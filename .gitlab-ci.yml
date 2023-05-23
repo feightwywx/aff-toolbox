@@ -1,0 +1,74 @@
+image: tiangolo/docker-with-compose
+
+before_script:
+  - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+  - pip install docker-auto-labels
+
+stages:
+  - test
+  - build
+  - deploy
+
+tests:
+  stage: test
+  script:
+    - sh ./scripts/test.sh
+  tags:
+    - build
+    - test
+
+build-stag:
+  stage: build
+  script:
+    - TAG=stag FRONTEND_ENV=staging sh ./scripts/build-push.sh
+  only:
+    - master
+  tags:
+    - build
+    - test
+    
+build-prod:
+  stage: build
+  script:
+    - TAG=prod FRONTEND_ENV=production sh ./scripts/build-push.sh
+  only:
+    - production
+  tags:
+    - build
+    - test
+
+deploy-stag:
+  stage: deploy
+  script: 
+    - >
+      DOMAIN=stag.aff.arcaea.icu
+      TRAEFIK_TAG=stag.aff.arcaea.icu
+      STACK_NAME=stag-aff-arcaea-icu
+      TAG=stag
+      sh ./scripts/deploy.sh
+  environment:
+    name: staging
+    url: https://stag.aff.arcaea.icu
+  only:
+    - master
+  tags:
+    - swarm
+    - stag
+
+deploy-prod:
+  stage: deploy
+  script:
+    - >
+      DOMAIN=aff.arcaea.icu
+      TRAEFIK_TAG=aff.arcaea.icu
+      STACK_NAME=aff-arcaea-icu
+      TAG=prod
+      sh ./scripts/deploy.sh
+  environment:
+    name: production
+    url: https://aff.arcaea.icu
+  only:
+    - production
+  tags:
+    - swarm
+    - prod
