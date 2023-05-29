@@ -1,4 +1,5 @@
 import { IconButton, Menu, MenuItem } from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
 import HistoryIcon from "@mui/icons-material/History";
 import TranslateIcon from "@mui/icons-material/Translate";
 import MoreIcon from "@mui/icons-material/MoreVert";
@@ -6,6 +7,25 @@ import React from "react";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { MenuItemSx } from "@/styles/sx";
+import { useAppDispatch } from "@/utils/hooks";
+import { toggleDrawer } from "@/utils/slices/layout";
+
+export const DrawerButton: React.FC = () => {
+  const dispatch = useAppDispatch();
+
+  return (
+    <IconButton
+      size="large"
+      edge="start"
+      color="inherit"
+      aria-label="menu"
+      sx={{ mr: 2 }}
+      onClick={() => dispatch(toggleDrawer())}
+    >
+      <MenuIcon />
+    </IconButton>
+  );
+};
 
 export const ChangeLangButton: React.FC = () => {
   const router = useRouter();

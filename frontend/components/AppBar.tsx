@@ -13,6 +13,7 @@ import React from "react";
 import { useRouter } from "next/router";
 import {
   ChangeLangButton,
+  DrawerButton,
   HistoryButton,
   MoreActionsButton,
 } from "./AppBarActions";
@@ -32,15 +33,7 @@ const AppBar: React.FC<PropsWithChildren> = ({ children }) => {
     >
       <Toolbar>
         {/* 汉堡菜单 */}
-        <IconButton
-          size="large"
-          edge="start"
-          color="inherit"
-          aria-label="menu"
-          sx={{ mr: 2 }}
-        >
-          <MenuIcon />
-        </IconButton>
+        <DrawerButton />
 
         {/* 标题 */}
         <Box sx={{ flexGrow: 1 }}>
