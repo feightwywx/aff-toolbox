@@ -39,15 +39,15 @@ const AppBar: React.FC<PropsWithChildren> = ({ children }) => {
         <Box sx={{ flexGrow: 1 }}>
           <Badge badgeContent={"beta"} color="secondary">
             <Typography variant="h6" component="div" sx={{ pr: 2 }}>
-              {t("AFF工具箱")}
+              {t("title")}
             </Typography>
           </Badge>
         </Box>
 
         {/* 功能按钮 */}
-        <HistoryButton />
+        <HistoryButton disabled />
         <ChangeLangButton />
-        <MoreActionsButton />
+        <MoreActionsButton disabled />
       </Toolbar>
     </MuiAppBar>
   );

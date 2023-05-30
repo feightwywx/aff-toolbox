@@ -1,11 +1,4 @@
 {
-    "home": "首页",
-    "title": "AFF工具箱",
-    "new.name": "新增",
-    "arc-envelope.name": "Arc包络",
-    "chart-offset.name": "谱面偏移",
-    "chart-offset.shortDesc": "偏移整体或谱面片段",
-    "test.name": "测试页面",
-    "test.shortDesc": "这是一个测试表单用的页面",
-    "aff": "AFF谱面"
+    "home": "Home",
+    "title": "AFF Toolbox"
 }

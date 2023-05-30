@@ -1,4 +1,4 @@
-import { IconButton, Menu, MenuItem } from "@mui/material";
+import { ButtonProps, IconButton, Menu, MenuItem } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import HistoryIcon from "@mui/icons-material/History";
 import TranslateIcon from "@mui/icons-material/Translate";
@@ -10,7 +10,7 @@ import { MenuItemSx } from "@/styles/sx";
 import { useAppDispatch } from "@/utils/hooks";
 import { toggleDrawer } from "@/utils/slices/layout";
 
-export const DrawerButton: React.FC = () => {
+export const DrawerButton: React.FC<ButtonProps> = ({ ...props }) => {
   const dispatch = useAppDispatch();
 
   return (
@@ -21,13 +21,14 @@ export const DrawerButton: React.FC = () => {
       aria-label="menu"
       sx={{ mr: 2 }}
       onClick={() => dispatch(toggleDrawer())}
+      {...props}
     >
       <MenuIcon />
     </IconButton>
   );
 };
 
-export const ChangeLangButton: React.FC = () => {
+export const ChangeLangButton: React.FC<ButtonProps> = ({ ...props }) => {
   const router = useRouter();
   const { t, i18n } = useTranslation();
 
@@ -51,6 +52,7 @@ export const ChangeLangButton: React.FC = () => {
         aria-haspopup="true"
         onClick={handleMenu}
         color="inherit"
+        {...props}
       >
         <TranslateIcon />
       </IconButton>
@@ -80,7 +82,7 @@ export const ChangeLangButton: React.FC = () => {
   );
 };
 
-export const HistoryButton: React.FC = () => {
+export const HistoryButton: React.FC<ButtonProps> = ({ ...props }) => {
   return (
     <>
       <IconButton
@@ -90,6 +92,7 @@ export const HistoryButton: React.FC = () => {
         aria-haspopup="true"
         // onClick={() => setHistoryDialog(true)}
         color="inherit"
+        {...props}
       >
         <HistoryIcon />
       </IconButton>
@@ -97,7 +100,7 @@ export const HistoryButton: React.FC = () => {
   );
 };
 
-export const MoreActionsButton: React.FC = () => {
+export const MoreActionsButton: React.FC<ButtonProps> = ({ ...props }) => {
   const router = useRouter();
   const { t, i18n } = useTranslation();
 
@@ -121,6 +124,7 @@ export const MoreActionsButton: React.FC = () => {
         aria-haspopup="true"
         onClick={handleMenu}
         color="inherit"
+        {...props}
       >
         <MoreIcon />
       </IconButton>

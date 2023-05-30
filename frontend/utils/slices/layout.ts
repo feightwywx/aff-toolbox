@@ -5,7 +5,7 @@ export interface LayoutState {
 }
 
 const initialState = {
-  drawerOpen: false,
+  drawerOpen: true,
 };
 
 export const layoutSlice = createSlice({

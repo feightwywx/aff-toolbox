@@ -1,13 +1,12 @@
 {
     "home": "首页",
     "title": "AFF工具箱",
-    "new.name": "新增",
-    "chart.name": "谱面工具",
-    "arc-envelope.name": "Arc包络",
-    "chart-offset.name": "谱面偏移",
-    "chart-offset.shortDesc": "偏移整体或谱面片段",
-    "test.name": "测试页面",
-    "test.shortDesc": "这是一个测试表单用的页面",
-    "aff": "AFF谱面",
-    "offset": "谱面延迟（ms）"
+    "category.new.name": "新增",
+    "category.chart.name": "谱面工具",
+    "category.arc.name": "Arc工具",
+    "category.timing.name": "Timing工具",
+    "tool.chartOffset.name": "谱面偏移",
+    "tool.chartOffset.shortDesc": "偏移整体或谱面片段",
+    "tool.test.name": "测试页面",
+    "tool.test.shortDesc": "这是一个测试表单用的页面"
 }

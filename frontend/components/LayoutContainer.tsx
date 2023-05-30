@@ -6,18 +6,18 @@ const LayoutContainer = styled("main", {
 })<{
   open?: boolean;
 }>(({ theme, open }) => ({
+  flexGrow: 1,
+  padding: theme.spacing(3),
   "@media (min-width:900px)": {
-    flexGrow: 1,
-    padding: theme.spacing(3),
     transition: theme.transitions.create("margin", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
     }),
     marginLeft: `${drawerWidth}px`,
     ...(!open && {
       transition: theme.transitions.create("margin", {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
       }),
       marginLeft: 0,
     }),
