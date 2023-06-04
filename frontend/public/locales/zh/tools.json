@@ -1,0 +1,7 @@
+{
+  "input.notes": "谱面",
+  "input.params": "参数",
+  "input.params.offset": "偏移量（ms）",
+  "error.required": "必填",
+  "error.integer": "需为整数"
+}

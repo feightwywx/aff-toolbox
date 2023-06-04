@@ -1,6 +1,5 @@
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { useRouter } from "next/router";
 import * as React from "react";
 import {
   Box,
@@ -9,7 +8,6 @@ import {
   Stack,
   Typography,
   Unstable_Grid2 as Grid,
-  useMediaQuery,
 } from "@mui/material";
 import {
   faBilibili,
@@ -23,16 +21,11 @@ import { Button, Link } from "@/components/common";
 import { IndexRecommendCard } from "@/components/IndexRecommendCard";
 
 export default function Home() {
-  const router = useRouter();
-  const { t, i18n } = useTranslation();
-
-  const isDesktop = useMediaQuery((theme) => theme.breakpoints.up("md"));
-
   return (
     <Box>
       <Stack spacing={2} sx={{ mb: 2 }}>
         <Box>
-          <Typography variant={isDesktop ? "h1" : "h3"}>AFF工具箱</Typography>
+          <Typography variant={"h3"}>AFF工具箱</Typography>
           <Typography variant="h6">一个Arcaea谱面段落生成工具</Typography>
         </Box>
 

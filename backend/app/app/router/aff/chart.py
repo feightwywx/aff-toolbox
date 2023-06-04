@@ -21,7 +21,7 @@ async def notes_converter(notes: str = Body()) -> a.NoteGroup | a.AffList:
     return chart
 
 
-@chart_router.get("/offset")
+@chart_router.post("/offset")
 async def chart_offset(
     notes: str = Body(), params: ChartOffsetParams = Body()
 ) -> CommonResponse[str]:
@@ -36,7 +36,7 @@ async def chart_offset(
         return make_success_resp(processed.__str__())
 
 
-@chart_router.get("/align")
+@chart_router.post("/align")
 async def chart_align(
     notes: a.NoteGroup = Depends(notes_converter), params: ChartAlignParams = Body()
 ) -> CommonResponse[str]:
@@ -45,7 +45,7 @@ async def chart_align(
     )
 
 
-@chart_router.get("/mirror")
+@chart_router.post("/mirror")
 async def chart_mirror(
     notes: a.NoteGroup = Depends(notes_converter),
 ) -> CommonResponse[str]:

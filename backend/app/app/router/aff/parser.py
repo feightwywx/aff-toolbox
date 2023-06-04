@@ -15,7 +15,7 @@ parser_router = APIRouter(
 )
 
 
-@parser_router.get("/loadline")
+@parser_router.post("/loadline")
 async def parser_loadline(
     body: Annotated[
         ParserLoadlineBody,

@@ -14,7 +14,7 @@ timing_router = APIRouter(
 )
 
 
-@timing_router.get("/easing")
+@timing_router.post("/easing")
 async def timing_easing(params: TimingEasingParams = Body()) -> CommonResponse[str]:
     return make_success_resp(
         a.generator.timing_easing(
@@ -30,7 +30,7 @@ async def timing_easing(params: TimingEasingParams = Body()) -> CommonResponse[s
     )
 
 
-@timing_router.get("/glitch")
+@timing_router.post("/glitch")
 async def timing_glitch(params: TimingGlitchParams = Body()) -> CommonResponse[str]:
     return make_success_resp(
         a.generator.timing_glitch(

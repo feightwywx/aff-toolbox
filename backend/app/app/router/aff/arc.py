@@ -30,7 +30,7 @@ async def timings_converter(timings: str = Body()) -> a.NoteGroup:
     return a.NoteGroup(filter(lambda note: isinstance(note, a.Timing), obj))
 
 
-@arc_router.get("/split")
+@arc_router.post("/split")
 async def arc_split(
     arc: a.Arc = Depends(arc_converter),
     params: ArcSplitParams = Body(
@@ -47,7 +47,7 @@ async def arc_split(
     )
 
 
-@arc_router.get("/split-by-timing")
+@arc_router.post("/split-by-timing")
 async def arc_split_by_timing(
     arc: a.Arc = Depends(arc_converter),
     timings: list[a.Timing] = Depends(timings_converter),
@@ -55,7 +55,7 @@ async def arc_split_by_timing(
     return make_success_resp(a.generator.arc_slice_by_timing(arc, timings).__str__())
 
 
-@arc_router.get("/crease-line")
+@arc_router.post("/crease-line")
 def arc_crease_line(
     arc: a.Arc = Depends(arc_converter), params: ArcCreaseLineParams = Body()
 ) -> CommonResponse[str]:
@@ -71,7 +71,7 @@ def arc_crease_line(
     )
 
 
-@arc_router.get("/animate")
+@arc_router.post("/animate")
 def arc_animate(
     arc: a.Arc = Depends(arc_converter),
     params: ArcAnimateParams = Body(),

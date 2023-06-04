@@ -1,8 +1,8 @@
 export type ToolCategoryData = Array<string>;
 
-export type Category = "chart" | "arc" | "timing"
+export type Category = "chart" | "arc" | "timing";
 
-export type CategoryWithNew = Category | "new"
+export type CategoryWithNew = Category | "new";
 
 export interface ArcToolMetadata {
   id: string;
@@ -20,4 +20,16 @@ export interface HistoryItemData {
   value: string;
   tool: string;
   time: number;
+}
+
+export interface ResponseJson<T = any> {
+  code: number;
+  result: T;
+}
+
+export enum StatusCode {
+  SUCCESS = 0,
+  UNKNOWN_ERR = -1,
+  REQUEST_VALIDATION_ERR = 100,
+  NOTE_PARSE_ERR = 101,
 }

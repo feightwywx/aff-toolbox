@@ -5,9 +5,25 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import Layout from "../components/Layout";
 import { theme } from "@/utils/theme";
 import { Provider as ReduxProvider } from "react-redux";
-import store from '@/utils/store';
+import store from "@/utils/store";
+import { SnackbarProvider } from "notistack";
+import { setLocale } from "yup";
 
 function App({ Component, pageProps }: AppProps) {
+  setLocale({
+    // use constant translation keys for messages without values
+    mixed: {
+      default: 'error.invalid',
+      required: 'error.required'
+    },
+    // use functions to generate an error object that includes the value from the schema
+    number: {
+      min: ({ min }) => ({ key: 'field_too_short', values: { min } }),
+      max: ({ max }) => ({ key: 'field_too_big', values: { max } }),
+      integer: 'error.integer'
+    },
+  });
+  
   return (
     <>
       <Head>
@@ -18,9 +34,11 @@ function App({ Component, pageProps }: AppProps) {
       <ReduxProvider store={store}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
+          <SnackbarProvider>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </SnackbarProvider>
         </ThemeProvider>
       </ReduxProvider>
     </>

@@ -13,6 +13,7 @@ class StatusCode(int, Enum):
     SUCCESS = 0
     UNKNOWN_ERR = -1
     REQUEST_VALIDATION_ERR = 100
+    NOTE_PARSE_ERR = 101
 
 
 class CommonResponse(BaseModel, Generic[T]):

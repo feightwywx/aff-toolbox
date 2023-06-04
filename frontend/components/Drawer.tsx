@@ -33,7 +33,7 @@ const Drawer: React.FC<
 
   const { t, i18n } = useTranslation();
   const router = useRouter();
-  const pathname = router.asPath;
+  const pathname = `/${router.asPath.split('/').slice(-1)}`;
 
   // 计算一个由模块路径到分类名的映射
   const moduleToCategory = React.useMemo(() => {
@@ -144,7 +144,7 @@ const Drawer: React.FC<
                       <ListItemButton
                         key={index}
                         sx={ListItemSx}
-                        href={`/${router.locale}${meta.path}`}
+                        href={`/${router.locale}/tools${meta.path}`}
                         selected={meta.path === pathname && cid !== "new"}
                         LinkComponent={Link}
                         onClick={() => !desktop && dispatch(toggleDrawer())}
