@@ -2,6 +2,11 @@
   "input.notes": "谱面",
   "input.params": "参数",
   "input.params.offset": "偏移量（ms）",
+  "input.params.bpm": "BPM",
+  "input.params.bpm.helper": "暂不支持变BPM",
+  "input.params.error": "容差（ms）",
+  "input.params.lcd": "分音的最小公倍数",
+  "input.params.lcd.helper": "默认为96",
   "error.required": "必填",
   "error.integer": "需为整数"
 }

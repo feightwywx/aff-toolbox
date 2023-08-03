@@ -7,6 +7,10 @@
     "category.timing.name": "Timing工具",
     "tool.chartOffset.name": "谱面偏移",
     "tool.chartOffset.shortDesc": "偏移整体或谱面片段",
+    "tool.chartMirror.name": "谱面镜像",
+    "tool.chartMirror.shortDesc": "镜像整体或谱面片段",
+    "tool.chartAlign.name": "谱面对齐",
+    "tool.chartAlign.shortDesc": "将谱面整体或片段对齐（消除1ms偏差）",
     "tool.test.name": "测试页面",
     "tool.test.shortDesc": "这是一个测试表单用的页面"
 }

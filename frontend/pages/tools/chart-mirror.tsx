@@ -1,7 +1,7 @@
 import type { GetStaticProps, NextPage } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import ToolFormikForm from "@/components/ToolFormikForm";
-import { AffTextField, NumberField } from "@/components/input";
+import { AffTextField } from "@/components/input";
 import { CardWithGrid } from "@/components/CardWithGrid";
 import { ToolTitle } from "@/components/ToolTitle";
 import * as Yup from "yup";
@@ -13,20 +13,13 @@ const ToolPage: NextPage = () => {
       <ToolTitle />
 
       <ToolFormikForm
-        initValues={{ notes: "", params: { offset: "" } }}
+        initValues={{ notes: "" }}
         validationSchema={{
           notes: Yup.string().required(),
-          params: Yup.object().shape({
-            offset: Yup.number().required().integer(),
-          }),
         }}
       >
         <CardWithGrid title="Note区域">
           <AffTextField name="notes" />
-        </CardWithGrid>
-
-        <CardWithGrid title="参数">
-          <NumberField name="params.offset" />
         </CardWithGrid>
       </ToolFormikForm>
     </ToolStack>

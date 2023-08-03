@@ -1,6 +1,6 @@
 import { Trans, useTranslation } from "next-i18next";
 
-import React from "react";
+import React, { PropsWithChildren } from "react";
 import { Unstable_Grid2 as Grid, TextField } from "@mui/material";
 import { useField } from "formik";
 
@@ -40,10 +40,22 @@ export const NumberField = ({ ...props }) => {
         {...props}
         fullWidth
         label={t(`input.${props.name}`)}
-        helperText={isError ? t(meta.error!) : null}
+        helperText={
+          isError
+            ? t(meta.error!)
+            : props.helperText
+            ? t(`input.${props.name}.helper`)
+            : undefined
+        }
         error={isError}
-        type="number"
       />
     </Grid>
   );
+};
+
+export const SingleLineField: React.FC<PropsWithChildren> = ({
+  children,
+  ...props
+}) => {
+  return <Grid xs={12}>{children}</Grid>;
 };
