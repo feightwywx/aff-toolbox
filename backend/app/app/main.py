@@ -57,7 +57,7 @@ async def not_an_arc_hadler(req: Request, e: NotAnArcError) -> JSONResponse:
 
 
 @app.exception_handler(RequestValidationError)
-async def validation_exception_handler(request, exc) -> JSONResponse:
+async def validation_exception_handler(request: Request, exc: RequestValidationError) -> JSONResponse:
     print(exc)
     return JSONResponse(make_fail_resp("validation error: " + str(exc)).dict())
 
