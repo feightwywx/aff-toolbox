@@ -72,10 +72,10 @@ class ArcAnimateParams(StartStopCommonBody):
     basebpm: float
 
     easing_x: str
-    easing_b_point_x: list[float] = [1 / 3, 0, 2 / 3, 1]
+    easing_b_point_x: Optional[list[float]] = [1 / 3, 0, 2 / 3, 1]
 
     easing_y: str
-    easing_b_point_y: list[float] = [1 / 3, 0, 2 / 3, 1]
+    easing_b_point_y: Optional[list[float]] = [1 / 3, 0, 2 / 3, 1]
 
     infbpm: float = 999999.0
     framerate: float = 60.0
@@ -84,7 +84,7 @@ class ArcAnimateParams(StartStopCommonBody):
     offset_t: int = 0
     delta_offset_t: int = 0
     easing_offset_t: str
-    easing_b_point_offset_t: list[float] = [1 / 3, 0, 2 / 3, 1]
+    easing_b_point_offset_t: Optional[list[float]] = [1 / 3, 0, 2 / 3, 1]
 
     @root_validator()
     def count_validate(cls, values: dict[str, Any]) -> dict[str, Any]:
@@ -106,7 +106,7 @@ class ArcAnimateParams(StartStopCommonBody):
 
     @validator("easing_b_point_x", "easing_b_point_y", "easing_b_point_offset_t")
     def easing_b_point_validate(cls, val: list[float]) -> list[float]:
-        if len(val) < 5:
+        if len(val) < 4:
             raise TooLessBPointArgsError("too less bezier control point arguments")
         return val
 
@@ -143,7 +143,7 @@ class TimingEasingParams(StartStopCommonBody, CountCommonBody):
 
     @validator("easing_b_point")
     def easing_b_point_validate(cls, val: list[float]) -> list[float]:
-        if len(val) < 5:
+        if len(val) < 4:
             raise TooLessBPointArgsError("too less bezier control point arguments")
         return val
 
