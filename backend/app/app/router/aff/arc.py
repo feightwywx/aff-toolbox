@@ -3,6 +3,7 @@ from app.model.request import (
     ArcAnimateParams,
     ArcCreaseLineParams,
     ArcSplitParams,
+    ArcRainParams,
 )
 from app.utils.response import make_success_resp
 import app.exception as appexc
@@ -42,7 +43,10 @@ async def arc_split(
 ) -> CommonResponse[str]:
     return make_success_resp(
         a.generator.arc_slice_by_count(
-            arc=arc, count=params.count, start=params.start, stop=params.stop
+            arc=arc,
+            count=params.count,
+            start=params.start if (params.start is not None) else arc.time,
+            stop=params.stop if (params.stop is not None) else arc.totime,
         ).__str__()
     )
 
@@ -67,6 +71,20 @@ def arc_crease_line(
             params.count,
             mode=params.mode,
             easing=params.easing,
+        ).__str__()
+    )
+
+
+@arc_router.post("/rain")
+def arc_rain(params: ArcRainParams = Body(embed=True)) -> CommonResponse[str]:
+    return make_success_resp(
+        a.generator.arc_rain(
+            params.start,
+            params.stop,
+            params.step,
+            params.dropLength
+            if (params.dropLength is not None)
+            else (params.stop - params.start),
         ).__str__()
     )
 

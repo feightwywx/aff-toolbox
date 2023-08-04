@@ -30,6 +30,20 @@ class StartStopCommonBody(BaseModel):
         return values
 
 
+class OptionalStartStopCommonBody(BaseModel):
+    start: Optional[int]
+    stop: Optional[int]
+
+    @root_validator()
+    def start_stop_validate(cls, values: dict[str, Any]) -> dict[str, Any]:
+        start, stop = values.get("start"), values.get("stop")
+
+        if isinstance(start, int) and isinstance(stop, int) and start >= stop:
+            raise StartStopError("start time must before stop time")
+
+        return values
+
+
 class CountCommonBody(BaseModel):
     count: int
 
@@ -40,7 +54,7 @@ class CountCommonBody(BaseModel):
         return val
 
 
-class ArcSplitParams(StartStopCommonBody, CountCommonBody):
+class ArcSplitParams(OptionalStartStopCommonBody, CountCommonBody):
     pass
 
 
@@ -99,7 +113,7 @@ class ArcAnimateParams(StartStopCommonBody):
 
 class ArcRainParams(StartStopCommonBody):
     step: float
-    length: int
+    dropLength: Optional[int]
 
     @root_validator()
     def count_validate(cls, values: dict[str, Any]) -> dict[str, Any]:
