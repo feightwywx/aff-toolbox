@@ -29,6 +29,15 @@ const ToolFormikForm: React.FC<ToolFormikFormProps> = ({
     values: any,
     actions: FormikHelpers<any>
   ) => {
+    if (values.params) {
+      for (const key in values.params) {
+        if (key.includes("b_point")) {
+          values.params[key] = (values.params[key] as string)
+            .split(",")
+            .map((x: string) => +x);
+        }
+      }
+    }
     const resp = await fetch(`/api/aff${meta?.endpoint}`, {
       method: "POST",
       body: JSON.stringify(values),
@@ -122,9 +131,12 @@ const ToolFormikForm: React.FC<ToolFormikFormProps> = ({
                   variant: "default",
                 });
               } else if (errKeys.length !== 0) {
-                enqueueSnackbar(`请检查以下字段：${errKeys.map((e) => t(`input.${e}`))}`, {
-                  variant: "error",
-                });
+                enqueueSnackbar(
+                  `请检查以下字段：${errKeys.map((e) => t(`input.${e}`))}`,
+                  {
+                    variant: "error",
+                  }
+                );
               }
             }}
             disabled={isSubmitting}
