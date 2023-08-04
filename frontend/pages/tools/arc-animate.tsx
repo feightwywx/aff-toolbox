@@ -95,7 +95,7 @@ const ToolPage: NextPage = () => {
           <EasingModeSelect name="params.easing_y" />
           <SingleLineField>
             <Typography>
-              下面的参数控制Timing缓动曲线，当缓动类型为“b”时可以提供两个控制点作为参数，进行更精细的控制。
+              下面的参数控制缓动曲线，当缓动类型为“b”时可以提供两个控制点作为参数，进行更精细的控制。
             </Typography>
             <Typography>
               控制点默认值为

@@ -50,6 +50,18 @@ export const toolMetas: ArcToolMetadata[] = [
     endpoint: "/arc/animate",
   },
   {
+    id: "timingEasing",
+    category: "timing",
+    path: "/timing-easing",
+    endpoint: "/timing/easing",
+  },
+  {
+    id: "timingGlitch",
+    category: "timing",
+    path: "/timing-glitch",
+    endpoint: "/timing/glitch",
+  },
+  {
     id: "test",
     // @ts-expect-error Type '""' is not assignable to type 'Category'.
     category: "",
