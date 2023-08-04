@@ -13,7 +13,7 @@ import { CardWithGrid, SubtitleTypography } from "@/components/CardWithGrid";
 import { ToolTitle } from "@/components/ToolTitle";
 import * as Yup from "yup";
 import { ToolStack } from "@/components/ToolStack";
-import { emptyStringToUndef, splitToListByComma } from "@/utils/helpers";
+import { emptyStringToUndef } from "@/utils/helpers";
 import { Divider, Link, Typography } from "@mui/material";
 
 const ToolPage: NextPage = () => {
