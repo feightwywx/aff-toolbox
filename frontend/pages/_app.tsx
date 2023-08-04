@@ -8,6 +8,10 @@ import { Provider as ReduxProvider } from "react-redux";
 import store from "@/utils/store";
 import { SnackbarProvider } from "notistack";
 import { setLocale } from "yup";
+import { config } from '@fortawesome/fontawesome-svg-core'
+import '@fortawesome/fontawesome-svg-core/styles.css'
+
+config.autoAddCss = false
 
 function App({ Component, pageProps }: AppProps) {
   setLocale({
