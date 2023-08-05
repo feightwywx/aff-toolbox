@@ -24,7 +24,7 @@ const ToolPage: NextPage = () => {
             delta_x: "",
             delta_y: "",
             count: "",
-            easing: "s",
+            arc_easing: "s",
             mode: "m",
           },
         }}
@@ -34,7 +34,7 @@ const ToolPage: NextPage = () => {
             delta_x: Yup.number().required(),
             delta_y: Yup.number().required(),
             count: Yup.number().required(),
-            easing: Yup.string(),
+            arc_easing: Yup.string(),
             mode: Yup.string(),
           }),
         }}
@@ -44,12 +44,12 @@ const ToolPage: NextPage = () => {
         </CardWithGrid>
 
         <CardWithGrid title="参数">
-          <NumberField name="params.delta_x" />
-          <NumberField name="params.delta_y" />
+          <NumberField name="params.delta_x" helperText />
+          <NumberField name="params.delta_y" helperText />
           <NumberField name="params.count" />
           <SubtitleTypography>可选参数</SubtitleTypography>
-          <ArcEasingModeSelect name="params.easing" helperText />
-          <CreaseModeSelect name="params.mode" />
+          <ArcEasingModeSelect name="params.arc_easing" />
+          <CreaseModeSelect name="params.mode" helperText />
         </CardWithGrid>
       </ToolFormikForm>
     </ToolStack>

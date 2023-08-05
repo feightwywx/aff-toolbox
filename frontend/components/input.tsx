@@ -144,7 +144,7 @@ export const CreaseModeSelect: React.FC<SelectWithHelperProps> = ({ ...props }) 
           {isError
             ? t(meta.error!)
             : props.helperText
-            ? t(`input.${props.name}.helper`)
+            ? t(`input.creaseMode.helper`)
             : undefined}
         </FormHelperText>
       </FormControl>

@@ -81,14 +81,8 @@ const ToolPage: NextPage = () => {
         <CardWithGrid title="参数">
           <NumberField name="params.start" />
           <NumberField name="params.stop" />
-          <NumberField
-            name="params.delta_x"
-            placeholder="如果不变动，请填写0"
-          />
-          <NumberField
-            name="params.delta_y"
-            placeholder="如果不变动，请填写0"
-          />
+          <NumberField name="params.delta_x" helperText />
+          <NumberField name="params.delta_y" helperText />
           <NumberField name="params.basebpm" />
           <SubtitleTypography>可选参数</SubtitleTypography>
           <EasingModeSelect name="params.easing_x" />
@@ -134,9 +128,9 @@ const ToolPage: NextPage = () => {
           <SingleLineField>
             <Typography>下面是一些个性化的设置。</Typography>
           </SingleLineField>
-          <NumberField name="params.infbpm" />
-          <NumberField name="params.framerate" />
-          <NumberField name="params.fake_note_t" />
+          <NumberField name="params.infbpm" helperText />
+          <NumberField name="params.framerate" helperText />
+          <NumberField name="params.fake_note_t" helperText />
         </CardWithGrid>
       </ToolFormikForm>
     </ToolStack>

@@ -74,21 +74,21 @@ export default function Home() {
                   <IndexRecommendCard
                     title="Arc分割"
                     desc="将一条完整的Arc切分成多个更短的Arc"
-                    href="/arc-cutter"
+                    href="/tools/arc-split"
                   />
                 </Grid>
                 <Grid xs={12} sm={6} lg={4}>
                   <IndexRecommendCard
                     title="谱面偏移"
                     desc="将整个谱面或者谱面片段偏移指定时间"
-                    href="/chart-offset"
+                    href="/tools/chart-offset"
                   />
                 </Grid>
                 <Grid xs={12} sm={6} lg={4}>
                   <IndexRecommendCard
                     title="Timing缓动"
-                    desc="利用缓动函数生成一段Timing"
-                    href="/timing-easing"
+                    desc="利用缓动函数生成一组BPM逐渐变化的Timing"
+                    href="/tools/timing-easing"
                   />
                 </Grid>
               </Grid>
@@ -116,7 +116,7 @@ export default function Home() {
                     startIcon={<FontAwesomeIcon icon={faBilibili} />}
                     href="https://space.bilibili.com/2095080"
                   >
-                    一只恐狼
+                    点儿恐狼
                   </Button>
                 </Grid>
                 <Grid xs="auto">

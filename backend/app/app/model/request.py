@@ -62,7 +62,7 @@ class ArcCreaseLineParams(CountCommonBody):
     delta_x: float
     delta_y: float
     mode: Literal["m", "s"] = "m"
-    easing: str
+    arc_easing: str
 
 
 class ArcAnimateParams(StartStopCommonBody):

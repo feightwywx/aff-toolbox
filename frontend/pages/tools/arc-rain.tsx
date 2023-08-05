@@ -32,7 +32,7 @@ const ToolPage: NextPage = () => {
           <NumberField name="params.stop" />
           <NumberField name="params.step" />
           <SubtitleTypography>可选参数</SubtitleTypography>
-          <NumberField name="params.dropLength" />
+          <NumberField name="params.dropLength" helperText />
         </CardWithGrid>
       </ToolFormikForm>
     </ToolStack>

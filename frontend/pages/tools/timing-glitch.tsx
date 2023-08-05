@@ -46,10 +46,10 @@ const ToolPage: NextPage = () => {
           <NumberField name="params.start" />
           <NumberField name="params.stop" />
           <NumberField name="params.count" />
-          <NumberField name="params.bpm_range" />
+          <NumberField name="params.bpm_range" helperText />
           <SubtitleTypography>可选参数</SubtitleTypography>
-          <NumberField name="params.exact_bar" />
-          <NumberField name="params.zero_bar" />
+          <NumberField name="params.exact_bar" helperText />
+          <NumberField name="params.zero_bar" helperText />
         </CardWithGrid>
       </ToolFormikForm>
     </ToolStack>

@@ -70,7 +70,7 @@ def arc_crease_line(
             params.delta_y,
             params.count,
             mode=params.mode,
-            easing=params.easing,
+            easing=params.arc_easing,
         ).__str__()
     )
 
