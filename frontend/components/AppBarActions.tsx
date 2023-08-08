@@ -1,9 +1,21 @@
-import { ButtonProps, IconButton, Menu, MenuItem } from "@mui/material";
+import {
+  Box,
+  ButtonProps,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  Menu,
+  MenuItem,
+  Toolbar,
+  Typography,
+} from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import HistoryIcon from "@mui/icons-material/History";
 import TranslateIcon from "@mui/icons-material/Translate";
 import MoreIcon from "@mui/icons-material/MoreVert";
-import React from "react";
+import CloseIcon from "@mui/icons-material/Close";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { MenuItemSx } from "@/styles/sx";
@@ -83,6 +95,8 @@ export const ChangeLangButton: React.FC<ButtonProps> = ({ ...props }) => {
 };
 
 export const HistoryButton: React.FC<ButtonProps> = ({ ...props }) => {
+  const [historyDialog, setHistoryDialog] = useState(false);
+
   return (
     <>
       <IconButton
@@ -90,12 +104,44 @@ export const HistoryButton: React.FC<ButtonProps> = ({ ...props }) => {
         aria-label="language"
         aria-controls="menu-appbar"
         aria-haspopup="true"
-        // onClick={() => setHistoryDialog(true)}
+        onClick={() => setHistoryDialog(true)}
         color="inherit"
         {...props}
       >
         <HistoryIcon />
       </IconButton>
+      <Dialog
+        open={historyDialog}
+        onClose={() => {
+          setHistoryDialog(false);
+        }}
+        fullWidth
+        maxWidth="lg"
+      >
+        <Toolbar style={{ paddingLeft: 0, display: "flex" }}>
+          <DialogTitle>历史记录</DialogTitle>
+          <div style={{ flexGrow: 1 }}></div>
+          <IconButton onClick={() => setHistoryDialog(false)}>
+            <CloseIcon />
+          </IconButton>
+        </Toolbar>
+
+        <DialogContent style={{ height: "80vh", display: "flex" }}>
+          <Box
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              display: "flex",
+              width: "100%",
+              flexDirection: "column",
+              opacity: 0.7,
+            }}
+          >
+            <HistoryIcon style={{ fontSize: 100 }} />
+            <Typography variant="h6">试着生成点什么？</Typography>
+          </Box>
+        </DialogContent>
+      </Dialog>
     </>
   );
 };
