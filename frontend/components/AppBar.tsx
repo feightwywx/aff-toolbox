@@ -45,8 +45,8 @@ const AppBar: React.FC<PropsWithChildren> = ({ children }) => {
         </Box>
 
         {/* 功能按钮 */}
-        <HistoryButton />
         <ChangeLangButton />
+        <HistoryButton />
         {/* <MoreActionsButton disabled /> */}
       </Toolbar>
     </MuiAppBar>

@@ -1,28 +1,36 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 export interface LayoutState {
   drawerOpen: boolean;
+  history: ResultHistory[];
+}
+
+export interface ResultHistory {
+  time: number;
+  tool: string;
+  input: Object;
+  output: string;
 }
 
 const initialState = {
   drawerOpen: true,
-};
+  history: [],
+} as LayoutState;
 
 export const layoutSlice = createSlice({
   name: "layout",
   initialState,
   reducers: {
     toggleDrawer: (state) => {
-      // Redux Toolkit allows us to write "mutating" logic in reducers. It
-      // doesn't actually mutate the state because it uses the Immer library,
-      // which detects changes to a "draft state" and produces a brand new
-      // immutable state based off those changes
       state.drawerOpen = !state.drawerOpen;
+    },
+    appendHistory: (state, action: PayloadAction<ResultHistory>) => {
+      console.log('append history', action.payload)
+      state.history.unshift(action.payload);
     },
   },
 });
 
-// Action creators are generated for each case reducer function
-export const { toggleDrawer } = layoutSlice.actions;
+export const { toggleDrawer, appendHistory } = layoutSlice.actions;
 
 export default layoutSlice.reducer;

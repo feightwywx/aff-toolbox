@@ -7,7 +7,9 @@ import PlayArrow from "@mui/icons-material/PlayArrow";
 import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
 import toolMetas from "@/config/modules";
-import { ArcToolMetadata, ResponseJson, StatusCode } from "@/utils/interfaces";
+import { ResponseJson, StatusCode } from "@/utils/interfaces";
+import { appendHistory } from "@/utils/slices/layout";
+import { useAppDispatch } from "@/utils/hooks";
 
 interface ToolFormikFormProps extends React.PropsWithChildren {
   initValues: any;
@@ -22,6 +24,7 @@ const ToolFormikForm: React.FC<ToolFormikFormProps> = ({
   const router = useRouter();
   const { t } = useTranslation("tools");
   const pathname = `/${router.asPath.split("/").slice(-1)}`;
+  const dispatch = useAppDispatch();
 
   const meta = toolMetas.find((tool) => tool.path === pathname);
 
@@ -38,30 +41,31 @@ const ToolFormikForm: React.FC<ToolFormikFormProps> = ({
         }
       }
     }
-    const resp = await fetch(`/api/aff${meta?.endpoint}`, {
-      method: "POST",
-      body: JSON.stringify(values),
-      headers: new Headers({
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      }),
-    });
-
     try {
+      const resp = await fetch(`/api/aff${meta?.endpoint}`, {
+        method: "POST",
+        body: JSON.stringify(values),
+        headers: new Headers({
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        }),
+      });
+
       if (resp.ok) {
         const jsonResp: ResponseJson = await resp.json();
         if (jsonResp.code === StatusCode.SUCCESS) {
+          // 写入历史记录
+          dispatch(
+            appendHistory({
+              tool: meta?.id ?? "unknown",
+              time: Date.now(),
+              input: values,
+              output: jsonResp.result,
+            })
+          );
+
           if (navigator.clipboard !== undefined) {
             navigator.clipboard.writeText(jsonResp.result);
-            // // TODO 历史记录部分
-            // if (history !== null) {
-            //   setHistory([{
-            //     value: JSON.stringify(values, null, 2),
-            //     tool: pageId,
-            //     time: Date.now()
-            //   }, ...history])
-            // }
-
             enqueueSnackbar("生成结果已复制到剪贴板", {
               variant: "success",
             });
@@ -73,12 +77,15 @@ const ToolFormikForm: React.FC<ToolFormikFormProps> = ({
               variant: "warning",
             });
           }
+        } else if (jsonResp.code === StatusCode.NOTE_PARSE_ERR) {
+          enqueueSnackbar("Note语句格式错误，请检查", {
+            variant: "error",
+          });
         } else {
-          if (jsonResp.code === StatusCode.NOTE_PARSE_ERR) {
-            enqueueSnackbar("Note语句格式错误，请检查", {
-              variant: "error",
-            });
-          }
+          console.error(jsonResp);
+          enqueueSnackbar("遇到了未知错误", {
+            variant: "error",
+          });
         }
       } else if (resp.status === 422) {
         enqueueSnackbar("验证错误，请检查填写的数据格式", {
@@ -92,10 +99,17 @@ const ToolFormikForm: React.FC<ToolFormikFormProps> = ({
         console.error("Failed Response:", await resp.text());
       }
     } catch (e) {
-      enqueueSnackbar("遇到了未知错误", {
-        variant: "error",
-      });
-      console.error("Unexpected Error:", e);
+      if ((e as Error).message.includes("Failed to fetch")) {
+        enqueueSnackbar("请检查网络连接", {
+          variant: "error",
+        });
+      } else {
+        enqueueSnackbar("遇到了未知错误", {
+          variant: "error",
+        });
+      }
+
+      console.error("[AFF Toolbox] Unexpected Error:", e);
     } finally {
       actions.setSubmitting(false);
     }

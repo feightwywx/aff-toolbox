@@ -7,6 +7,7 @@ import {
   IconButton,
   Menu,
   MenuItem,
+  Stack,
   Toolbar,
   Typography,
 } from "@mui/material";
@@ -19,8 +20,9 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { MenuItemSx } from "@/styles/sx";
-import { useAppDispatch } from "@/utils/hooks";
+import { useAppDispatch, useAppSelector } from "@/utils/hooks";
 import { toggleDrawer } from "@/utils/slices/layout";
+import { EmptyHistory, HistoryCard } from "./history";
 
 export const DrawerButton: React.FC<ButtonProps> = ({ ...props }) => {
   const dispatch = useAppDispatch();
@@ -96,6 +98,7 @@ export const ChangeLangButton: React.FC<ButtonProps> = ({ ...props }) => {
 
 export const HistoryButton: React.FC<ButtonProps> = ({ ...props }) => {
   const [historyDialog, setHistoryDialog] = useState(false);
+  const resultHistory = useAppSelector((state) => state.layout.history);
 
   return (
     <>
@@ -126,20 +129,18 @@ export const HistoryButton: React.FC<ButtonProps> = ({ ...props }) => {
           </IconButton>
         </Toolbar>
 
-        <DialogContent style={{ height: "80vh", display: "flex" }}>
-          <Box
-            style={{
-              justifyContent: "center",
-              alignItems: "center",
-              display: "flex",
-              width: "100%",
-              flexDirection: "column",
-              opacity: 0.7,
-            }}
-          >
-            <HistoryIcon style={{ fontSize: 100 }} />
-            <Typography variant="h6">试着生成点什么？</Typography>
-          </Box>
+        <DialogContent
+          style={{ height: "80vh", display: "flex", overflow: "scroll" }}
+        >
+          {resultHistory && resultHistory.length > 0 ? (
+            <Stack style={{ width: "100%", height: 'fit-content'}} direction="column" spacing={1}>
+              {resultHistory.map((x, i) => (
+                <HistoryCard history={x} key={i} />
+              ))}
+            </Stack>
+          ) : (
+            <EmptyHistory />
+          )}
         </DialogContent>
       </Dialog>
     </>
