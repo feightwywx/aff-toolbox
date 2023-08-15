@@ -8,14 +8,18 @@ import * as Yup from "yup";
 import { ToolStack } from "@/components/ToolStack";
 import { Typography } from "@mui/material";
 import { emptyStringToUndef } from "@/utils/helpers";
+import { useTranslation, Trans } from "next-i18next";
 
 const ToolPage: NextPage = () => {
+  const { t } = useTranslation("tools");
   return (
     <ToolStack>
       <ToolTitle>
         <Typography>
-          最小公倍数过大（例如《Fracture
-          Ray》FTR）时算法会炸掉，这时可以对谱面中每一种分音分别对齐一次
+          <Trans t={t}>
+            {/* prettier-ignore */}
+            最小公倍数过大（例如《Fracture Ray》FTR）时算法会炸掉，这时可以对谱面中每一种分音分别对齐一次
+          </Trans>
         </Typography>
       </ToolTitle>
 
@@ -26,7 +30,10 @@ const ToolPage: NextPage = () => {
           params: Yup.object().shape({
             bpm: Yup.number().required(),
             error: Yup.number().required().integer(),
-            lcd: Yup.number().integer().transform(emptyStringToUndef).nullable(),
+            lcd: Yup.number()
+              .integer()
+              .transform(emptyStringToUndef)
+              .nullable(),
           }),
         }}
       >
@@ -40,7 +47,6 @@ const ToolPage: NextPage = () => {
           <SubtitleTypography>可选参数</SubtitleTypography>
           <NumberField name="params.lcd" helperText />
         </CardWithGrid>
-        
       </ToolFormikForm>
     </ToolStack>
   );

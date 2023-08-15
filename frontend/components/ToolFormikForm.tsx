@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import { enqueueSnackbar } from "notistack";
 import { CircularProgress, Fab, Stack } from "@mui/material";
 import PlayArrow from "@mui/icons-material/PlayArrow";
-import { useTranslation } from "next-i18next";
+import { useTranslation, Trans } from "next-i18next";
 import { useRouter } from "next/router";
 import toolMetas from "@/config/modules";
 import { ResponseJson, StatusCode } from "@/utils/interfaces";
@@ -66,45 +66,45 @@ const ToolFormikForm: React.FC<ToolFormikFormProps> = ({
 
           if (navigator.clipboard !== undefined) {
             navigator.clipboard.writeText(jsonResp.result);
-            enqueueSnackbar("生成结果已复制到剪贴板", {
+            enqueueSnackbar(t("生成结果已复制到剪贴板"), {
               variant: "success",
             });
           } else {
             console.warn(
               "[AFF Toolbox] 无法访问剪贴板，这可能是因为权限不足，浏览器过旧或页面不来自一个安全的来源。"
             );
-            enqueueSnackbar("结果已生成，但是复制失败。请检查历史记录面板。", {
+            enqueueSnackbar(t("结果已生成，但是复制失败。请检查历史记录面板。"), {
               variant: "warning",
             });
           }
         } else if (jsonResp.code === StatusCode.NOTE_PARSE_ERR) {
-          enqueueSnackbar("Note语句格式错误，请检查", {
+          enqueueSnackbar(t("Note语句格式错误，请检查"), {
             variant: "error",
           });
         } else {
           console.error(jsonResp);
-          enqueueSnackbar("遇到了未知错误", {
+          enqueueSnackbar(t("遇到了未知错误"), {
             variant: "error",
           });
         }
       } else if (resp.status === 422) {
-        enqueueSnackbar("验证错误，请检查填写的数据格式", {
+        enqueueSnackbar(t("验证错误，请检查填写的数据格式"), {
           variant: "error",
         });
         console.error(await resp.text());
       } else {
-        enqueueSnackbar("遇到了未知错误", {
+        enqueueSnackbar(t("遇到了未知错误"), {
           variant: "error",
         });
         console.error("Failed Response:", await resp.text());
       }
     } catch (e) {
       if ((e as Error).message.includes("Failed to fetch")) {
-        enqueueSnackbar("请检查网络连接", {
+        enqueueSnackbar(t("请检查网络连接"), {
           variant: "error",
         });
       } else {
-        enqueueSnackbar("遇到了未知错误", {
+        enqueueSnackbar(t("遇到了未知错误"), {
           variant: "error",
         });
       }
@@ -136,17 +136,18 @@ const ToolFormikForm: React.FC<ToolFormikFormProps> = ({
               position: "fixed",
               bottom: (theme) => theme.spacing(4),
               right: (theme) => theme.spacing(4),
+              textTransform: 'none',
             }}
             onClick={() => {
               const errKeys = Object.keys(errors);
               const touchedKeys = Object.keys(touched);
               if (touchedKeys.length === 0) {
-                enqueueSnackbar("在提交之前...至少动点什么吧？", {
+                enqueueSnackbar(t("在提交之前...至少动点什么吧？"), {
                   variant: "default",
                 });
               } else if (errKeys.length !== 0) {
                 enqueueSnackbar(
-                  `请检查以下字段：${errKeys.map((e) => t(`input.${e}`))}`,
+                  `${t("请检查以下字段：")}${errKeys.map((e) => t(`input.${e}`))}`,
                   {
                     variant: "error",
                   }
@@ -160,7 +161,7 @@ const ToolFormikForm: React.FC<ToolFormikFormProps> = ({
             ) : (
               <PlayArrow sx={{ mr: 1 }} />
             )}
-            生成并复制
+            <Trans t={t}>生成并复制</Trans>
           </Fab>
         </Form>
       )}

@@ -50,5 +50,6 @@
   "input.params.zero_bar": "零流速小节线",
   "input.params.zero_bar.helper": "默认4.00",
   "error.required": "必填",
-  "error.integer": "需为整数"
+  "error.integer": "需为整数",
+  "error.invalid": "数值不合法"
 }

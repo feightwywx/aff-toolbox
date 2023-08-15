@@ -137,8 +137,8 @@ export const CreaseModeSelect: React.FC<SelectWithHelperProps> = ({ ...props }) 
           {...field}
           {...props}
         >
-          <MenuItem value="m">中线模式</MenuItem>
-          <MenuItem value="b">边线模式</MenuItem>
+          <MenuItem value="m"><Trans t={t}>中线模式</Trans></MenuItem>
+          <MenuItem value="b"><Trans t={t}>边线模式</Trans></MenuItem>
         </Select>
         <FormHelperText>
           {isError

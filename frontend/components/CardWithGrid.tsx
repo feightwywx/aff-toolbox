@@ -6,19 +6,20 @@ import {
   TypographyProps,
 } from "@mui/material";
 import React, { PropsWithChildren } from "react";
-import { Trans } from "next-i18next";
+import { Trans, useTranslation } from "next-i18next";
 
 export const CardWithGrid: React.FC<PropsWithChildren<{ title?: string }>> = ({
   children,
   title,
 }) => {
+  const { t } = useTranslation("tools");
   return (
     <>
       <Card>
         {title && (
           <CardContent sx={{ pb: 0 }}>
             <Typography variant="subtitle2">
-              <Trans>{title}</Trans>
+              <Trans t={t}>{title}</Trans>
             </Typography>
           </CardContent>
         )}
@@ -37,10 +38,11 @@ export const SubtitleTypography: React.FC<TypographyProps> = ({
   children,
   ...props
 }) => {
+  const { t } = useTranslation("tools");
   return (
     <Grid xs={12}>
       <Typography variant="subtitle2" {...props}>
-        <Trans>{children}</Trans>
+        <Trans t={t}>{children}</Trans>
       </Typography>
     </Grid>
   );

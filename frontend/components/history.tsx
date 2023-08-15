@@ -12,7 +12,7 @@ import React from "react";
 import HistoryIcon from "@mui/icons-material/History";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import { ResultHistory } from "@/utils/slices/layout";
-import { useTranslation } from "next-i18next";
+import { Trans, useTranslation } from "next-i18next";
 import { enqueueSnackbar } from "notistack";
 
 export interface HistoryCardProps {
@@ -20,6 +20,7 @@ export interface HistoryCardProps {
 }
 
 export const EmptyHistory: React.FC = () => {
+  const { t } = useTranslation();
   return (
     <Box
       style={{
@@ -32,7 +33,9 @@ export const EmptyHistory: React.FC = () => {
       }}
     >
       <HistoryIcon style={{ fontSize: 100 }} />
-      <Typography variant="h6">试着生成点什么？</Typography>
+      <Typography variant="h6" sx={{ textAlign: "center" }}>
+        <Trans t={t}>人类在神圣的沉默中学会历史。</Trans>
+      </Typography>
     </Box>
   );
 };
@@ -43,7 +46,7 @@ export const HistoryCard: React.FC<HistoryCardProps> = ({ history }) => {
   const copyClickHandler = () => {
     if (navigator.clipboard !== undefined) {
       navigator.clipboard.writeText(history.output);
-      enqueueSnackbar("已复制", {
+      enqueueSnackbar(t("已复制"), {
         variant: "success",
       });
     } else {
@@ -67,7 +70,7 @@ export const HistoryCard: React.FC<HistoryCardProps> = ({ history }) => {
           {t(`tool.${history.tool}.name`)} -{" "}
           {new Date(history.time).toLocaleString()}
         </Typography>
-        <Tooltip title="复制">
+        <Tooltip title={t("复制")}>
           <IconButton
             style={{ marginLeft: "auto" }}
             size="small"

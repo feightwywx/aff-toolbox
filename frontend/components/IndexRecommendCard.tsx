@@ -1,5 +1,6 @@
-import React from 'react';
+import React from "react";
 import { Box, Card, CardActions, CardContent, Typography } from "@mui/material";
+import { useTranslation, Trans } from "next-i18next";
 import { Button } from "./common";
 
 export const IndexRecommendCard: React.FC<{
@@ -7,6 +8,7 @@ export const IndexRecommendCard: React.FC<{
   desc: string;
   href: string;
 }> = ({ title, desc, href }) => {
+  const { t } = useTranslation('index');
   return (
     <Card variant="outlined" sx={{ height: "100%", width: "100%" }}>
       <CardContent>
@@ -17,7 +19,7 @@ export const IndexRecommendCard: React.FC<{
       </CardContent>
       <CardActions>
         <Button href={href} withLocale>
-          尝试一下
+          <Trans t={t}>尝试一下</Trans>
         </Button>
       </CardActions>
     </Card>

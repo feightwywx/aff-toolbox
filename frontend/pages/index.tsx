@@ -1,4 +1,4 @@
-import { useTranslation } from "next-i18next";
+import { useTranslation, Trans } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import * as React from "react";
 import {
@@ -13,6 +13,7 @@ import {
   faBilibili,
   faGithub,
   faTwitter,
+  faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -21,12 +22,19 @@ import { Button, Link } from "@/components/common";
 import { IndexRecommendCard } from "@/components/IndexRecommendCard";
 
 export default function Home() {
+  const { t, i18n } = useTranslation(["index", "common"]);
+  const lang = i18n.language;
+
   return (
     <Box>
       <Stack spacing={2} sx={{ mb: 2 }}>
         <Box>
-          <Typography variant={"h3"}>AFF工具箱</Typography>
-          <Typography variant="h6">一个Arcaea谱面段落生成工具</Typography>
+          <Typography variant={"h3"}>
+            <Trans t={t}>AFF工具箱</Trans>
+          </Typography>
+          <Typography variant="h6">
+            <Trans t={t}>一个Arcaea谱面段落生成工具</Trans>
+          </Typography>
         </Box>
 
         {/* 信息介绍卡片 */}
@@ -34,33 +42,47 @@ export default function Home() {
           <CardContent>
             <Stack spacing={2}>
               <>
-                <Typography variant="h5">这是什么？</Typography>
+                <Typography variant="h5">
+                  <Trans t={t}>这是什么？</Trans>
+                </Typography>
                 <Typography variant="body1">
-                  AFF工具箱是一个用于生成
+                  <Trans t={t}>AFF工具箱是一个用于生成</Trans>
                   <Link href="https://arcaea.lowiro.com/">Arcaea</Link>
-                  谱面段落的工具。 Arcaea是一款由lowiro开发的创新立体节奏游戏。
+                  <Trans t={t}>
+                    谱面段落的工具。
+                    Arcaea是一款由lowiro开发的创新立体节奏游戏。
+                  </Trans>
                 </Typography>
                 <Typography variant="body1">
-                  如果您还不了解Arcaea自制、谱面结构、语句等基础内容，这个工具可能不怎么适合你。
-                </Typography>
-              </>
-              <div />
-              <>
-                <Typography variant="h5">如何使用？</Typography>
-                <Typography variant="body1">
-                  通过左上角的菜单按钮选择您想生成的段落种类。之后只需输入参数，再点击右下角的生成按钮就可以将生成好的谱面段落复制到剪贴板！
+                  <Trans t={t}>
+                    如果您还不了解Arcaea自制、谱面结构、语句等基础内容，这个工具可能不怎么适合你。
+                  </Trans>
                 </Typography>
               </>
               <div />
               <>
-                <Typography variant="h5">有什么推荐的工具吗？</Typography>
+                <Typography variant="h5">
+                  <Trans t={t}>如何使用？</Trans>
+                </Typography>
                 <Typography variant="body1">
-                  这个
+                  <Trans t={t}>
+                    通过左上角的菜单按钮选择您想生成的段落种类。之后只需输入参数，再点击右下角的生成按钮就可以将生成好的谱面段落复制到剪贴板！
+                  </Trans>
+                </Typography>
+              </>
+              <div />
+              <>
+                <Typography variant="h5">
+                  <Trans t={t}>有什么推荐的工具吗？</Trans>
+                </Typography>
+                <Typography variant="body1">
+                  <Trans t={t}>这个</Trans>
                   <Link href="https://www.bilibili.com/video/BV1RR4y1J7sL">
-                    介绍视频
+                    <Trans t={t}>介绍视频</Trans>
                   </Link>
-                  有各个工具的结果预览，
-                  请根据您的需要选用。同时，向您推荐这几个最受欢迎的工具：
+                  <Trans t={t}>
+                    有各个工具的结果预览，请根据您的需要选用。同时，向您推荐这几个最受欢迎的工具：
+                  </Trans>
                 </Typography>
               </>
               <div />
@@ -72,22 +94,22 @@ export default function Home() {
               >
                 <Grid xs={12} sm={6} lg={4}>
                   <IndexRecommendCard
-                    title="Arc分割"
-                    desc="将一条完整的Arc切分成多个更短的Arc"
+                    title={t("tool.arcSplit.name", { ns: "common" })}
+                    desc={t("tool.arcSplit.shortDesc", { ns: "common" })}
                     href="/tools/arc-split"
                   />
                 </Grid>
                 <Grid xs={12} sm={6} lg={4}>
                   <IndexRecommendCard
-                    title="谱面偏移"
-                    desc="将整个谱面或者谱面片段偏移指定时间"
+                    title={t("tool.chartMirror.name", { ns: "common" })}
+                    desc={t("tool.chartMirror.shortDesc", { ns: "common" })}
                     href="/tools/chart-offset"
                   />
                 </Grid>
                 <Grid xs={12} sm={6} lg={4}>
                   <IndexRecommendCard
-                    title="Timing缓动"
-                    desc="利用缓动函数生成一组BPM逐渐变化的Timing"
+                    title={t("tool.timingEasing.name", { ns: "common" })}
+                    desc={t("tool.timingEasing.shortDesc", { ns: "common" })}
                     href="/tools/timing-easing"
                   />
                 </Grid>
@@ -110,15 +132,28 @@ export default function Home() {
                     aff-toolbox
                   </Button>
                 </Grid>
-                <Grid xs="auto">
-                  <Button
-                    variant="outlined"
-                    startIcon={<FontAwesomeIcon icon={faBilibili} />}
-                    href="https://space.bilibili.com/2095080"
-                  >
-                    点儿恐狼
-                  </Button>
-                </Grid>
+
+                {lang === "zh" ? (
+                  <Grid xs="auto">
+                    <Button
+                      variant="outlined"
+                      startIcon={<FontAwesomeIcon icon={faBilibili} />}
+                      href="https://space.bilibili.com/2095080"
+                    >
+                      点儿恐狼
+                    </Button>
+                  </Grid>
+                ) : (
+                  <Grid xs="auto">
+                    <Button
+                      variant="outlined"
+                      startIcon={<FontAwesomeIcon icon={faYoutube} />}
+                      href="https://www.youtube.com/channel/UCj9sf7D2mFK3uZQHOuZFhkg"
+                    >
+                      d0td1wf
+                    </Button>
+                  </Grid>
+                )}
                 <Grid xs="auto">
                   <Button
                     variant="outlined"

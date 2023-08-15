@@ -18,7 +18,7 @@ import MoreIcon from "@mui/icons-material/MoreVert";
 import CloseIcon from "@mui/icons-material/Close";
 import React, { useState } from "react";
 import { useRouter } from "next/router";
-import { useTranslation } from "next-i18next";
+import { Trans, useTranslation } from "next-i18next";
 import { MenuItemSx } from "@/styles/sx";
 import { useAppDispatch, useAppSelector } from "@/utils/hooks";
 import { toggleDrawer } from "@/utils/slices/layout";
@@ -99,6 +99,7 @@ export const ChangeLangButton: React.FC<ButtonProps> = ({ ...props }) => {
 export const HistoryButton: React.FC<ButtonProps> = ({ ...props }) => {
   const [historyDialog, setHistoryDialog] = useState(false);
   const resultHistory = useAppSelector((state) => state.layout.history);
+  const { t } = useTranslation();
 
   return (
     <>
@@ -122,7 +123,9 @@ export const HistoryButton: React.FC<ButtonProps> = ({ ...props }) => {
         maxWidth="lg"
       >
         <Toolbar style={{ paddingLeft: 0, display: "flex" }}>
-          <DialogTitle>历史记录</DialogTitle>
+          <DialogTitle>
+            <Trans t={t}>历史记录</Trans>
+          </DialogTitle>
           <div style={{ flexGrow: 1 }}></div>
           <IconButton onClick={() => setHistoryDialog(false)}>
             <CloseIcon />
@@ -133,7 +136,11 @@ export const HistoryButton: React.FC<ButtonProps> = ({ ...props }) => {
           style={{ height: "80vh", display: "flex", overflow: "scroll" }}
         >
           {resultHistory && resultHistory.length > 0 ? (
-            <Stack style={{ width: "100%", height: 'fit-content'}} direction="column" spacing={1}>
+            <Stack
+              style={{ width: "100%", height: "fit-content" }}
+              direction="column"
+              spacing={1}
+            >
               {resultHistory.map((x, i) => (
                 <HistoryCard history={x} key={i} />
               ))}

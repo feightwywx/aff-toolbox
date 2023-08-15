@@ -15,8 +15,11 @@ import * as Yup from "yup";
 import { ToolStack } from "@/components/ToolStack";
 import { emptyStringToUndef } from "@/utils/helpers";
 import { Divider, Link, Typography } from "@mui/material";
+import { useTranslation, Trans } from "next-i18next";
+import { BezierHint } from "@/components/hints";
 
 const ToolPage: NextPage = () => {
+  const { t } = useTranslation("tools");
   return (
     <ToolStack>
       <ToolTitle />
@@ -87,46 +90,31 @@ const ToolPage: NextPage = () => {
           <SubtitleTypography>可选参数</SubtitleTypography>
           <EasingModeSelect name="params.easing_x" />
           <EasingModeSelect name="params.easing_y" />
-          <SingleLineField>
-            <Typography>
-              下面的参数控制缓动曲线，当缓动类型为“b”时可以提供两个控制点作为参数，进行更精细的控制。
-            </Typography>
-            <Typography>
-              控制点默认值为
-              <span
-                style={{
-                  fontFamily: "monospace",
-                  padding: "0.25em",
-                  display: "inline",
-                }}
-              >
-                0.33,0,0.67,1
-              </span>
-              。
-            </Typography>
-            <Typography>
-              你可以在这个网站了解和调试贝塞尔曲线：
-              <Link href="https://cubic-bezier.com">cubic-bezier.com</Link>
-            </Typography>
-          </SingleLineField>
+          <BezierHint />
           <BezierField name="params.easing_b_point_x" />
           <BezierField name="params.easing_b_point_y" />
           <SingleLineField>
             <Typography>
-              下面的参数用于控制物件与z轴的距离（离玩家方向更远+/更近-）。
+              <Trans t={t}>
+                下面的参数用于控制物件与z轴的距离（离玩家方向更远+/更近-）。
+              </Trans>
             </Typography>
           </SingleLineField>
           <NumberField name="params.offset_t" />
           <SingleLineField>
             <Typography>
-              同时，也可以借此处的设置实现物件在z轴上的平移，填写方式与在x、y轴上的控制参数相仿。
+              <Trans t={t}>
+                同时，也可以借此处的设置实现物件在z轴上的平移，填写方式与在x、y轴上的控制参数相仿。
+              </Trans>
             </Typography>
           </SingleLineField>
           <NumberField name="params.delta_offset_t" />
           <EasingModeSelect name="params.easing_offset_t" />
           <BezierField name="params.easing_b_point_offset_t" />
           <SingleLineField>
-            <Typography>下面是一些个性化的设置。</Typography>
+            <Typography>
+              <Trans t={t}>下面是一些个性化的设置。</Trans>
+            </Typography>
           </SingleLineField>
           <NumberField name="params.infbpm" helperText />
           <NumberField name="params.framerate" helperText />

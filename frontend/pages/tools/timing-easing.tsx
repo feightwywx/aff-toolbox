@@ -14,6 +14,7 @@ import * as Yup from "yup";
 import { ToolStack } from "@/components/ToolStack";
 import { emptyStringToUndef } from "@/utils/helpers";
 import { Link, Typography } from "@mui/material";
+import { BezierHint } from "@/components/hints";
 
 const ToolPage: NextPage = () => {
   return (
@@ -54,28 +55,7 @@ const ToolPage: NextPage = () => {
           <NumberField name="params.count" />
           <SubtitleTypography>可选参数</SubtitleTypography>
           <NumberField name="params.bar" />
-          <SingleLineField>
-            <Typography>
-              下面的参数控制缓动曲线，当缓动类型为“b”时可以提供两个控制点作为参数，进行更精细的控制。
-            </Typography>
-            <Typography>
-              控制点默认值为
-              <span
-                style={{
-                  fontFamily: "monospace",
-                  padding: "0.25em",
-                  display: "inline",
-                }}
-              >
-                0.33,0,0.67,1
-              </span>
-              。
-            </Typography>
-            <Typography>
-              你可以在这个网站了解和调试贝塞尔曲线：
-              <Link href="https://cubic-bezier.com">cubic-bezier.com</Link>
-            </Typography>
-          </SingleLineField>
+          <BezierHint />
           <EasingModeSelect name="params.easing" />
           <BezierField name="params.easing_b_point" />
         </CardWithGrid>

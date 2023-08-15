@@ -18,7 +18,8 @@ function App({ Component, pageProps }: AppProps) {
     // use constant translation keys for messages without values
     mixed: {
       default: 'error.invalid',
-      required: 'error.required'
+      required: 'error.required',
+      notType: 'error.invalid'
     },
     // use functions to generate an error object that includes the value from the schema
     number: {
