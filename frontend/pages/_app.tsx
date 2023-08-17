@@ -8,27 +8,31 @@ import { Provider as ReduxProvider } from "react-redux";
 import store from "@/utils/store";
 import { SnackbarProvider } from "notistack";
 import { setLocale } from "yup";
-import { config } from '@fortawesome/fontawesome-svg-core'
-import '@fortawesome/fontawesome-svg-core/styles.css'
+import { config } from "@fortawesome/fontawesome-svg-core";
+import ReactGA from "react-ga4";
+import "@fortawesome/fontawesome-svg-core/styles.css";
 
-config.autoAddCss = false
+config.autoAddCss = false;
 
 function App({ Component, pageProps }: AppProps) {
   setLocale({
     // use constant translation keys for messages without values
     mixed: {
-      default: 'error.invalid',
-      required: 'error.required',
-      notType: 'error.invalid'
+      default: "error.invalid",
+      required: "error.required",
+      notType: "error.invalid",
     },
     // use functions to generate an error object that includes the value from the schema
     number: {
-      min: ({ min }) => ({ key: 'field_too_short', values: { min } }),
-      max: ({ max }) => ({ key: 'field_too_big', values: { max } }),
-      integer: 'error.integer'
+      min: ({ min }) => ({ key: "field_too_short", values: { min } }),
+      max: ({ max }) => ({ key: "field_too_big", values: { max } }),
+      integer: "error.integer",
     },
   });
-  
+
+  // init Google Analysis
+  ReactGA.initialize("G-SNZN20X39X");
+
   return (
     <>
       <Head>
