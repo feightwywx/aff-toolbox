@@ -1,5 +1,4 @@
 import React from "react";
-import { theme } from "@/utils/theme";
 import {
   Box,
   Collapse,
@@ -8,6 +7,7 @@ import {
   ListItemText,
   Toolbar,
   useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import type { DrawerProps } from "@mui/material";
 import { Drawer as MuiDrawer } from "@mui/material";
@@ -27,6 +27,7 @@ export const drawerWidth = 240;
 const Drawer: React.FC<
   Omit<DrawerProps, "content"> & { content?: never }
 > = () => {
+  const theme = useTheme();
   const desktop = useMediaQuery(theme.breakpoints.up("md"));
   const open = useAppSelector((state) => state.layout.drawerOpen);
   const dispatch = useAppDispatch();

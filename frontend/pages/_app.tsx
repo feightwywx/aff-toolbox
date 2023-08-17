@@ -1,16 +1,18 @@
+import React from 'react';
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import { appWithTranslation } from "next-i18next";
-import { CssBaseline, ThemeProvider } from "@mui/material";
+import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
 import Layout from "../components/Layout";
-import { theme } from "@/utils/theme";
 import { Provider as ReduxProvider } from "react-redux";
 import store from "@/utils/store";
 import { SnackbarProvider } from "notistack";
 import { setLocale } from "yup";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import ReactGA from "react-ga4";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import "@fortawesome/fontawesome-svg-core/styles.css";
+import { getDesignTokens } from '@/utils/theme';
 
 config.autoAddCss = false;
 
@@ -32,6 +34,69 @@ function App({ Component, pageProps }: AppProps) {
 
   // init Google Analysis
   ReactGA.initialize("G-SNZN20X39X");
+
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+  const theme = React.useMemo(
+    () =>
+      createTheme({
+        ...getDesignTokens(prefersDarkMode ? 'dark' : 'light'),
+        components: {
+          MuiPaper: {
+            styleOverrides: {
+              root: {
+                borderRadius: 12,
+                MuiDialog: {
+                  borderRadius: 24,
+                },
+              },
+            },
+          },
+          MuiButton: {
+            styleOverrides: {
+              root: {
+                textTransform: "none",
+                borderRadius: "50vh",
+              },
+            },
+          },
+          MuiFab: {
+            styleOverrides: {
+              root: {
+                borderRadius: "16px",
+                padding: "28px 20px",
+                textTransform: "none",
+              },
+            },
+          },
+          MuiInputBase: {
+            styleOverrides: {
+              root: {
+                '&:focus': {
+                  borderColor: 'red'
+                }
+              }
+            }
+          }
+        },
+        typography: {
+          fontFamily: [
+            '"Exo 2"',
+            '"Noto Sans SC"',
+            "Roboto",
+            "-apple-system",
+            "BlinkMacSystemFont",
+            '"Segoe UI"',
+            '"Helvetica Neue"',
+            "Arial",
+            "sans-serif",
+            '"Apple Color Emoji"',
+            '"Segoe UI Emoji"',
+            '"Segoe UI Symbol"',
+          ].join(","),
+        },
+      }),
+    [prefersDarkMode],
+  );
 
   return (
     <>

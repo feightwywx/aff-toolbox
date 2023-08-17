@@ -7,10 +7,12 @@ import {
   IconButton,
   Toolbar,
   Typography,
+  Theme,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import React from "react";
 import { useRouter } from "next/router";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import {
   ChangeLangButton,
   DrawerButton,
@@ -21,6 +23,7 @@ import {
 const AppBar: React.FC<PropsWithChildren> = ({ children }) => {
   const router = useRouter();
   const { t, i18n } = useTranslation();
+  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
 
   return (
     <MuiAppBar
@@ -28,6 +31,14 @@ const AppBar: React.FC<PropsWithChildren> = ({ children }) => {
       sx={{
         zIndex: (theme) => theme.zIndex.drawer + 1,
         borderRadius: 0,
+        backgroundColor: (theme) =>
+          prefersDarkMode
+            ? theme.palette.primary.light
+            : theme.palette.primary.main,
+        color: (theme) =>
+          prefersDarkMode
+            ? theme.palette.primary.dark
+            : theme.palette.primary.contrastText,
       }}
       elevation={0}
     >
