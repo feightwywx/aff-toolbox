@@ -20,13 +20,26 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import { Button, Link } from "@/components/common";
 import { IndexRecommendCard } from "@/components/IndexRecommendCard";
+import Head from "next/head";
 
 export default function Home() {
   const { t, i18n } = useTranslation(["index", "common"]);
   const lang = i18n.language;
 
   return (
-    <Box>
+    <>
+      <Head>
+        <meta
+          name="description"
+          content={t('desc') ?? ""}
+          key="desc"
+        />
+        <link
+          rel="canonical"
+          href={`https://aff.arcaea.icu/`}
+          key="canonical"
+        />
+      </Head>
       <Stack spacing={2} sx={{ mb: 2 }}>
         <Box>
           <Typography variant={"h3"}>
@@ -177,7 +190,7 @@ export default function Home() {
           </CardContent>
         </Card>
       </Stack>
-    </Box>
+    </>
   );
 }
 

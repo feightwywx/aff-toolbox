@@ -61,13 +61,6 @@ export const toolMetas: ArcToolMetadata[] = [
     path: "/timing-glitch",
     endpoint: "/timing/glitch",
   },
-  {
-    id: "test",
-    // @ts-expect-error Type '""' is not assignable to type 'Category'.
-    category: "",
-    path: "/test",
-    endpoint: "",
-  },
 ];
 
 export default toolMetas;

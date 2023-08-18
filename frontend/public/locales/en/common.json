@@ -1,6 +1,7 @@
 {
     "home": "Home",
     "title": "AFF Toolbox",
+    "desc": "A tool for generating Arcaea Fanmade chart snippets, including Arc cutting, chart offset, Timing easing and more functions.",
     "category.new.name": "New",
     "category.chart.name": "Chart Tools",
     "category.arc.name": "Arc Tools",
