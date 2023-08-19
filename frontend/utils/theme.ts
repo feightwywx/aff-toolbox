@@ -22,7 +22,7 @@ export const getDesignTokens = (mode: PaletteMode) => ({
           },
           text: {
             primary: "rgba(14,7,29,0.83)",
-            secondary: "rgba(14,7,29,0.83)",
+            secondary: "rgba(14,7,29,0.54)",
             disabled: "rgba(14,7,29,0.54)",
           },
           divider: "rgba(124,116,125,0.37)",
@@ -48,7 +48,7 @@ export const getDesignTokens = (mode: PaletteMode) => ({
             paper: "#052141",
           },
           text: {
-            secondary: "rgba(214,227,255,0.83)",
+            secondary: "rgba(214,227,255,0.54)",
             disabled: "rgba(214,227,255,0.54)",
             primary: "rgba(214,227,255,0.83)",
             hint: "rgba(214,227,255,0.38)",
