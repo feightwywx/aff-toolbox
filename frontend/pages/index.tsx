@@ -21,6 +21,8 @@ import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import { Button, Link } from "@/components/common";
 import { IndexRecommendCard } from "@/components/IndexRecommendCard";
 import Head from "next/head";
+import InfoIcon from "@mui/icons-material/Info";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 
 export default function Home() {
   const { t, i18n } = useTranslation(["index", "common"]);
@@ -29,11 +31,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <meta
-          name="description"
-          content={t('desc') ?? ""}
-          key="desc"
-        />
+        <meta name="description" content={t("desc") ?? ""} key="desc" />
         <link
           rel="canonical"
           href={`https://aff.arcaea.icu/`}
@@ -49,7 +47,39 @@ export default function Home() {
             <Trans t={t}>一个Arcaea谱面段落生成工具</Trans>
           </Typography>
         </Box>
-
+        <Card
+          sx={{
+            backgroundColor: (theme) => theme.palette.primary.main,
+            color: (theme) => theme.palette.primary.contrastText,
+          }}
+        >
+          <Box sx={{ p: 2, display: "flex", alignItems: "center" }}>
+            <InfoIcon sx={{ mr: 2, display: { xs: "none", sm: "inherit" } }} />
+            <Typography>
+              <Trans t={t}>您正在使用AFF工具箱的下个主要版本。</Trans>
+            </Typography>
+          </Box>
+          <Box
+            sx={{
+              p: 2,
+              pt: 0,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "right",
+            }}
+          >
+            <Button
+              variant="text"
+              sx={{
+                color: (theme) => theme.palette.primary.contrastText,
+              }}
+              href="https://legacy.aff.arcaea.icu/"
+              startIcon={<OpenInNewIcon />}
+            >
+              <Trans t={t}>返回旧版</Trans>
+            </Button>
+          </Box>
+        </Card>
         {/* 信息介绍卡片 */}
         <Card>
           <CardContent>
@@ -189,6 +219,16 @@ export default function Home() {
             </Stack>
           </CardContent>
         </Card>
+        <Box>
+            <Typography>
+              ©️ 2023 .direwolf. Powered by{" "}
+              <Link href="https://github.com/feightwywx/arcfutil">
+                arcfutil
+              </Link>
+              .
+            </Typography>
+            <Link href="https://beian.miit.gov.cn/">皖ICP备20002195号-2</Link>
+          </Box>
       </Stack>
     </>
   );
