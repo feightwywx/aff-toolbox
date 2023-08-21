@@ -27,11 +27,6 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <>
-      <Head>
-        <title>{t("title")}</title>
-        <meta name="title" content={t("title") ?? ""} />
-      </Head>
-
       <AppBar />
       <Toolbar />
       <LinearProgress

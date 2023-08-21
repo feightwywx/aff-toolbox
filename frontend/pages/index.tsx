@@ -31,7 +31,13 @@ export default function Home() {
   return (
     <>
       <Head>
-        <meta name="description" content={t("desc") ?? ""} key="desc" />
+        <title>{t("title", { ns: "common" })}</title>
+        <meta name="title" content={t("title", { ns: "common" }) ?? ""} />
+        <meta
+          name="description"
+          content={t("desc", { ns: "common" }) ?? ""}
+          key="desc"
+        />
         <link
           rel="canonical"
           href={`https://aff.arcaea.icu/`}
@@ -220,15 +226,12 @@ export default function Home() {
           </CardContent>
         </Card>
         <Box>
-            <Typography>
-              ©️ 2023 .direwolf. Powered by{" "}
-              <Link href="https://github.com/feightwywx/arcfutil">
-                arcfutil
-              </Link>
-              .
-            </Typography>
-            <Link href="https://beian.miit.gov.cn/">皖ICP备20002195号-2</Link>
-          </Box>
+          <Typography>
+            ©️ 2023 .direwolf. Powered by{" "}
+            <Link href="https://github.com/feightwywx/arcfutil">arcfutil</Link>.
+          </Typography>
+          <Link href="https://beian.miit.gov.cn/">皖ICP备20002195号-2</Link>
+        </Box>
       </Stack>
     </>
   );

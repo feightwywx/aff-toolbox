@@ -12,13 +12,16 @@ export const ToolStack: React.FC<StackProps> = ({ children, ...props }) => {
   const pathname = `/${router.asPath.split("/").slice(-1)}`;
   const meta = toolMetas.find((tool) => tool.path === pathname);
 
+  const pageTitle = [t(`tool.${meta?.id}.name`), " - ", t("title")].join("");
+
   return (
     <>
       <Head>
-        <title>{t(`tool.${meta?.id}.name - ${'title'}`)}</title>
+        <title>{pageTitle}</title>
+        <meta name="title" content={pageTitle} />
         <meta
           name="description"
-          content={t(`tool.${meta?.id}.shortDesc`) ?? ''}
+          content={t(`tool.${meta?.id}.shortDesc`) ?? ""}
           key="desc"
         />
         <link
