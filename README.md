@@ -177,7 +177,6 @@ const ToolPage: NextPage = () => {
           {/* Optional params, i18n will be processed inside */}
           <SubtitleTypography>可选参数</SubtitleTypography>
           <NumberField name="params.optionalNum" />
-          <NumberField name="params.stop" />
         </CardWithGrid>
       </ToolFormikForm>
     </ToolStack>
@@ -264,7 +263,7 @@ Due to there is not any aff processing dependency in frontend environment, this 
 
 2. import the function in tool page.
 
-3. set `localHandler` attribute with your function to `<ToolFormikForm>`.
+3. set `processorOverride` attribute with your function to `<ToolFormikForm>`.
 
 ## Deployment
 

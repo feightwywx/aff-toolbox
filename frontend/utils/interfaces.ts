@@ -32,4 +32,5 @@ export enum StatusCode {
   UNKNOWN_ERR = -1,
   REQUEST_VALIDATION_ERR = 100,
   NOTE_PARSE_ERR = 101,
+  NETWORK_ERR = 200,
 }
