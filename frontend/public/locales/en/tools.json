@@ -73,5 +73,13 @@
   "验证错误，请检查填写的数据格式": "Validation error, please check the format of the filled data.",
   "请检查网络连接": "Network error, please check your network connection.",
   "在提交之前...至少动点什么吧？": "Just input something. It's not that difficult.",
-  "请检查以下字段：": "Check the following sections: "
+  "请检查以下字段：": "Check the following sections: ",
+  "input.params.start_x": "x-coordinate starting point",
+  "input.params.stop_x": "x-coordinate endpoint",
+  "input.params.start_y": "y-coordinate starting point",
+  "input.params.stop_y": "y-coordinate endpoint",
+  "input.params.fx": "FX",
+  "input.params.arctap": "Arc taps",
+  "input.params.arctap.helper": "Arc tap timings, separate by comma\",\"",
+  "input.params.skyline": "Skyline"
 }

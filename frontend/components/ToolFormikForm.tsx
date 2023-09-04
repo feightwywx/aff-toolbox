@@ -19,6 +19,7 @@ interface ToolFormikFormProps extends React.PropsWithChildren {
   processorOverride?: DataProcessor;
   successCallbackOverride?: FormCallback;
   disablePreprocess?: boolean;
+  disableSubmitFab?: boolean;
 }
 
 const ToolFormikForm: React.FC<ToolFormikFormProps> = ({
@@ -28,6 +29,7 @@ const ToolFormikForm: React.FC<ToolFormikFormProps> = ({
   processorOverride,
   successCallbackOverride,
   disablePreprocess,
+  disableSubmitFab,
 }) => {
   const router = useRouter();
   const { t } = useTranslation("tools");
@@ -98,7 +100,10 @@ const ToolFormikForm: React.FC<ToolFormikFormProps> = ({
     }
   };
 
-  const pageToolCallback: FormCallback = async (input: Object, result: ArcToolResult) => {
+  const pageToolCallback: FormCallback = async (
+    input: Object,
+    result: ArcToolResult
+  ) => {
     writeHistoryAndCopy({
       tool: meta?.id ?? "unknown",
       time: Date.now(),
@@ -172,45 +177,46 @@ const ToolFormikForm: React.FC<ToolFormikFormProps> = ({
           <Stack spacing={2} sx={{ mb: 2 }}>
             {children}
           </Stack>
-
-          <Fab
-            variant="extended"
-            type="submit"
-            color="secondary"
-            sx={{
-              boxShadow: 2,
-              position: "fixed",
-              bottom: (theme) => theme.spacing(4),
-              right: (theme) => theme.spacing(4),
-              textTransform: "none",
-            }}
-            onClick={() => {
-              const errKeys = Object.keys(errors);
-              const touchedKeys = Object.keys(touched);
-              if (touchedKeys.length === 0) {
-                enqueueSnackbar(t("在提交之前...至少动点什么吧？"), {
-                  variant: "default",
-                });
-              } else if (errKeys.length !== 0) {
-                enqueueSnackbar(
-                  `${t("请检查以下字段：")}${errKeys.map((e) =>
-                    t(`input.${e}`)
-                  )}`,
-                  {
-                    variant: "error",
-                  }
-                );
-              }
-            }}
-            disabled={isSubmitting}
-          >
-            {isSubmitting ? (
-              <CircularProgress color="inherit" size={20} sx={{ mr: 1.5 }} />
-            ) : (
-              <PlayArrow sx={{ mr: 1 }} />
-            )}
-            <Trans t={t}>生成并复制</Trans>
-          </Fab>
+          {!disableSubmitFab && (
+            <Fab
+              variant="extended"
+              type="submit"
+              color="secondary"
+              sx={{
+                boxShadow: 2,
+                position: "fixed",
+                bottom: (theme) => theme.spacing(4),
+                right: (theme) => theme.spacing(4),
+                textTransform: "none",
+              }}
+              onClick={() => {
+                const errKeys = Object.keys(errors);
+                const touchedKeys = Object.keys(touched);
+                if (touchedKeys.length === 0) {
+                  enqueueSnackbar(t("在提交之前...至少动点什么吧？"), {
+                    variant: "default",
+                  });
+                } else if (errKeys.length !== 0) {
+                  enqueueSnackbar(
+                    `${t("请检查以下字段：")}${errKeys.map((e) =>
+                      t(`input.${e}`)
+                    )}`,
+                    {
+                      variant: "error",
+                    }
+                  );
+                }
+              }}
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? (
+                <CircularProgress color="inherit" size={20} sx={{ mr: 1.5 }} />
+              ) : (
+                <PlayArrow sx={{ mr: 1 }} />
+              )}
+              <Trans t={t}>生成并复制</Trans>
+            </Fab>
+          )}
         </Form>
       )}
     </Formik>

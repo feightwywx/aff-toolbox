@@ -25,7 +25,6 @@ export const layoutSlice = createSlice({
       state.drawerOpen = !state.drawerOpen;
     },
     appendHistory: (state, action: PayloadAction<ResultHistory>) => {
-      console.log('append history', action.payload)
       state.history.unshift(action.payload);
     },
   },

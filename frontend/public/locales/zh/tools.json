@@ -51,5 +51,14 @@
   "input.params.zero_bar.helper": "默认4.00",
   "error.required": "必填",
   "error.integer": "需为整数",
-  "error.invalid": "数值不合法"
+  "error.invalid": "数值不合法",
+  "input.params.start_x": "起始x坐标",
+  "input.params.stop_x": "终止x坐标",
+  "input.params.start_y": "起始y坐标",
+  "input.params.stop_y": "终止y坐标",
+  "input.params.fx": "FX",
+  "input.params.arctap": "天键",
+  "input.params.arctap.helper": "天键时间点，用半角括号“,”隔开",
+  "input.params.skyline": "引导线"
+
 }

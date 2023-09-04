@@ -1,21 +1,54 @@
 import { Trans, useTranslation } from "next-i18next";
 
-import React, { PropsWithChildren } from "react";
+import React, { PropsWithChildren, useState } from "react";
 import {
+  Box,
+  Button,
+  Checkbox,
+  CheckboxProps,
+  Dialog,
   FormControl,
+  FormControlLabel,
+  FormGroup,
   FormHelperText,
   Unstable_Grid2 as Grid,
+  IconButton,
+  InputAdornment,
   InputLabel,
   MenuItem,
+  OutlinedInput,
   Select,
   SelectProps,
   TextField,
   TextFieldProps,
+  Unstable_Grid2,
 } from "@mui/material";
-import { useField } from "formik";
+import AddBoxIcon from "@mui/icons-material/AddBox";
+import { FieldHelperProps, Form, Formik, useField } from "formik";
+import * as Yup from "yup";
+import ToolFormikForm from "./ToolFormikForm";
+import { StatusCode } from "@/utils/interfaces";
+import { SubtitleTypography } from "./CardWithGrid";
 
 interface SelectWithHelperProps extends SelectProps {
   helperText?: boolean;
+}
+
+interface InputAdornmentButtonProps {
+  fieldHelpers: FieldHelperProps<string>;
+}
+
+interface CreateArcParams {
+  start: string;
+  stop: string;
+  start_x: string;
+  stop_x: string;
+  easing: string;
+  start_y: string;
+  stop_y: string;
+  skyline: boolean;
+  fx: string;
+  arctap: string;
 }
 
 export const AffTextField: React.FC<TextFieldProps> = ({ ...props }) => {
@@ -67,6 +100,62 @@ export const NumberField: React.FC<TextFieldProps> = ({ ...props }) => {
   );
 };
 
+export const AnyTextField: React.FC<
+  TextFieldProps & { singleLine?: boolean }
+> = ({ singleLine, ...props }) => {
+  const [field, meta] = useField(props as { name: any });
+  const { t } = useTranslation("tools");
+
+  let isError = Boolean(meta.touched && meta.error);
+
+  return (
+    <Grid
+      xs={12}
+      sm={!singleLine ? 6 : undefined}
+      md={!singleLine ? 4 : undefined}
+    >
+      <TextField
+        {...field}
+        {...props}
+        fullWidth
+        label={t(`input.${props.name}`)}
+        helperText={
+          isError
+            ? t(meta.error!)
+            : props.helperText
+            ? t(`input.${props.name}.helper`)
+            : undefined
+        }
+        error={isError}
+      />
+    </Grid>
+  );
+};
+
+export const CheckBoxField: React.FC<
+  CheckboxProps & { singleLine?: boolean }
+> = ({ singleLine, ...props }) => {
+  const [field, meta] = useField(props as { name: any });
+  const { t } = useTranslation("tools");
+
+  let isError = Boolean(meta.touched && meta.error);
+
+  return (
+    <Grid
+      xs={12}
+      sm={!singleLine ? 6 : undefined}
+      md={!singleLine ? 4 : undefined}
+    >
+      <FormGroup>
+        <FormControlLabel
+          control={<Checkbox {...field} {...props} />}
+          label={t(`input.${props.name}`)}
+        />
+      </FormGroup>
+    </Grid>
+  );
+};
+
 export const BezierField: React.FC<TextFieldProps> = ({ ...props }) => {
   const [field, meta] = useField(props as { name: any });
   const { t } = useTranslation("tools");
@@ -94,32 +183,40 @@ export const BezierField: React.FC<TextFieldProps> = ({ ...props }) => {
 };
 
 export const ArcField: React.FC<TextFieldProps> = ({ ...props }) => {
-  const [field, meta] = useField(props as { name: any });
+  const [field, meta, helpers] = useField(props as { name: any });
   const { t } = useTranslation("tools");
 
   let isError = Boolean(meta.touched && meta.error);
 
   return (
     <Grid xs={12}>
-      <TextField
-        {...field}
-        {...props}
-        fullWidth
-        label={t(`input.${props.name}`)}
-        helperText={
-          isError
+      <FormControl fullWidth variant="outlined" error={isError}>
+        <InputLabel>{t(`input.${props.name}`)}</InputLabel>
+        <OutlinedInput
+          label={t(`input.${props.name}`)}
+          fullWidth
+          endAdornment={
+            <InputAdornment position="end">
+              <CreateArcButton fieldHelpers={helpers} />
+            </InputAdornment>
+          }
+          {...field}
+        />
+        <FormHelperText>
+          {isError
             ? t(meta.error!)
             : props.helperText
             ? t(`input.${props.name}.helper`)
-            : undefined
-        }
-        error={isError}
-      />
+            : undefined}
+        </FormHelperText>
+      </FormControl>
     </Grid>
   );
 };
 
-export const CreaseModeSelect: React.FC<SelectWithHelperProps> = ({ ...props }) => {
+export const CreaseModeSelect: React.FC<SelectWithHelperProps> = ({
+  ...props
+}) => {
   const [field, meta] = useField(props as { name: any });
   const { t } = useTranslation("tools");
 
@@ -137,8 +234,12 @@ export const CreaseModeSelect: React.FC<SelectWithHelperProps> = ({ ...props }) 
           {...field}
           {...props}
         >
-          <MenuItem value="m"><Trans t={t}>中线模式</Trans></MenuItem>
-          <MenuItem value="b"><Trans t={t}>边线模式</Trans></MenuItem>
+          <MenuItem value="m">
+            <Trans t={t}>中线模式</Trans>
+          </MenuItem>
+          <MenuItem value="b">
+            <Trans t={t}>边线模式</Trans>
+          </MenuItem>
         </Select>
         <FormHelperText>
           {isError
@@ -152,7 +253,9 @@ export const CreaseModeSelect: React.FC<SelectWithHelperProps> = ({ ...props }) 
   );
 };
 
-export const ArcEasingModeSelect: React.FC<SelectWithHelperProps> = ({ ...props }) => {
+export const ArcEasingModeSelect: React.FC<SelectWithHelperProps> = ({
+  ...props
+}) => {
   const [field, meta] = useField(props as { name: any });
   const { t } = useTranslation("tools");
 
@@ -191,7 +294,9 @@ export const ArcEasingModeSelect: React.FC<SelectWithHelperProps> = ({ ...props 
   );
 };
 
-export const EasingModeSelect: React.FC<SelectWithHelperProps> = ({ ...props }) => {
+export const EasingModeSelect: React.FC<SelectWithHelperProps> = ({
+  ...props
+}) => {
   const [field, meta] = useField(props as { name: any });
   const { t } = useTranslation("tools");
 
@@ -231,4 +336,117 @@ export const SingleLineField: React.FC<PropsWithChildren> = ({
   ...props
 }) => {
   return <Grid xs={12}>{children}</Grid>;
+};
+
+export const CreateArcButton: React.FC<InputAdornmentButtonProps> = ({
+  fieldHelpers,
+}) => {
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <IconButton
+        onClick={async () => {
+          setOpen(true);
+        }}
+      >
+        <AddBoxIcon />
+      </IconButton>
+      <Dialog
+        open={open}
+        onClose={() => {
+          setOpen(false);
+        }}
+        fullWidth
+        maxWidth="lg"
+      >
+        <Box sx={{ m: 2, mb: 0 }}>
+          <ToolFormikForm
+            initValues={{
+              params: {
+                start: "",
+                stop: "",
+                start_x: "",
+                stop_x: "",
+                easing: "s",
+                start_y: "",
+                stop_y: "",
+                skyline: false,
+                fx: "",
+                arctap: "",
+              },
+            }}
+            validationSchema={{
+              params: Yup.object().shape({
+                start: Yup.number().integer().required(),
+                stop: Yup.number().integer().required(),
+                start_x: Yup.number().required(),
+                stop_x: Yup.number().required(),
+                easing: Yup.string().required(),
+                start_y: Yup.number().required(),
+                stop_y: Yup.number().required(),
+                skyline: Yup.boolean(),
+                fx: Yup.string().nullable(),
+                arctap: Yup.string().nullable(),
+              }),
+            }}
+            //@ts-expect-error
+            processorOverride={async (values: { params: CreateArcParams }) => {
+              const vals = {
+                ...values.params,
+                start: parseInt(values.params.start),
+                stop: parseInt(values.params.stop),
+                start_x: parseFloat(values.params.start_x),
+                stop_x: parseFloat(values.params.stop_x),
+                start_y: parseFloat(values.params.start_y),
+                stop_y: parseFloat(values.params.stop_y),
+              };
+              const arctaps = vals.arctap.split(",");
+              let arctapString = arctaps
+                .map((str) => `arctap(${str})`)
+                .join(",");
+              if (arctapString !== "arctap()") {
+                arctapString = `[${arctapString}]`;
+              } else {
+                arctapString = "";
+              }
+
+              return {
+                code: StatusCode.SUCCESS,
+                result: `arc(${vals.start.toFixed(0)},${vals.stop.toFixed(
+                  0
+                )},${vals.start_x.toFixed(2)},${vals.stop_x.toFixed(2)},${
+                  vals.easing
+                },${vals.start_y.toFixed(2)},${vals.stop_y.toFixed(2)},${
+                  vals.fx ? vals.fx : "none"
+                },${vals.skyline ? "true" : "false"})${arctapString};`,
+              };
+            }}
+            successCallbackOverride={async (_, result) => {
+              if (result.code == StatusCode.SUCCESS) {
+                fieldHelpers.setValue(result.result);
+                setOpen(false);
+              }
+            }}
+            disableSubmitFab
+          >
+            <Unstable_Grid2 container spacing={2}>
+              <SubtitleTypography>参数</SubtitleTypography>
+              <NumberField name="params.start" />
+              <NumberField name="params.stop" />
+              <NumberField name="params.start_x" />
+              <NumberField name="params.stop_x" />
+              <ArcEasingModeSelect name="params.easing" />
+              <NumberField name="params.start_y" />
+              <NumberField name="params.stop_y" />
+              <SubtitleTypography>可选参数</SubtitleTypography>
+              <AnyTextField name="params.fx" />
+              <AnyTextField name="params.arctap" singleLine helperText />
+              <CheckBoxField name="params.skyline" singleLine />
+            </Unstable_Grid2>
+            <Button type="submit">提交并填充</Button>
+          </ToolFormikForm>
+        </Box>
+      </Dialog>
+    </>
+  );
 };
