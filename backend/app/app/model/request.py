@@ -138,7 +138,7 @@ class TimingEasingParams(StartStopCommonBody, CountCommonBody):
     start_bpm: float
     stop_bpm: float
     bar: float = 4.00
-    easing: Literal["s", "b", "si", "so"] = "s"
+    easing: str = "s"
     easing_b_point: list[float] = [1 / 3, 0, 2 / 3, 1]
 
     @validator("easing_b_point")

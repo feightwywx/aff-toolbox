@@ -26,6 +26,14 @@ async def arc_converter(arc: str = Body()) -> a.Arc:
         raise appexc.NotAnArcError(obj)
 
 
+async def arc_tap_hold_converter(arc: str = Body()) -> a.Arc | a.Tap | a.Hold:
+    obj = a.loadline(arc)
+    if isinstance(obj, a.Arc) or isinstance(obj, a.Tap) or isinstance(obj, a.Hold):
+        return obj
+    else:
+        raise appexc.NotAnArcError(obj)
+
+
 async def timings_converter(timings: str = Body()) -> a.NoteGroup:
     obj = a.load(timings)
     return a.NoteGroup(filter(lambda note: isinstance(note, a.Timing), obj))
@@ -91,7 +99,7 @@ def arc_rain(params: ArcRainParams = Body(embed=True)) -> CommonResponse[str]:
 
 @arc_router.post("/animate")
 def arc_animate(
-    arc: a.Arc = Depends(arc_converter),
+    arc: a.Arc | a.Tap | a.Hold = Depends(arc_tap_hold_converter),
     params: ArcAnimateParams = Body(),
 ) -> CommonResponse[str]:
     easing_x = get_easing_func(

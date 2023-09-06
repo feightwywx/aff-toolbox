@@ -15,6 +15,7 @@ import {
   IconButton,
   InputAdornment,
   InputLabel,
+  ListSubheader,
   MenuItem,
   OutlinedInput,
   Select,
@@ -331,10 +332,42 @@ export const EasingModeSelect: React.FC<SelectWithHelperProps> = ({
           {...field}
           {...props}
         >
+          <ListSubheader>Arcaea</ListSubheader>
           <MenuItem value="s">s</MenuItem>
           <MenuItem value="b">b</MenuItem>
           <MenuItem value="si">si</MenuItem>
           <MenuItem value="so">so</MenuItem>
+          <ListSubheader><Trans t={t}>select.extend</Trans></ListSubheader>
+          <MenuItem value="ease_in_sine">easeInSine</MenuItem>
+          <MenuItem value="ease_out_sine">easeOutSine</MenuItem>
+          <MenuItem value="ease_in_out_sine">easeInOutSine</MenuItem>
+          <MenuItem value="ease_in_quad">easeInQuad</MenuItem>
+          <MenuItem value="ease_out_quad">easeOutQuad</MenuItem>
+          <MenuItem value="ease_in_out_quad">easeInOutQuad</MenuItem>
+          <MenuItem value="ease_in_cubic">easeInCubic</MenuItem>
+          <MenuItem value="ease_out_cubic">easeOutCubic</MenuItem>
+          <MenuItem value="ease_in_out_cubic">easeInOutCubic</MenuItem>
+          <MenuItem value="ease_in_quart">easeInQuart</MenuItem>
+          <MenuItem value="ease_out_quart">easeOutQuart</MenuItem>
+          <MenuItem value="ease_in_out_quart">easeInOutQuart</MenuItem>
+          <MenuItem value="ease_in_quint">easeInQuint</MenuItem>
+          <MenuItem value="ease_out_quint">easeOutQuint</MenuItem>
+          <MenuItem value="ease_in_out_quint">easeInOutQuint</MenuItem>
+          <MenuItem value="ease_in_expo">easeInExpo</MenuItem>
+          <MenuItem value="ease_out_expo">easeOutExpo</MenuItem>
+          <MenuItem value="ease_in_out_expo">easeInOutExpo</MenuItem>
+          <MenuItem value="ease_in_circ">easeInCirc</MenuItem>
+          <MenuItem value="ease_out_circ">easeOutCirc</MenuItem>
+          <MenuItem value="ease_in_out_circ">easeInOutCirc</MenuItem>
+          <MenuItem value="ease_in_back">easeInBack</MenuItem>
+          <MenuItem value="ease_out_back">easeOutBack</MenuItem>
+          <MenuItem value="ease_in_out_back">easeInOutBack</MenuItem>
+          <MenuItem value="ease_in_elastic">easeInElastic</MenuItem>
+          <MenuItem value="ease_out_elastic">easeOutElastic</MenuItem>
+          <MenuItem value="ease_in_out_elastic">easeInOutElastic</MenuItem>
+          <MenuItem value="ease_in_bounce">easeInCirc</MenuItem>
+          <MenuItem value="ease_out_bounce">easeOutCirc</MenuItem>
+          <MenuItem value="ease_in_out_bounce">easeInOutCirc</MenuItem>
         </Select>
         <FormHelperText>
           {isError

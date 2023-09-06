@@ -29,6 +29,12 @@ export const BezierHint: React.FC = () => {
         <Trans t={t}>你可以在这个网站了解和调试贝塞尔曲线：</Trans>
         <Link href="https://cubic-bezier.com">cubic-bezier.com</Link>
       </Typography>
+      <Typography>
+        <Trans t={t}>
+          除了Arcaea自带的缓动类型之外，AFF工具箱还预置了大量常用的缓动类型，你可以在这个网站预览：
+        </Trans>
+        <Link href="https://easings.net">easings.net</Link>
+      </Typography>
     </SingleLineField>
   );
 };

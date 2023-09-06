@@ -6,6 +6,7 @@ from app.model.request import (
 from app.utils.response import make_success_resp
 from fastapi import APIRouter, Body
 from arcfutil import aff as a
+from arcfutil.aff.easing import get_easing_func
 
 
 timing_router = APIRouter(
@@ -24,8 +25,7 @@ async def timing_easing(params: TimingEasingParams = Body(embed=True)) -> Common
             params.stop_bpm,
             params.count,
             bar=params.bar,
-            mode=params.easing,
-            b_point=params.easing_b_point,
+            mode=get_easing_func(params.easing, params.easing_b_point),
         ).__str__()
     )
 

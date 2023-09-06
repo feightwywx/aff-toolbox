@@ -23,6 +23,7 @@ const ToolPage: NextPage = () => {
   return (
     <ToolStack>
       <ToolTitle />
+      <Trans t={t}>也可以用于地面物件的移动，这时x轴为轨道</Trans>
 
       <ToolFormikForm
         initValues={{
@@ -88,9 +89,9 @@ const ToolPage: NextPage = () => {
           <NumberField name="params.delta_y" helperText />
           <NumberField name="params.basebpm" />
           <SubtitleTypography>可选参数</SubtitleTypography>
+          <BezierHint />
           <EasingModeSelect name="params.easing_x" />
           <EasingModeSelect name="params.easing_y" />
-          <BezierHint />
           <BezierField name="params.easing_b_point_x" />
           <BezierField name="params.easing_b_point_y" />
           <SingleLineField>

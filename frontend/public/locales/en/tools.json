@@ -88,5 +88,8 @@
   "submit.fill": "Fill",
   "select.blue": "Blue",
   "select.red": "Red",
-  "select.green": "Green"
+  "select.green": "Green",
+  "select.extend": "Extend",
+  "除了Arcaea自带的缓动类型之外，AFF工具箱还预置了大量常用的缓动类型，你可以在这个网站预览：": "In addition to the easing types that come with Arcaea, the AFF Toolbox comes with a large number of commonly used easing types pre-built, which you can preview at this site: ",
+  "也可以用于地面物件的移动，这时x轴为轨道": "It can also be used to move objects on the ground, in which case the lane is considered as the x-axis."
 }
