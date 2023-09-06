@@ -46,6 +46,7 @@ interface CreateArcParams {
   easing: string;
   start_y: string;
   stop_y: string;
+  color: number;
   skyline: boolean;
   fx: string;
   arctap: string;
@@ -347,6 +348,48 @@ export const EasingModeSelect: React.FC<SelectWithHelperProps> = ({
   );
 };
 
+export const ArcColorSelect: React.FC<SelectWithHelperProps> = ({
+  ...props
+}) => {
+  const [field, meta] = useField(props as { name: any });
+  const { t } = useTranslation("tools");
+
+  let isError = Boolean(meta.touched && meta.error);
+
+  return (
+    <Grid xs={12} sm={6} md={4}>
+      <FormControl fullWidth>
+        <InputLabel>{t(`input.${props.name}`)}</InputLabel>
+        {/* @ts-ignore */}
+        <Select
+          fullWidth
+          label={t(`input.${props.name}`)}
+          error={isError}
+          {...field}
+          {...props}
+        >
+          <MenuItem value="0">
+            <Trans t={t}>select.blue</Trans>
+          </MenuItem>
+          <MenuItem value="1">
+            <Trans t={t}>select.red</Trans>
+          </MenuItem>
+          <MenuItem value="2">
+            <Trans t={t}>select.green</Trans>
+          </MenuItem>
+        </Select>
+        <FormHelperText>
+          {isError
+            ? t(meta.error!)
+            : props.helperText
+            ? t(`input.${props.name}.helper`)
+            : undefined}
+        </FormHelperText>
+      </FormControl>
+    </Grid>
+  );
+};
+
 export const SingleLineField: React.FC<PropsWithChildren> = ({
   children,
   ...props
@@ -389,6 +432,7 @@ export const CreateArcButton: React.FC<InputAdornmentButtonProps> = ({
                 easing: "s",
                 start_y: "",
                 stop_y: "",
+                color: 0,
                 skyline: false,
                 fx: "",
                 arctap: "",
@@ -403,6 +447,7 @@ export const CreateArcButton: React.FC<InputAdornmentButtonProps> = ({
                 easing: Yup.string().required(),
                 start_y: Yup.number().required(),
                 stop_y: Yup.number().required(),
+                color: Yup.number().required(),
                 skyline: Yup.boolean(),
                 fx: Yup.string().nullable(),
                 arctap: Yup.string().nullable(),
@@ -436,8 +481,10 @@ export const CreateArcButton: React.FC<InputAdornmentButtonProps> = ({
                 )},${vals.start_x.toFixed(2)},${vals.stop_x.toFixed(2)},${
                   vals.easing
                 },${vals.start_y.toFixed(2)},${vals.stop_y.toFixed(2)},${
-                  vals.fx ? vals.fx : "none"
-                },${vals.skyline ? "true" : "false"})${arctapString};`,
+                  vals.color
+                },${vals.fx ? vals.fx : "none"},${
+                  vals.skyline ? "true" : "false"
+                })${arctapString};`,
               };
             }}
             successCallbackOverride={async (_, result) => {
@@ -457,12 +504,15 @@ export const CreateArcButton: React.FC<InputAdornmentButtonProps> = ({
               <ArcEasingModeSelect name="params.easing" />
               <NumberField name="params.start_y" />
               <NumberField name="params.stop_y" />
+              <ArcColorSelect name="params.color" />
               <SubtitleTypography>可选参数</SubtitleTypography>
               <AnyTextField name="params.fx" />
               <AnyTextField name="params.arctap" singleLine helperText />
               <CheckBoxField name="params.skyline" singleLine />
             </Unstable_Grid2>
-            <Button type="submit"><Trans t={t}>submit.fill</Trans></Button>
+            <Button type="submit">
+              <Trans t={t}>submit.fill</Trans>
+            </Button>
           </ToolFormikForm>
         </Box>
       </Dialog>
@@ -542,7 +592,9 @@ export const CalcTimingButton: React.FC<InputAdornmentButtonProps> = ({
               <NumberField name="params.division" />
               <NumberField name="params.offset" />
             </Unstable_Grid2>
-            <Button type="submit"><Trans t={t}>submit.fill</Trans></Button>
+            <Button type="submit">
+              <Trans t={t}>submit.fill</Trans>
+            </Button>
           </ToolFormikForm>
         </Box>
       </Dialog>

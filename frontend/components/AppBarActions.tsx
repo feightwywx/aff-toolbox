@@ -53,7 +53,11 @@ export const ChangeLangButton: React.FC<ButtonProps> = ({ ...props }) => {
   const handleMenuClose = (event: React.SyntheticEvent<HTMLElement>) => {
     const { pathname, asPath, query } = router;
     // @ts-expect-error Property 'id' does not exist on type 'EventTarget'.
-    router.push({ pathname, query }, asPath, { locale: event.target.id });
+    if (event.target.id) {
+      // @ts-expect-error Property 'id' does not exist on type 'EventTarget'.
+      router.push({ pathname, query }, asPath, { locale: event.target.id });
+    }
+    
     setAnchorEl(null);
   };
 

@@ -83,6 +83,10 @@
   "input.params.arctap.helper": "Arc tap timings, separate by comma\",\"",
   "input.params.skyline": "Skyline",
   "input.params.division": "Consonant",
+  "input.params.color": "Color",
   "error.fraction": "Fraction required, e.g. 1/4",
-  "submit.fill": "Fill"
+  "submit.fill": "Fill",
+  "select.blue": "Blue",
+  "select.red": "Red",
+  "select.green": "Green"
 }

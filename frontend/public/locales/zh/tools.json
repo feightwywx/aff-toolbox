@@ -61,6 +61,10 @@
   "input.params.arctap.helper": "天键时间点，用半角括号“,”隔开",
   "input.params.skyline": "引导线",
   "input.params.division": "分音",
+  "input.params.color": "颜色",
   "error.fraction": "需为分数，如1/4",
-  "submit.fill": "填充"
+  "submit.fill": "填充",
+  "select.blue": "蓝",
+  "select.red": "红",
+  "select.green": "绿"
 }
