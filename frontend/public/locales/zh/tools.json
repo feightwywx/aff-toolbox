@@ -59,6 +59,8 @@
   "input.params.fx": "FX",
   "input.params.arctap": "天键",
   "input.params.arctap.helper": "天键时间点，用半角括号“,”隔开",
-  "input.params.skyline": "引导线"
-
+  "input.params.skyline": "引导线",
+  "input.params.division": "分音",
+  "error.fraction": "需为分数，如1/4",
+  "submit.fill": "填充"
 }

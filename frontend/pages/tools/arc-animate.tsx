@@ -82,8 +82,8 @@ const ToolPage: NextPage = () => {
         </CardWithGrid>
 
         <CardWithGrid title="参数">
-          <NumberField name="params.start" />
-          <NumberField name="params.stop" />
+          <NumberField name="params.start" withTimingCalc />
+          <NumberField name="params.stop" withTimingCalc />
           <NumberField name="params.delta_x" helperText />
           <NumberField name="params.delta_y" helperText />
           <NumberField name="params.basebpm" />
@@ -100,7 +100,7 @@ const ToolPage: NextPage = () => {
               </Trans>
             </Typography>
           </SingleLineField>
-          <NumberField name="params.offset_t" />
+          <NumberField name="params.offset_t" withTimingCalc />
           <SingleLineField>
             <Typography>
               <Trans t={t}>
@@ -108,7 +108,7 @@ const ToolPage: NextPage = () => {
               </Trans>
             </Typography>
           </SingleLineField>
-          <NumberField name="params.delta_offset_t" />
+          <NumberField name="params.delta_offset_t" withTimingCalc />
           <EasingModeSelect name="params.easing_offset_t" />
           <BezierField name="params.easing_b_point_offset_t" />
           <SingleLineField>

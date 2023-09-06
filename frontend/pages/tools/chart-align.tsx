@@ -43,7 +43,7 @@ const ToolPage: NextPage = () => {
 
         <CardWithGrid title="参数">
           <NumberField name="params.bpm" helperText />
-          <NumberField name="params.error" />
+          <NumberField name="params.error" withTimingCalc />
           <SubtitleTypography>可选参数</SubtitleTypography>
           <NumberField name="params.lcd" helperText />
         </CardWithGrid>

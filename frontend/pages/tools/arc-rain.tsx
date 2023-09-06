@@ -28,11 +28,11 @@ const ToolPage: NextPage = () => {
         }}
       >
         <CardWithGrid title="参数">
-          <NumberField name="params.start" />
-          <NumberField name="params.stop" />
-          <NumberField name="params.step" />
+          <NumberField name="params.start" withTimingCalc />
+          <NumberField name="params.stop" withTimingCalc />
+          <NumberField name="params.step" withTimingCalc />
           <SubtitleTypography>可选参数</SubtitleTypography>
-          <NumberField name="params.dropLength" helperText />
+          <NumberField name="params.dropLength" helperText withTimingCalc />
         </CardWithGrid>
       </ToolFormikForm>
     </ToolStack>

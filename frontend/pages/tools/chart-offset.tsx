@@ -26,7 +26,7 @@ const ToolPage: NextPage = () => {
         </CardWithGrid>
 
         <CardWithGrid title="参数">
-          <NumberField name="params.offset" />
+          <NumberField name="params.offset" withTimingCalc />
         </CardWithGrid>
       </ToolFormikForm>
     </ToolStack>

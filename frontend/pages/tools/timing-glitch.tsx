@@ -43,8 +43,8 @@ const ToolPage: NextPage = () => {
         }}
       >
         <CardWithGrid title="参数">
-          <NumberField name="params.start" />
-          <NumberField name="params.stop" />
+          <NumberField name="params.start" withTimingCalc />
+          <NumberField name="params.stop" withTimingCalc />
           <NumberField name="params.count" />
           <NumberField name="params.bpm_range" helperText />
           <SubtitleTypography>可选参数</SubtitleTypography>

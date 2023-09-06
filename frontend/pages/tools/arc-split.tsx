@@ -37,8 +37,8 @@ const ToolPage: NextPage = () => {
         <CardWithGrid title="参数">
           <NumberField name="params.count" />
           <SubtitleTypography>可选参数</SubtitleTypography>
-          <NumberField name="params.start" />
-          <NumberField name="params.stop" />
+          <NumberField name="params.start" withTimingCalc />
+          <NumberField name="params.stop" withTimingCalc />
         </CardWithGrid>
       </ToolFormikForm>
     </ToolStack>

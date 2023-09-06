@@ -51,6 +51,12 @@ interface CreateArcParams {
   arctap: string;
 }
 
+interface CalcTimingParams {
+  bpm: number;
+  division: string;
+  offset: number;
+}
+
 export const AffTextField: React.FC<TextFieldProps> = ({ ...props }) => {
   const [field, meta] = useField(props as { name: any });
   const { t } = useTranslation("tools");
@@ -74,28 +80,38 @@ export const AffTextField: React.FC<TextFieldProps> = ({ ...props }) => {
   );
 };
 
-export const NumberField: React.FC<TextFieldProps> = ({ ...props }) => {
-  const [field, meta] = useField(props as { name: any });
+export const NumberField: React.FC<
+  TextFieldProps & { withTimingCalc?: boolean }
+> = ({ withTimingCalc, ...props }) => {
+  const [field, meta, helpers] = useField(props as { name: any });
   const { t } = useTranslation("tools");
 
   let isError = Boolean(meta.touched && meta.error);
 
   return (
     <Grid xs={12} sm={6} md={4}>
-      <TextField
-        {...field}
-        {...props}
-        fullWidth
-        label={t(`input.${props.name}`)}
-        helperText={
-          isError
+      <FormControl fullWidth variant="outlined" error={isError}>
+        <InputLabel>{t(`input.${props.name}`)}</InputLabel>
+        <OutlinedInput
+          label={t(`input.${props.name}`)}
+          fullWidth
+          endAdornment={
+            withTimingCalc ? (
+              <InputAdornment position="end">
+                <CalcTimingButton fieldHelpers={helpers} />
+              </InputAdornment>
+            ) : undefined
+          }
+          {...field}
+        />
+        <FormHelperText>
+          {isError
             ? t(meta.error!)
             : props.helperText
             ? t(`input.${props.name}.helper`)
-            : undefined
-        }
-        error={isError}
-      />
+            : undefined}
+        </FormHelperText>
+      </FormControl>
     </Grid>
   );
 };
@@ -341,6 +357,8 @@ export const SingleLineField: React.FC<PropsWithChildren> = ({
 export const CreateArcButton: React.FC<InputAdornmentButtonProps> = ({
   fieldHelpers,
 }) => {
+  const { t } = useTranslation("tools");
+
   const [open, setOpen] = useState(false);
   return (
     <>
@@ -358,6 +376,7 @@ export const CreateArcButton: React.FC<InputAdornmentButtonProps> = ({
         }}
         fullWidth
         maxWidth="lg"
+        keepMounted
       >
         <Box sx={{ m: 2, mb: 0 }}>
           <ToolFormikForm
@@ -443,7 +462,87 @@ export const CreateArcButton: React.FC<InputAdornmentButtonProps> = ({
               <AnyTextField name="params.arctap" singleLine helperText />
               <CheckBoxField name="params.skyline" singleLine />
             </Unstable_Grid2>
-            <Button type="submit">提交并填充</Button>
+            <Button type="submit"><Trans t={t}>submit.fill</Trans></Button>
+          </ToolFormikForm>
+        </Box>
+      </Dialog>
+    </>
+  );
+};
+
+export const CalcTimingButton: React.FC<InputAdornmentButtonProps> = ({
+  fieldHelpers,
+}) => {
+  const { t } = useTranslation("tools");
+
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <IconButton
+        onClick={async () => {
+          setOpen(true);
+        }}
+      >
+        <AddBoxIcon />
+      </IconButton>
+      <Dialog
+        open={open}
+        onClose={() => {
+          setOpen(false);
+        }}
+        fullWidth
+        maxWidth="lg"
+        keepMounted
+      >
+        <Box sx={{ m: 2, mb: 0 }}>
+          <ToolFormikForm
+            initValues={{
+              params: {
+                bpm: "",
+                division: "",
+                offset: "",
+              },
+            }}
+            validationSchema={{
+              params: Yup.object().shape({
+                bpm: Yup.number().required(),
+                division: Yup.string()
+                  .matches(
+                    /(?:[1-9][0-9]*|0)\/[1-9][0-9]*/g,
+                    t("error.fraction") ?? ""
+                  )
+                  .required(),
+                offset: Yup.number().integer().required(),
+              }),
+            }}
+            //@ts-expect-error
+            processorOverride={async (values: { params: CalcTimingParams }) => {
+              const { bpm, division, offset } = values.params;
+              const [dividend, divisor] = division
+                .split("/")
+                .map((x) => parseFloat(x));
+              return {
+                code: StatusCode.SUCCESS,
+                result: ((60000 / bpm) * (dividend / divisor) + offset).toFixed(
+                  0
+                ),
+              };
+            }}
+            successCallbackOverride={async (_, result) => {
+              if (result.code == StatusCode.SUCCESS) {
+                fieldHelpers.setValue(result.result);
+                setOpen(false);
+              }
+            }}
+            disableSubmitFab
+          >
+            <Unstable_Grid2 container spacing={2}>
+              <SubtitleTypography>参数</SubtitleTypography>
+              <NumberField name="params.bpm" />
+              <NumberField name="params.division" />
+              <NumberField name="params.offset" />
+            </Unstable_Grid2>
+            <Button type="submit"><Trans t={t}>submit.fill</Trans></Button>
           </ToolFormikForm>
         </Box>
       </Dialog>
