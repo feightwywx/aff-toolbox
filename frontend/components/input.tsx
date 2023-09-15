@@ -18,6 +18,8 @@ import {
   ListSubheader,
   MenuItem,
   OutlinedInput,
+  Radio as MuiRadio,
+  RadioProps,
   Select,
   SelectProps,
   TextField,
@@ -171,6 +173,20 @@ export const CheckBoxField: React.FC<
         />
       </FormGroup>
     </Grid>
+  );
+};
+
+export const Radio: React.FC<RadioProps> = (props) => {
+  const [field, meta] = useField(props as { name: any });
+  const { t } = useTranslation("tools");
+
+  let isError = Boolean(meta.touched && meta.error);
+
+  return (
+    <FormControlLabel
+      control={<MuiRadio {...field} {...props} />}
+      label={t(`input.${props.id}`)}
+    />
   );
 };
 
@@ -337,7 +353,9 @@ export const EasingModeSelect: React.FC<SelectWithHelperProps> = ({
           <MenuItem value="b">b</MenuItem>
           <MenuItem value="si">si</MenuItem>
           <MenuItem value="so">so</MenuItem>
-          <ListSubheader><Trans t={t}>select.extend</Trans></ListSubheader>
+          <ListSubheader>
+            <Trans t={t}>select.extend</Trans>
+          </ListSubheader>
           <MenuItem value="ease_in_sine">easeInSine</MenuItem>
           <MenuItem value="ease_out_sine">easeOutSine</MenuItem>
           <MenuItem value="ease_in_out_sine">easeInOutSine</MenuItem>

@@ -6,6 +6,11 @@ import { CardWithGrid } from "@/components/CardWithGrid";
 import { ToolTitle } from "@/components/ToolTitle";
 import * as Yup from "yup";
 import { ToolStack } from "@/components/ToolStack";
+import {
+  ArcPostProcessCard,
+  ArcPostProcessInitValues,
+  ArcPostProcessValidations,
+} from "@/components/ArcPostProcessCard";
 
 const ToolPage: NextPage = () => {
   return (
@@ -13,10 +18,11 @@ const ToolPage: NextPage = () => {
       <ToolTitle />
 
       <ToolFormikForm
-        initValues={{ arc: "", timings: "" }}
+        initValues={{ arc: "", timings: "", ...ArcPostProcessInitValues }}
         validationSchema={{
           arc: Yup.string().required(),
           timings: Yup.string().required(),
+          ...ArcPostProcessValidations,
         }}
       >
         <CardWithGrid title="Note区域">
@@ -26,6 +32,7 @@ const ToolPage: NextPage = () => {
             placeholder={`timing(0,222.22,4.00);\ntiming(100,222.22,4.00);\n...`}
           />
         </CardWithGrid>
+        <ArcPostProcessCard />
       </ToolFormikForm>
     </ToolStack>
   );

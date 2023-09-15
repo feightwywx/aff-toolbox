@@ -1,10 +1,13 @@
+from typing import Optional
 from app.model.common import CommonResponse
 from app.model.request import (
     ArcAnimateParams,
     ArcCreaseLineParams,
+    ArcPostProcessParams,
     ArcSplitParams,
     ArcRainParams,
 )
+from app.utils.postprocess import arc_post_process
 from app.utils.response import make_success_resp
 import app.exception as appexc
 from fastapi import APIRouter, Body, Depends
@@ -48,53 +51,74 @@ async def arc_split(
             "params": {"start": 0, "stop": 500, "count": 12},
         }
     ),
+    post: Optional[ArcPostProcessParams] = Body(),
 ) -> CommonResponse[str]:
-    return make_success_resp(
-        a.generator.arc_slice_by_count(
-            arc=arc,
-            count=params.count,
-            start=params.start if (params.start is not None) else arc.time,
-            stop=params.stop if (params.stop is not None) else arc.totime,
-        ).__str__()
+    result = a.generator.arc_slice_by_count(
+        arc=arc,
+        count=params.count,
+        start=params.start if (params.start is not None) else arc.time,
+        stop=params.stop if (params.stop is not None) else arc.totime,
     )
+
+    if post is not None:
+        result = arc_post_process(result, post)
+
+    return make_success_resp(result.__str__())
 
 
 @arc_router.post("/split-by-timing")
 async def arc_split_by_timing(
     arc: a.Arc = Depends(arc_converter),
     timings: list[a.Timing] = Depends(timings_converter),
+    post: Optional[ArcPostProcessParams] = Body(),
 ) -> CommonResponse[str]:
-    return make_success_resp(a.generator.arc_slice_by_timing(arc, timings).__str__())
+    result = a.generator.arc_slice_by_timing(arc, timings)
+
+    if post is not None:
+        result = arc_post_process(result, post)
+
+    return make_success_resp(result.__str__())
 
 
 @arc_router.post("/crease-line")
 def arc_crease_line(
-    arc: a.Arc = Depends(arc_converter), params: ArcCreaseLineParams = Body()
+    arc: a.Arc = Depends(arc_converter),
+    params: ArcCreaseLineParams = Body(),
+    post: Optional[ArcPostProcessParams] = Body(),
 ) -> CommonResponse[str]:
-    return make_success_resp(
-        a.generator.arc_crease_line(
-            arc,
-            params.delta_x,
-            params.delta_y,
-            params.count,
-            mode=params.mode,
-            easing=params.arc_easing,
-        ).__str__()
+    result = a.generator.arc_crease_line(
+        arc,
+        params.delta_x,
+        params.delta_y,
+        params.count,
+        mode=params.mode,
+        easing=params.arc_easing,
     )
+
+    if post is not None:
+        result = arc_post_process(result, post)
+
+    return make_success_resp(result.__str__())
 
 
 @arc_router.post("/rain")
-def arc_rain(params: ArcRainParams = Body(embed=True)) -> CommonResponse[str]:
-    return make_success_resp(
-        a.generator.arc_rain(
-            params.start,
-            params.stop,
-            params.step,
-            params.dropLength
-            if (params.dropLength is not None)
-            else (params.stop - params.start),
-        ).__str__()
+def arc_rain(
+    params: ArcRainParams = Body(embed=True),
+    post: Optional[ArcPostProcessParams] = Body(),
+) -> CommonResponse[str]:
+    result = a.generator.arc_rain(
+        params.start,
+        params.stop,
+        params.step,
+        params.dropLength
+        if (params.dropLength is not None)
+        else (params.stop - params.start),
     )
+
+    if post is not None:
+        result = arc_post_process(result, post)
+
+    return make_success_resp(result.__str__())
 
 
 @arc_router.post("/animate")

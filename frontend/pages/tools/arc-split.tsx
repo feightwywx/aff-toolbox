@@ -7,6 +7,11 @@ import { ToolTitle } from "@/components/ToolTitle";
 import * as Yup from "yup";
 import { ToolStack } from "@/components/ToolStack";
 import { emptyStringToUndef } from "@/utils/helpers";
+import {
+  ArcPostProcessCard,
+  ArcPostProcessInitValues,
+  ArcPostProcessValidations,
+} from "@/components/ArcPostProcessCard";
 
 const ToolPage: NextPage = () => {
   return (
@@ -14,7 +19,11 @@ const ToolPage: NextPage = () => {
       <ToolTitle />
 
       <ToolFormikForm
-        initValues={{ arc: "", params: { count: "", start: "", stop: "" } }}
+        initValues={{
+          arc: "",
+          params: { count: "", start: "", stop: "" },
+          ...ArcPostProcessInitValues,
+        }}
         validationSchema={{
           arc: Yup.string().required(),
           params: Yup.object().shape({
@@ -28,6 +37,7 @@ const ToolPage: NextPage = () => {
               .transform(emptyStringToUndef)
               .nullable(),
           }),
+          ...ArcPostProcessValidations
         }}
       >
         <CardWithGrid title="Note区域">
@@ -40,6 +50,7 @@ const ToolPage: NextPage = () => {
           <NumberField name="params.start" withTimingCalc />
           <NumberField name="params.stop" withTimingCalc />
         </CardWithGrid>
+        <ArcPostProcessCard />
       </ToolFormikForm>
     </ToolStack>
   );

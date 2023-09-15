@@ -67,5 +67,17 @@
   "select.blue": "蓝",
   "select.red": "红",
   "select.green": "绿",
-  "select.extend": "拓展"
+  "select.extend": "拓展",
+  "title.post": "后处理",
+  "title.post.mirror": "镜像",
+  "title.post.straighten": "拉直",
+  "title.post.connector": "连接",
+  "title.post.filter": "过滤",
+  "input.post.mirror": "镜像",
+  "input.post.straighten_x": "x轴方向",
+  "input.post.straighten_y": "y轴方向",
+  "input.post.connector": "0物量连接",
+  "input.post.position_filter.none": "不过滤",
+  "input.post.position_filter.even": "保留奇序数物件",
+  "input.post.position_filter.odd": "保留偶序数物件"
 }

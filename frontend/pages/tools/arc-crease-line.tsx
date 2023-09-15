@@ -11,6 +11,11 @@ import { CardWithGrid, SubtitleTypography } from "@/components/CardWithGrid";
 import { ToolTitle } from "@/components/ToolTitle";
 import * as Yup from "yup";
 import { ToolStack } from "@/components/ToolStack";
+import {
+  ArcPostProcessCard,
+  ArcPostProcessInitValues,
+  ArcPostProcessValidations,
+} from "@/components/ArcPostProcessCard";
 
 const ToolPage: NextPage = () => {
   return (
@@ -27,6 +32,7 @@ const ToolPage: NextPage = () => {
             arc_easing: "s",
             mode: "m",
           },
+          ...ArcPostProcessInitValues,
         }}
         validationSchema={{
           arc: Yup.string().required(),
@@ -37,6 +43,7 @@ const ToolPage: NextPage = () => {
             arc_easing: Yup.string(),
             mode: Yup.string(),
           }),
+          ...ArcPostProcessValidations,
         }}
       >
         <CardWithGrid title="Note区域">
@@ -51,6 +58,7 @@ const ToolPage: NextPage = () => {
           <ArcEasingModeSelect name="params.arc_easing" />
           <CreaseModeSelect name="params.mode" helperText />
         </CardWithGrid>
+        <ArcPostProcessCard />
       </ToolFormikForm>
     </ToolStack>
   );

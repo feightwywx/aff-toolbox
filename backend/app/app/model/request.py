@@ -162,3 +162,11 @@ class ChartAlignParams(BaseModel):
     bpm: float
     error: int
     lcd: int = 96
+
+
+class ArcPostProcessParams(BaseModel):
+    mirror: bool
+    straighten_x: bool
+    straighten_y: bool
+    connector: bool
+    position_filter: Literal['', 'even', 'odd']
