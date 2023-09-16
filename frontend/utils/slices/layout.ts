@@ -1,8 +1,11 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
+export type ThemeMode = "auto" | "light" | "dark";
+
 export interface LayoutState {
   drawerOpen: boolean;
   history: ResultHistory[];
+  darkMode: ThemeMode;
 }
 
 export interface ResultHistory {
@@ -15,6 +18,7 @@ export interface ResultHistory {
 const initialState = {
   drawerOpen: true,
   history: [],
+  darkMode: "auto",
 } as LayoutState;
 
 export const layoutSlice = createSlice({
@@ -27,9 +31,12 @@ export const layoutSlice = createSlice({
     appendHistory: (state, action: PayloadAction<ResultHistory>) => {
       state.history.unshift(action.payload);
     },
+    setDarkMode: (state, action: PayloadAction<ThemeMode>) => {
+      state.darkMode = action.payload;
+    },
   },
 });
 
-export const { toggleDrawer, appendHistory } = layoutSlice.actions;
+export const { toggleDrawer, appendHistory, setDarkMode } = layoutSlice.actions;
 
 export default layoutSlice.reducer;

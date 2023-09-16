@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import { appWithTranslation } from "next-i18next";
@@ -12,7 +12,9 @@ import { config } from "@fortawesome/fontawesome-svg-core";
 import ReactGA from "react-ga4";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import "@fortawesome/fontawesome-svg-core/styles.css";
-import { getDesignTokens } from '@/utils/theme';
+import { getDesignTokens } from "@/utils/theme";
+import { useAppSelector } from "@/utils/hooks";
+import { computeDarkMode } from "@/utils/helpers";
 
 config.autoAddCss = false;
 
@@ -35,69 +37,6 @@ function App({ Component, pageProps }: AppProps) {
   // init Google Analysis
   ReactGA.initialize("G-SNZN20X39X");
 
-  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
-  const theme = React.useMemo(
-    () =>
-      createTheme({
-        ...getDesignTokens(prefersDarkMode ? 'dark' : 'light'),
-        components: {
-          MuiPaper: {
-            styleOverrides: {
-              root: {
-                borderRadius: 12,
-                MuiDialog: {
-                  borderRadius: 24,
-                },
-              },
-            },
-          },
-          MuiButton: {
-            styleOverrides: {
-              root: {
-                textTransform: "none",
-                borderRadius: "50vh",
-              },
-            },
-          },
-          MuiFab: {
-            styleOverrides: {
-              root: {
-                borderRadius: "16px",
-                padding: "28px 20px",
-                textTransform: "none",
-              },
-            },
-          },
-          MuiInputBase: {
-            styleOverrides: {
-              root: {
-                '&:focus': {
-                  borderColor: 'red'
-                }
-              }
-            }
-          }
-        },
-        typography: {
-          fontFamily: [
-            '"Exo 2"',
-            '"Noto Sans SC"',
-            "Roboto",
-            "-apple-system",
-            "BlinkMacSystemFont",
-            '"Segoe UI"',
-            '"Helvetica Neue"',
-            "Arial",
-            "sans-serif",
-            '"Apple Color Emoji"',
-            '"Segoe UI Emoji"',
-            '"Segoe UI Symbol"',
-          ].join(","),
-        },
-      }),
-    [prefersDarkMode],
-  );
-
   return (
     <>
       <Head>
@@ -106,14 +45,11 @@ function App({ Component, pageProps }: AppProps) {
       </Head>
 
       <ReduxProvider store={store}>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <SnackbarProvider>
-            <Layout>
-              <Component {...pageProps} />
-            </Layout>
-          </SnackbarProvider>
-        </ThemeProvider>
+        <SnackbarProvider>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </SnackbarProvider>
       </ReduxProvider>
     </>
   );

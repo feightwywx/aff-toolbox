@@ -28,5 +28,9 @@
     "tool.timingGlitch.shortDesc": "生成使谱面前后抖动的Timing组",
     "tool.test.name": "测试页面",
     "tool.test.shortDesc": "这是一个测试表单用的页面",
-    "button.dismiss": "忽略"
+    "button.dismiss": "忽略",
+    "tooltip.theme.auto": "自动",
+    "tooltip.theme.light": "浅色模式",
+    "tooltip.theme.dark": "深色模式",
+    "tooltip.history": "历史记录"
 }

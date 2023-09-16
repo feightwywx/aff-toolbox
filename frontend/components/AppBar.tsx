@@ -1,4 +1,4 @@
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, useState } from "react";
 import { useTranslation } from "next-i18next";
 import {
   AppBar as MuiAppBar,
@@ -18,12 +18,18 @@ import {
   DrawerButton,
   HistoryButton,
   MoreActionsButton,
+  ToggleThemeButton,
 } from "./AppBarActions";
+import { useAppSelector } from "@/utils/hooks";
+import { computeDarkMode } from "@/utils/helpers";
 
 const AppBar: React.FC<PropsWithChildren> = ({ children }) => {
   const router = useRouter();
   const { t, i18n } = useTranslation();
+
+  const configuredDarkMode = useAppSelector((state) => state.layout.darkMode);
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
+  const darkMode = computeDarkMode(configuredDarkMode, prefersDarkMode);
 
   return (
     <MuiAppBar
@@ -32,11 +38,11 @@ const AppBar: React.FC<PropsWithChildren> = ({ children }) => {
         zIndex: (theme) => theme.zIndex.drawer + 1,
         borderRadius: 0,
         backgroundColor: (theme) =>
-          prefersDarkMode
+          darkMode
             ? theme.palette.primary.light
             : theme.palette.primary.main,
         color: (theme) =>
-          prefersDarkMode
+          darkMode
             ? theme.palette.primary.dark
             : theme.palette.primary.contrastText,
       }}
@@ -56,6 +62,7 @@ const AppBar: React.FC<PropsWithChildren> = ({ children }) => {
         </Box>
 
         {/* 功能按钮 */}
+        <ToggleThemeButton />
         <ChangeLangButton />
         <HistoryButton />
         {/* <MoreActionsButton disabled /> */}
