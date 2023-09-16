@@ -27,5 +27,6 @@
     "tool.timingGlitch.name": "抖动Timing生成",
     "tool.timingGlitch.shortDesc": "生成使谱面前后抖动的Timing组",
     "tool.test.name": "测试页面",
-    "tool.test.shortDesc": "这是一个测试表单用的页面"
+    "tool.test.shortDesc": "这是一个测试表单用的页面",
+    "button.dismiss": "忽略"
 }

@@ -8,6 +8,7 @@ import {
   Stack,
   Typography,
   Unstable_Grid2 as Grid,
+  Collapse,
 } from "@mui/material";
 import {
   faBilibili,
@@ -23,10 +24,19 @@ import { IndexRecommendCard } from "@/components/IndexRecommendCard";
 import Head from "next/head";
 import InfoIcon from "@mui/icons-material/Info";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import { useEffect, useState } from "react";
 
 export default function Home() {
   const { t, i18n } = useTranslation(["index", "common"]);
   const lang = i18n.language;
+
+  const [showLegacy, setShowLegacy] = useState(false);
+
+  useEffect(() => {
+    if (!(localStorage.getItem("infoChecked.legacy") === "true")) {
+      setShowLegacy(true);
+    }
+  });
 
   return (
     <>
@@ -53,39 +63,56 @@ export default function Home() {
             <Trans t={t}>一个Arcaea谱面段落生成工具</Trans>
           </Typography>
         </Box>
-        <Card
-          sx={{
-            backgroundColor: (theme) => theme.palette.primary.main,
-            color: (theme) => theme.palette.primary.contrastText,
-          }}
-        >
-          <Box sx={{ p: 2, display: "flex", alignItems: "center" }}>
-            <InfoIcon sx={{ mr: 2, display: { xs: "none", sm: "inherit" } }} />
-            <Typography>
-              <Trans t={t}>您正在使用AFF工具箱的下个主要版本。</Trans>
-            </Typography>
-          </Box>
-          <Box
+        <Collapse in={showLegacy} unmountOnExit>
+          <Card
             sx={{
-              p: 2,
-              pt: 0,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "right",
+              backgroundColor: (theme) => theme.palette.primary.main,
+              color: (theme) => theme.palette.primary.contrastText,
             }}
           >
-            <Button
-              variant="text"
+            <Box sx={{ p: 2, display: "flex", alignItems: "center" }}>
+              <InfoIcon
+                sx={{ mr: 2, display: { xs: "none", sm: "inherit" } }}
+              />
+              <Typography>
+                <Trans t={t}>您正在使用AFF工具箱的下个主要版本。</Trans>
+              </Typography>
+            </Box>
+            <Box
               sx={{
-                color: (theme) => theme.palette.primary.contrastText,
+                p: 2,
+                pt: 0,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "right",
               }}
-              href="https://legacy.aff.arcaea.icu/"
-              startIcon={<OpenInNewIcon />}
             >
-              <Trans t={t}>返回旧版</Trans>
-            </Button>
-          </Box>
-        </Card>
+              <Button
+                variant="text"
+                sx={{
+                  color: (theme) => theme.palette.primary.contrastText,
+                }}
+                onClick={() => {
+                  setShowLegacy(false);
+                  localStorage.setItem("infoChecked.legacy", "true");
+                }}
+              >
+                <Trans t={t} ns='common'>button.dismiss</Trans>
+              </Button>
+              <Button
+                variant="text"
+                sx={{
+                  color: (theme) => theme.palette.primary.contrastText,
+                }}
+                href="https://legacy.aff.arcaea.icu/"
+                startIcon={<OpenInNewIcon />}
+              >
+                <Trans t={t}>返回旧版</Trans>
+              </Button>
+            </Box>
+          </Card>
+        </Collapse>
+
         {/* 信息介绍卡片 */}
         <Card>
           <CardContent>

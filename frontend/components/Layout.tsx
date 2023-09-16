@@ -1,6 +1,14 @@
 import { PropsWithChildren, useEffect, useState } from "react";
-import { useTranslation } from "next-i18next";
-import { Fade, LinearProgress, Toolbar } from "@mui/material";
+import { Trans, useTranslation } from "next-i18next";
+import {
+  Collapse,
+  Fade,
+  LinearProgress,
+  Link,
+  Stack,
+  Toolbar,
+  Typography,
+} from "@mui/material";
 import Head from "next/head";
 import React from "react";
 import { useRouter } from "next/router";
@@ -25,6 +33,13 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
     });
   }, [router]);
 
+  const [showCommunity, setShowCommunity] = useState(false);
+  useEffect(() => {
+    if (!(localStorage.getItem("infoChecked.community") === "true")) {
+      setShowCommunity(true);
+    }
+  });
+
   return (
     <>
       <AppBar />
@@ -41,7 +56,54 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
       <Fade in={showContent}>
         {/* 防止main的transition被Fade覆盖 */}
         <div>
-          <LayoutContainer open={drawerOpen}>{children}</LayoutContainer>
+          <LayoutContainer open={drawerOpen}>
+            <Collapse in={showCommunity} unmountOnExit>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <Stack direction="row" spacing={1}>
+                  {i18n.language === "zh" ? (
+                    <>
+                      <Typography
+                        align="center"
+                        sx={{
+                          color: (theme) => theme.palette.text.disabled,
+                          mb: 1,
+                        }}
+                      >
+                        加入我们的QQ群：477499123
+                      </Typography>
+                    </>
+                  ) : (
+                    <>
+                      <Typography
+                        align="center"
+                        sx={{
+                          color: (theme) => theme.palette.text.disabled,
+                          mb: 1,
+                        }}
+                      >
+                        Join our Discord server!
+                      </Typography>
+                      <Link href="https://discord.gg/UEQ8UhacJG">
+                        Invite Link
+                      </Link>
+                    </>
+                  )}
+                  <Link
+                    onClick={() => {
+                      setShowCommunity(false);
+                      localStorage.setItem("infoChecked.community", "true");
+                    }}
+                  >
+                    <Trans>
+                      button.dismiss
+                    </Trans>
+                  </Link>
+                </Stack>
+              </div>
+            </Collapse>
+
+            {children}
+          </LayoutContainer>
         </div>
       </Fade>
     </>
