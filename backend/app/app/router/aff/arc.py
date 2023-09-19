@@ -3,6 +3,7 @@ from app.model.common import CommonResponse
 from app.model.request import (
     ArcAnimateParams,
     ArcCreaseLineParams,
+    ArcEnvelopeParams,
     ArcPostProcessParams,
     ArcSplitParams,
     ArcRainParams,
@@ -159,3 +160,27 @@ def arc_animate(
             easing_offset_t=easing_offset_t,
         ).__str__()
     )
+
+
+@arc_router.post("/envelope")
+def arc_envelope(
+    arc1: str = Body(),
+    arc2: str = Body(),
+    params: ArcEnvelopeParams = Body(),
+    post: Optional[ArcPostProcessParams] = Body(),
+) -> CommonResponse[str]:
+    obj1 = a.loadline(arc1)
+    obj2 = a.loadline(arc2)
+    if not(isinstance(obj1, a.Arc) and isinstance(obj2, a.Arc)):
+        raise appexc.NotAnArcError([obj1, obj2])
+    result = a.generator.arc_envelope(
+        obj1,
+        obj2,
+        params.count,
+        params.mode if params.mode is not None else "c",
+    )
+
+    if post is not None:
+        result = arc_post_process(result, post)
+
+    return make_success_resp(result.__str__())

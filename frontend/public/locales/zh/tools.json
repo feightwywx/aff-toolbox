@@ -79,5 +79,13 @@
   "input.post.connector": "0物量连接",
   "input.post.position_filter.none": "不过滤",
   "input.post.position_filter.even": "保留奇序数物件",
-  "input.post.position_filter.odd": "保留偶序数物件"
+  "input.post.position_filter.odd": "保留偶序数物件",
+  "input.arc1": "Arc 1",
+  "input.arc1.helper": "这条Arc的起点将会是生成结果的起点，并且确定除了时间点与坐标之外的参数",
+  "input.arc2": "Arc 2",
+  "input.arc2.helper": "显然，你需要两条Arc才能形成一个平面",
+  "input.envelopeMode": "模式",
+  "input.envelopeMode.helper": "生成结果的形态",
+  "input.envelopeMode.crease": "折线",
+  "input.envelopeMode.parallel": "平行线"
 }

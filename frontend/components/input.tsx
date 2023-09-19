@@ -441,6 +441,45 @@ export const ArcColorSelect: React.FC<SelectWithHelperProps> = ({
   );
 };
 
+export const EnvelopeModeSelect: React.FC<SelectWithHelperProps> = ({
+  ...props
+}) => {
+  const [field, meta] = useField(props as { name: any });
+  const { t } = useTranslation("tools");
+
+  let isError = Boolean(meta.touched && meta.error);
+
+  return (
+    <Grid xs={12} sm={6} md={4}>
+      <FormControl fullWidth>
+        <InputLabel>{t("input.envelopeMode")}</InputLabel>
+        {/* @ts-ignore */}
+        <Select
+          fullWidth
+          label={t("input.envelopeMode")}
+          error={isError}
+          {...field}
+          {...props}
+        >
+          <MenuItem value="c">
+            <Trans t={t}>input.envelopeMode.crease</Trans>
+          </MenuItem>
+          <MenuItem value="p">
+            <Trans t={t}>input.envelopeMode.parallel</Trans>
+          </MenuItem>
+        </Select>
+        <FormHelperText>
+          {isError
+            ? t(meta.error!)
+            : props.helperText
+            ? t(`input.envelopeMode.helper`)
+            : undefined}
+        </FormHelperText>
+      </FormControl>
+    </Grid>
+  );
+};
+
 export const SingleLineField: React.FC<PropsWithChildren> = ({
   children,
   ...props

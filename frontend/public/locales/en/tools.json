@@ -103,5 +103,13 @@
   "input.post.connector": "0-duration connector",
   "input.post.position_filter.none": "No filter",
   "input.post.position_filter.even": "Keep the eventh",
-  "input.post.position_filter.odd": "Keep the oddth"
+  "input.post.position_filter.odd": "Keep the oddth",
+  "input.arc1": "Arc 1",
+  "input.arc1.helper": "The starting point of this Arc will be the starting point of the generated result and determines the parameters other than the time point and coordinates.",
+  "input.arc2": "Arc 2",
+  "input.arc2.helper": "Obviously, you need two Arc's to form a plane.",
+  "input.envelopeMode": "Mode",
+  "input.envelopeMode.helper": "Pattern of the result",
+  "input.envelopeMode.crease": "Crease",
+  "input.envelopeMode.parallel": "Parallel"
 }

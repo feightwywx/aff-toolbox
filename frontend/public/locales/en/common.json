@@ -36,5 +36,7 @@
     "tooltip.theme.auto": "Auto",
     "tooltip.theme.light": "Light Mode",
     "tooltip.theme.dark": "Dark Mode",
-    "tooltip.history": "History"
+    "tooltip.history": "History",
+    "tool.arcEnvelope.name": "Arc Envelope",
+    "tool.arcEnvelope.shortDesc": "Generate one Arc that enveloped by two Arcs"
 }

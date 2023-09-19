@@ -32,5 +32,7 @@
     "tooltip.theme.auto": "自动",
     "tooltip.theme.light": "浅色模式",
     "tooltip.theme.dark": "深色模式",
-    "tooltip.history": "历史记录"
+    "tooltip.history": "历史记录",
+    "tool.arcEnvelope.name": "Arc包围",
+    "tool.arcEnvelope.shortDesc": "生成一条被两条Arc包夹的Arc"
 }

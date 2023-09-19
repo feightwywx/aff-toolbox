@@ -169,4 +169,8 @@ class ArcPostProcessParams(BaseModel):
     straighten_x: bool
     straighten_y: bool
     connector: bool
-    position_filter: Literal['', 'even', 'odd']
+    position_filter: Literal["", "even", "odd"]
+
+
+class ArcEnvelopeParams(CountCommonBody):
+    mode: Optional[Literal["c", "p"]] = "c"

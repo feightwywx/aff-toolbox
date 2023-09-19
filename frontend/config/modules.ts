@@ -61,6 +61,12 @@ export const toolMetas: ArcToolMetadata[] = [
     path: "/timing-glitch",
     endpoint: "/timing/glitch",
   },
+  {
+    id: "arcEnvelope",
+    category: "arc",
+    path: "/arc-envelope",
+    endpoint: "/arc/envelope",
+  },
 ];
 
 export default toolMetas;
