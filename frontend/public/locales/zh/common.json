@@ -6,6 +6,7 @@
     "category.chart.name": "谱面工具",
     "category.arc.name": "Arc工具",
     "category.timing.name": "Timing工具",
+    "category.other.name": "其他工具",
     "tool.chartOffset.name": "谱面偏移",
     "tool.chartOffset.shortDesc": "偏移整体或谱面片段",
     "tool.chartMirror.name": "谱面镜像",

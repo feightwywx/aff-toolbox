@@ -34,7 +34,7 @@ const Drawer: React.FC<
 
   const { t, i18n } = useTranslation();
   const router = useRouter();
-  const pathname = `/${router.asPath.split('/').slice(-1)}`;
+  const pathname = `/${router.asPath.split("/").slice(-1)}`;
 
   // 计算一个由模块路径到分类名的映射
   const moduleToCategory = React.useMemo(() => {
@@ -141,6 +141,7 @@ const Drawer: React.FC<
                         ? newModules.includes(meta.id)
                         : meta.category === cid
                     )
+                    .sort((a, b) => a.id.localeCompare(b.id))
                     .map((meta, index) => (
                       <ListItemButton
                         key={index}

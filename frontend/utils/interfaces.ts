@@ -1,6 +1,6 @@
 export type ToolCategoryData = Array<string>;
 
-export type Category = "chart" | "arc" | "timing";
+export type Category = "chart" | "arc" | "timing" | "other";
 
 export type CategoryWithNew = Category | "new";
 

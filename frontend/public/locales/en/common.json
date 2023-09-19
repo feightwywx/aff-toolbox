@@ -6,6 +6,7 @@
     "category.chart.name": "Chart Tools",
     "category.arc.name": "Arc Tools",
     "category.timing.name": "Timing Tools",
+    "category.other.name": "Other",
     "tool.chartOffset.name": "Chart Offset Tool",
     "tool.chartOffset.shortDesc": "Offset whole or segment chart",
     "tool.chartMirror.name": "Chart Mirror Tool",

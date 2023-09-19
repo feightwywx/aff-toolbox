@@ -45,7 +45,7 @@ export const toolMetas: ArcToolMetadata[] = [
   },
   {
     id: "arcAnimate",
-    category: "arc",
+    category: "other",
     path: "/arc-animate",
     endpoint: "/arc/animate",
   },
