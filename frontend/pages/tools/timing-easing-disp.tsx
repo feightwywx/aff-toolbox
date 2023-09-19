@@ -15,7 +15,7 @@ import { ToolStack } from "@/components/ToolStack";
 import { emptyStringToUndef } from "@/utils/helpers";
 import { Link, Typography } from "@mui/material";
 import { BezierHint } from "@/components/hints";
-import { Trans, useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "next-i18next";
 
 const ToolPage: NextPage = () => {
   const { t } = useTranslation("tools");
