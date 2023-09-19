@@ -181,3 +181,7 @@ class TimingEasingDispParams(StartStopCommonBody, CountCommonBody):
     easing: Optional[str] = "s"
     easing_b_point: Optional[list[float]] = [1 / 3, 0, 2 / 3, 1]
     bar: Optional[float] = 4.00
+
+
+class SceneControlBlinkParams(StartStopCommonBody, CountCommonBody):
+    sc_x: Optional[float] = 0

@@ -44,10 +44,10 @@ export const toolMetas: ArcToolMetadata[] = [
     endpoint: "/arc/crease-line",
   },
   {
-    id: "arcAnimate",
-    category: "other",
-    path: "/arc-animate",
-    endpoint: "/arc/animate",
+    id: "arcEnvelope",
+    category: "arc",
+    path: "/arc-envelope",
+    endpoint: "/arc/envelope",
   },
   {
     id: "timingEasing",
@@ -56,22 +56,28 @@ export const toolMetas: ArcToolMetadata[] = [
     endpoint: "/timing/easing",
   },
   {
+    id: "timingEasingDisp",
+    category: "timing",
+    path: "/timing-easing-disp",
+    endpoint: "/timing/easing-disp"
+  },
+  {
     id: "timingGlitch",
     category: "timing",
     path: "/timing-glitch",
     endpoint: "/timing/glitch",
   },
   {
-    id: "arcEnvelope",
-    category: "arc",
-    path: "/arc-envelope",
-    endpoint: "/arc/envelope",
+    id: "arcAnimate",
+    category: "other",
+    path: "/arc-animate",
+    endpoint: "/arc/animate",
   },
   {
-    id: "timingEasingDisp",
-    category: "timing",
-    path: "/timing-easing-disp",
-    endpoint: "/timing/easing-disp"
+    id: "scBlink",
+    category: "other",
+    path: "/sc-blink",
+    endpoint: "/etc/sc-blink"
   }
 ];
 
