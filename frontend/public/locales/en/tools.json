@@ -111,5 +111,6 @@
   "input.envelopeMode": "Mode",
   "input.envelopeMode.helper": "Pattern of the result",
   "input.envelopeMode.crease": "Crease",
-  "input.envelopeMode.parallel": "Parallel"
+  "input.envelopeMode.parallel": "Parallel",
+  "hint.timingEasingDisp.easing": "In this tool, the type of easing function directly determines the tendency of BPM change. Generally speaking, the \"In\" series is to accelerate from 0, the \"Out\" series is to decelerate to 0, and the \"InOut\" series is to accelerate and then decelerate. This tool can't precisely control the BPM extremes. Anyway, try a few more functions and you will understand!"
 }

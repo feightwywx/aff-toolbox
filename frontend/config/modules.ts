@@ -67,6 +67,12 @@ export const toolMetas: ArcToolMetadata[] = [
     path: "/arc-envelope",
     endpoint: "/arc/envelope",
   },
+  {
+    id: "timingEasingDisp",
+    category: "timing",
+    path: "/timing-easing-disp",
+    endpoint: "/timing/easing-disp"
+  }
 ];
 
 export default toolMetas;

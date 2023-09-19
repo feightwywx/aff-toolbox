@@ -34,5 +34,7 @@
     "tooltip.theme.dark": "深色模式",
     "tooltip.history": "历史记录",
     "tool.arcEnvelope.name": "Arc包围",
-    "tool.arcEnvelope.shortDesc": "生成一条被两条Arc包夹的Arc"
+    "tool.arcEnvelope.shortDesc": "生成一条被两条Arc包夹的Arc",
+    "tool.timingEasingDisp.name": "Timing缓动（位移优先）",
+    "tool.timingEasingDisp.shortDesc": "精确控制位移的Timing缓动工具"
 }

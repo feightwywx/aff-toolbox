@@ -38,5 +38,7 @@
     "tooltip.theme.dark": "Dark Mode",
     "tooltip.history": "History",
     "tool.arcEnvelope.name": "Arc Envelope",
-    "tool.arcEnvelope.shortDesc": "Generate one Arc that enveloped by two Arcs"
+    "tool.arcEnvelope.shortDesc": "Generate one Arc that enveloped by two Arcs",
+    "tool.timingEasingDisp.name": "Timing Easing (displacement first)",
+    "tool.timingEasingDisp.shortDesc": "Timing easing tool for precise displacement control"
 }

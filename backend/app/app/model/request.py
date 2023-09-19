@@ -174,3 +174,10 @@ class ArcPostProcessParams(BaseModel):
 
 class ArcEnvelopeParams(CountCommonBody):
     mode: Optional[Literal["c", "p"]] = "c"
+
+
+class TimingEasingDispParams(StartStopCommonBody, CountCommonBody):
+    basebpm: float
+    easing: Optional[str] = "s"
+    easing_b_point: Optional[list[float]] = [1 / 3, 0, 2 / 3, 1]
+    bar: Optional[float] = 4.00
