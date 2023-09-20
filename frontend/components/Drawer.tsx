@@ -141,7 +141,6 @@ const Drawer: React.FC<
                         ? newModules.includes(meta.id)
                         : meta.category === cid
                     )
-                    .sort((a, b) => a.id.localeCompare(b.id))
                     .map((meta, index) => (
                       <ListItemButton
                         key={index}

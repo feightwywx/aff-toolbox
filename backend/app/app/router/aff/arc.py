@@ -2,12 +2,14 @@ from typing import Optional
 from app.model.common import CommonResponse
 from app.model.request import (
     ArcAnimateParams,
+    ArcBreakParams,
     ArcCreaseLineParams,
     ArcEnvelopeParams,
     ArcPostProcessParams,
     ArcSplitParams,
     ArcRainParams,
 )
+from app.utils.chart import arc_break
 from app.utils.postprocess import arc_post_process
 from app.utils.response import make_success_resp
 import app.exception as appexc
@@ -171,7 +173,7 @@ def arc_envelope(
 ) -> CommonResponse[str]:
     obj1 = a.loadline(arc1)
     obj2 = a.loadline(arc2)
-    if not(isinstance(obj1, a.Arc) and isinstance(obj2, a.Arc)):
+    if not (isinstance(obj1, a.Arc) and isinstance(obj2, a.Arc)):
         raise appexc.NotAnArcError([obj1, obj2])
     result = a.generator.arc_envelope(
         obj1,
@@ -179,6 +181,20 @@ def arc_envelope(
         params.count,
         params.mode if params.mode is not None else "c",
     )
+
+    if post is not None:
+        result = arc_post_process(result, post)
+
+    return make_success_resp(result.__str__())
+
+
+@arc_router.post("/break")
+def arc_break_router(
+    arc: a.Arc = Depends(arc_converter),
+    params: ArcBreakParams = Body(embed=True),
+    post: Optional[ArcPostProcessParams] = Body(),
+) -> CommonResponse[str]:
+    result = arc_break(arc, params.breakpoints, params.disp)
 
     if post is not None:
         result = arc_post_process(result, post)

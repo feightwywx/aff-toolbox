@@ -89,5 +89,9 @@
   "input.envelopeMode.crease": "折线",
   "input.envelopeMode.parallel": "平行线",
   "hint.timingEasingDisp.easing": "这个工具中，缓动函数类型直接决定BPM的变化趋向。一般来说，“In”系列的为从0加速，“Out”系列的为减速到0，“InOut”系列的为先加速再减速。这个工具无法精确控制BPM极值。总之，多试几个函数，你会理解的！",
-  "input.params.sc_x": "scenecontrol的第三个参数"
+  "input.params.sc_x": "scenecontrol的第三个参数",
+  "input.params.breakpoints": "断点",
+  "input.params.breakpoints.helper": "时间点，用半角括号“,”隔开",
+  "input.params.disp": "位移",
+  "input.params.disp.helper": "断点产生的总位移，将被平均到断点前后"
 }

@@ -50,6 +50,12 @@ export const toolMetas: ArcToolMetadata[] = [
     endpoint: "/arc/envelope",
   },
   {
+    id: "arcBreak",
+    category: "arc",
+    path: "/arc-break",
+    endpoint: "/arc/break",
+  },
+  {
     id: "timingEasing",
     category: "timing",
     path: "/timing-easing",
@@ -59,7 +65,7 @@ export const toolMetas: ArcToolMetadata[] = [
     id: "timingEasingDisp",
     category: "timing",
     path: "/timing-easing-disp",
-    endpoint: "/timing/easing-disp"
+    endpoint: "/timing/easing-disp",
   },
   {
     id: "timingGlitch",
@@ -77,8 +83,8 @@ export const toolMetas: ArcToolMetadata[] = [
     id: "scBlink",
     category: "other",
     path: "/sc-blink",
-    endpoint: "/etc/sc-blink"
-  }
+    endpoint: "/etc/sc-blink",
+  },
 ];
 
 export default toolMetas;

@@ -122,7 +122,7 @@ const ToolFormikForm: React.FC<ToolFormikFormProps> = ({
     // 预处理表单数据
     if (!disablePreprocess && values.params) {
       for (const key in values.params) {
-        if (key.includes("b_point")) {
+        if (key.includes("b_point") || key.includes("breakpoint")) {
           values.params[key] = (values.params[key] as string)
             .split(",")
             .map((x: string) => +x);

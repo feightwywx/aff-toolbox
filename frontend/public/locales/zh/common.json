@@ -39,5 +39,7 @@
     "tool.timingEasingDisp.name": "Timing缓动（位移优先）",
     "tool.timingEasingDisp.shortDesc": "精确控制位移的Timing缓动工具",
     "tool.scBlink.name": "时间组闪烁工具",
-    "tool.scBlink.shortDesc": "生成使时间组产生闪烁效果的scenecontrol语句"
+    "tool.scBlink.shortDesc": "生成使时间组产生闪烁效果的scenecontrol语句",
+    "tool.arcBreak.name": "Arc断点位移工具",
+    "tool.arcBreak.shortDesc": "根据时间点切断Arc并在断点产生位移"
 }

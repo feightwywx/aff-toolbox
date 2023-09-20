@@ -43,5 +43,7 @@
     "tool.timingEasingDisp.name": "Timing Easing (displacement first)",
     "tool.timingEasingDisp.shortDesc": "Timing easing tool for precise displacement control",
     "tool.scBlink.name": "Timinggroup Blinking Tool",
-    "tool.scBlink.shortDesc": "Generate scenecontrol statements that cause the timinggroup to blink"
+    "tool.scBlink.shortDesc": "Generate scenecontrol statements that cause the timinggroup to blink",
+    "tool.arcBreak.name": "Arc Breakpoint Shift Tool",
+    "tool.arcBreak.shortDesc": "Cutting off the Arc according to the point in time and generating displacements at the breakpoints"
 }

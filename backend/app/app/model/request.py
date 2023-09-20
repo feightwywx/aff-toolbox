@@ -185,3 +185,8 @@ class TimingEasingDispParams(StartStopCommonBody, CountCommonBody):
 
 class SceneControlBlinkParams(StartStopCommonBody, CountCommonBody):
     sc_x: Optional[float] = 0
+
+
+class ArcBreakParams(BaseModel):
+    breakpoints: list[int]
+    disp: float

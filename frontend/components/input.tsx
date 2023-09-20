@@ -216,6 +216,32 @@ export const BezierField: React.FC<TextFieldProps> = ({ ...props }) => {
   );
 };
 
+export const BreakpointsField: React.FC<TextFieldProps> = ({ ...props }) => {
+  const [field, meta] = useField(props as { name: any });
+  const { t } = useTranslation("tools");
+
+  let isError = Boolean(meta.touched && meta.error);
+
+  return (
+    <Grid xs={12}>
+      <TextField
+        {...field}
+        {...props}
+        fullWidth
+        label={t(`input.${props.name}`)}
+        helperText={
+          isError
+            ? t(meta.error!)
+            : props.helperText
+            ? t(`input.${props.name}.helper`)
+            : undefined
+        }
+        error={isError}
+      />
+    </Grid>
+  );
+};
+
 export const ArcField: React.FC<TextFieldProps> = ({ ...props }) => {
   const [field, meta, helpers] = useField(props as { name: any });
   const { t } = useTranslation("tools");

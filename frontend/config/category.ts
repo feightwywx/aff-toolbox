@@ -1,5 +1,17 @@
 import { CategoryWithNew } from "@/utils/interfaces";
 
-export const category: CategoryWithNew[] = ['new', 'chart', 'arc', 'timing', 'other'];
+export const category: CategoryWithNew[] = [
+  "new",
+  "chart",
+  "arc",
+  "timing",
+  "other",
+];
 
-export const newModules: string[] = ['arcEnvelope', 'timingEasingDisp', 'timingEasing'];
+export const newModules: string[] = [
+  "arcBreak",
+  "arcEnvelope",
+  "arcSplit",
+  "timingEasingDisp",
+  "timingEasing",
+];
