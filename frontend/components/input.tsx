@@ -409,9 +409,9 @@ export const EasingModeSelect: React.FC<SelectWithHelperProps> = ({
           <MenuItem value="ease_in_elastic">easeInElastic</MenuItem>
           <MenuItem value="ease_out_elastic">easeOutElastic</MenuItem>
           <MenuItem value="ease_in_out_elastic">easeInOutElastic</MenuItem>
-          <MenuItem value="ease_in_bounce">easeInCirc</MenuItem>
-          <MenuItem value="ease_out_bounce">easeOutCirc</MenuItem>
-          <MenuItem value="ease_in_out_bounce">easeInOutCirc</MenuItem>
+          <MenuItem value="ease_in_bounce">easeInBounce</MenuItem>
+          <MenuItem value="ease_out_bounce">easeOutBounce</MenuItem>
+          <MenuItem value="ease_in_out_bounce">easeInOutBounce</MenuItem>
         </Select>
         <FormHelperText>
           {isError

@@ -11,7 +11,7 @@ packages = [{include = "app"}]
 python = "^3.11"
 fastapi = "^0.95.2"
 uvicorn = {extras = ["standard"], version = "^0.22.0"}
-arcfutil = "^0.10.1"
+arcfutil = "^0.10.2"
 pydantic = {extras = ["misc"], version = "^1.10.8"}
 
 [tool.poetry.group.dev.dependencies]
