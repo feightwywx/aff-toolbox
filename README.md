@@ -12,20 +12,22 @@ Website: [AFF Toolbox](https://aff.arcaea.icu)
 
 - Timing Easing Tool, Glitch Timing Generator
 
+And more!
+
 ## Migration
 
-The previous version of AFF Toolbox is based on MDUI and flask. You can still use it at [legacy AFF Toolbox](https://aff.arcaea.icu) for any purposes.
-
-However, it is now archived and is no longer accepting new code, which means no new features will be added and there will be no bug fixes either.
+The previous version of AFF Toolbox is based on MDUI and flask and no longer under maintainance. You can find it at [aff.arcaea.icu](https://github.com/feightwywx/aff.arcaea.icu) (frontend) and [arcfapi](https://github.com/feightwywx/arcfapi) (backend).
 
 ## Development
 
 ### Requirements
 
-#### Backend Requirements
-
 - [Docker](https://www.docker.com/).
 - [Docker Compose](https://docs.docker.com/compose/install/).
+
+#### Backend Requirements
+
+- Python 3.11 environment.
 - [Poetry](https://python-poetry.org/) for Python package and environment management.
 
 #### Frontend Requirements

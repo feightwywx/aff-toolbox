@@ -63,7 +63,7 @@ export default function Home() {
             <Trans t={t}>一个Arcaea谱面段落生成工具</Trans>
           </Typography>
         </Box>
-        <Collapse in={showLegacy} unmountOnExit>
+        {/* <Collapse in={showLegacy} unmountOnExit>
           <Card
             sx={{
               backgroundColor: (theme) => theme.palette.primary.main,
@@ -111,7 +111,7 @@ export default function Home() {
               </Button>
             </Box>
           </Card>
-        </Collapse>
+        </Collapse> */}
 
         {/* 信息介绍卡片 */}
         <Card>
@@ -254,10 +254,10 @@ export default function Home() {
         </Card>
         <Box>
           <Typography>
-            ©️ 2023 .direwolf. Powered by{" "}
+            AFF backend powered by{" "}
             <Link href="https://github.com/feightwywx/arcfutil">arcfutil</Link>.
           </Typography>
-          <Link href="https://beian.miit.gov.cn/">皖ICP备20002195号-2</Link>
+          <Typography>Copyright ©️ .direwolf 2024.</Typography>
         </Box>
       </Stack>
     </>
