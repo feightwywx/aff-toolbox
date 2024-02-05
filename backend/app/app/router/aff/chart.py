@@ -1,7 +1,9 @@
+from typing import Iterable
 from app.model.common import CommonResponse
 from app.model.request import (
     ChartAlignParams,
     ChartOffsetParams,
+    ChartScaleParams,
 )
 from app.utils.response import make_success_resp
 from fastapi import APIRouter, Body, Depends
@@ -50,3 +52,29 @@ async def chart_mirror(
     notes: a.NoteGroup = Depends(notes_converter),
 ) -> CommonResponse[str]:
     return make_success_resp(notes.mirror().__str__())
+
+
+@chart_router.post("/scale")
+async def chart_scale(
+    notes: a.NoteGroup = Depends(notes_converter), params: ChartScaleParams = Body()
+) -> CommonResponse[str]:
+    def scale_group(notes):
+        for each in notes:
+            if isinstance(each, Iterable):
+                scale_group(each)
+            else:
+                each.time = (
+                    each.time - params.standard
+                ) * params.scale + params.standard
+        return notes
+
+    def filter_by_standard(notes):
+        for each in notes:
+            if isinstance(each, Iterable):
+                filter_by_standard(each)
+            else:
+                if each.time < params.standard:
+                    notes.remove(each)
+        return notes
+
+    return make_success_resp(filter_by_standard(scale_group(notes)).__str__())

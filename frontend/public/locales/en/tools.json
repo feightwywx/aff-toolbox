@@ -117,5 +117,8 @@
   "input.params.breakpoints": "Breakpoints",
   "input.params.breakpoints.helper": "Timings, separate by comma\",\"",
   "input.params.disp": "Displacement",
-  "input.params.disp.helper": "The total displacement generated at the breakpoint position, which will be divided equally before and after the breakpoint"
+  "input.params.disp.helper": "The total displacement generated at the breakpoint position, which will be divided equally before and after the breakpoint",
+  "input.params.scale": "Scale",
+  "input.params.standard": "Standard timing",
+  "input.params.standard.helper": "Note will be ignored which is earlier than the standard, defaults to 0"
 }

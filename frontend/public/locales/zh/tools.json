@@ -93,5 +93,8 @@
   "input.params.breakpoints": "断点",
   "input.params.breakpoints.helper": "时间点，用半角括号“,”隔开",
   "input.params.disp": "位移",
-  "input.params.disp.helper": "断点产生的总位移，将被平均到断点前后"
+  "input.params.disp.helper": "断点产生的总位移，将被平均到断点前后",
+  "input.params.scale": "缩放倍数",
+  "input.params.standard": "基准时间点",
+  "input.params.standard.helper": "早于基准的note会被忽略，默认为0"
 }

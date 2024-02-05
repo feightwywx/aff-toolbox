@@ -190,3 +190,7 @@ class SceneControlBlinkParams(StartStopCommonBody, CountCommonBody):
 class ArcBreakParams(BaseModel):
     breakpoints: list[int]
     disp: float
+
+class ChartScaleParams(BaseModel):
+    scale: float
+    standard: Optional[int] = 0

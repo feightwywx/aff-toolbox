@@ -52,11 +52,11 @@ const AppBar: React.FC<PropsWithChildren> = ({ children }) => {
 
         {/* 标题 */}
         <Box sx={{ flexGrow: 1 }}>
-          {/* <Badge badgeContent={"beta"} color="secondary"> */}
-          <Typography variant="h6" component="div" sx={{ pr: 2 }}>
-            {t("title")}
-          </Typography>
-          {/* </Badge> */}
+          <Badge badgeContent={"beta"} color="secondary">
+            <Typography variant="h6" component="div" sx={{ pr: 2 }}>
+              {t("title")}
+            </Typography>
+          </Badge>
         </Box>
 
         {/* 功能按钮 */}

@@ -85,6 +85,12 @@ export const toolMetas: ArcToolMetadata[] = [
     path: "/sc-blink",
     endpoint: "/etc/sc-blink",
   },
+  {
+    id: "chartScale",
+    category: "chart",
+    path: "/chart-scale",
+    endpoint: "/chart/scale",
+  },
 ];
 
 export default toolMetas;

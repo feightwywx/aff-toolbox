@@ -41,5 +41,7 @@
     "tool.scBlink.name": "时间组闪烁工具",
     "tool.scBlink.shortDesc": "生成使时间组产生闪烁效果的scenecontrol语句",
     "tool.arcBreak.name": "Arc断点位移工具",
-    "tool.arcBreak.shortDesc": "根据时间点切断Arc并在断点产生位移"
+    "tool.arcBreak.shortDesc": "根据时间点切断Arc并在断点产生位移",
+    "tool.chartScale.name": "谱面倍速",
+    "tool.chartScale.shortDesc": "将谱面整体或片段倍速"
 }

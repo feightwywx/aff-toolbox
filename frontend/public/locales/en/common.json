@@ -45,5 +45,7 @@
     "tool.scBlink.name": "Timinggroup Blinking Tool",
     "tool.scBlink.shortDesc": "Generate scenecontrol statements that cause the timinggroup to blink",
     "tool.arcBreak.name": "Arc Breakpoint Shift Tool",
-    "tool.arcBreak.shortDesc": "Cutting off the Arc according to the point in time and generating displacements at the breakpoints"
+    "tool.arcBreak.shortDesc": "Cutting off the Arc according to the point in time and generating displacements at the breakpoints",
+    "tool.chartScale.name": "Chart Scaling",
+    "tool.chartScale.shortDesc": "Scale whole or segment chart"
 }

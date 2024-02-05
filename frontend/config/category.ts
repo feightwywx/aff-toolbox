@@ -14,4 +14,5 @@ export const newModules: string[] = [
   "arcSplit",
   "timingEasingDisp",
   "timingEasing",
+  "chartScale",
 ];
