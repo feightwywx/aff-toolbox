@@ -58,6 +58,7 @@ async def chart_mirror(
 async def chart_scale(
     notes: a.NoteGroup = Depends(notes_converter), params: ChartScaleParams = Body()
 ) -> CommonResponse[str]:
+    params.scale = 1 / params.scale
     def scale_group(notes):
         for each in notes:
             if each is None:
