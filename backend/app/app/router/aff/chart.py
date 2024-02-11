@@ -65,6 +65,8 @@ async def chart_scale(
             if isinstance(each, a.NoteGroup):
                 scale_group(each)
             else:
+                if each.time == 0 and isinstance(each, a.Timing):
+                    continue
                 each.time = (
                     each.time - params.standard
                 ) * params.scale + params.standard
@@ -79,8 +81,15 @@ async def chart_scale(
         for i, each in enumerate(notes):
             if isinstance(each, a.NoteGroup):
                 filter_by_standard(each)
+                if isinstance(each, a.TimingGroup):
+                    opt = each.option
+                    filtered_tg = a.TimingGroup(filter(lambda x: x is not None, each), opt)
+                    if len(filtered_tg) > 0:
+                        notes[i] = filtered_tg
+                    else:
+                        notes[i] = None
             else:
-                if each.time < params.standard:
+                if each.time < params.standard and not (each.time == 0 and isinstance(each, a.Timing)):
                     notes[i] = None
         return notes
 
