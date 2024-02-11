@@ -60,21 +60,31 @@ async def chart_scale(
 ) -> CommonResponse[str]:
     def scale_group(notes):
         for each in notes:
-            if isinstance(each, Iterable):
+            if each is None:
+                continue
+            if isinstance(each, a.NoteGroup):
                 scale_group(each)
             else:
                 each.time = (
                     each.time - params.standard
                 ) * params.scale + params.standard
+                
+                if hasattr(each, 'totime'):
+                    each.totime = (
+                    each.totime - params.standard
+                ) * params.scale + params.standard
         return notes
 
     def filter_by_standard(notes):
-        for each in notes:
-            if isinstance(each, Iterable):
+        print(repr(notes))
+        for i, each in enumerate(notes):
+            print(repr(each))
+            if isinstance(each, a.NoteGroup):
                 filter_by_standard(each)
             else:
+                print(type(each), each.time, params.standard)
                 if each.time < params.standard:
-                    notes.remove(each)
+                    notes[i] = None
         return notes
 
-    return make_success_resp(filter_by_standard(scale_group(notes)).__str__())
+    return make_success_resp(scale_group(filter_by_standard(notes)).__str__())
