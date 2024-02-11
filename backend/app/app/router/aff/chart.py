@@ -84,6 +84,12 @@ async def chart_scale(
                             each.skynote,
                         )
                     )
+
+                if isinstance(each, a.SceneControl) and each.type in [
+                    "enwidencamera",
+                    "enwidenlanes",
+                ]:
+                    each.x = (each.x - params.standard) * params.scale + params.standard
         return notes
 
     def filter_by_standard(notes):
