@@ -70,11 +70,20 @@ async def chart_scale(
                 each.time = (
                     each.time - params.standard
                 ) * params.scale + params.standard
-                
-                if hasattr(each, 'totime'):
+
+                if hasattr(each, "totime"):
                     each.totime = (
-                    each.totime - params.standard
-                ) * params.scale + params.standard
+                        each.totime - params.standard
+                    ) * params.scale + params.standard
+
+                if isinstance(each, a.Arc) and each.skynote is not None:
+                    each.skynote = list(
+                        map(
+                            lambda x: (x - params.standard) * params.scale
+                            + params.standard,
+                            each.skynote,
+                        )
+                    )
         return notes
 
     def filter_by_standard(notes):
@@ -83,13 +92,17 @@ async def chart_scale(
                 filter_by_standard(each)
                 if isinstance(each, a.TimingGroup):
                     opt = each.option
-                    filtered_tg = a.TimingGroup(filter(lambda x: x is not None, each), opt)
+                    filtered_tg = a.TimingGroup(
+                        filter(lambda x: x is not None, each), opt
+                    )
                     if len(filtered_tg) > 0:
                         notes[i] = filtered_tg
                     else:
                         notes[i] = None
             else:
-                if each.time < params.standard and not (each.time == 0 and isinstance(each, a.Timing)):
+                if each.time < params.standard and not (
+                    each.time == 0 and isinstance(each, a.Timing)
+                ):
                     notes[i] = None
         return notes
 
