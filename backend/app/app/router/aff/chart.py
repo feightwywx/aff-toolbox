@@ -76,13 +76,10 @@ async def chart_scale(
         return notes
 
     def filter_by_standard(notes):
-        print(repr(notes))
         for i, each in enumerate(notes):
-            print(repr(each))
             if isinstance(each, a.NoteGroup):
                 filter_by_standard(each)
             else:
-                print(type(each), each.time, params.standard)
                 if each.time < params.standard:
                     notes[i] = None
         return notes
