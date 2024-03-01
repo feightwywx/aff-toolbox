@@ -100,7 +100,7 @@ async def chart_scale(
                 if isinstance(each, a.TimingGroup):
                     opt = each.option
                     filtered_tg = a.TimingGroup(
-                        filter(lambda x: x is not None, each), opt
+                        filter(lambda x: x is not None, each), opt=opt
                     )
                     if len(filtered_tg) > 0:
                         notes[i] = filtered_tg
