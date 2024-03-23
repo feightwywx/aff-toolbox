@@ -61,7 +61,7 @@ class ArcSplitParams(OptionalStartStopCommonBody, CountCommonBody):
 class ArcCreaseLineParams(CountCommonBody):
     delta_x: float
     delta_y: float
-    mode: Literal["m", "s"] = "m"
+    mode: Literal["m", "b"] = "m"
     arc_easing: str
 
 
