@@ -27,8 +27,30 @@ async def notes_converter(notes: str = Body()) -> a.NoteGroup | a.AffList:
 async def chart_offset(
     notes: str = Body(), params: ChartOffsetParams = Body()
 ) -> CommonResponse[str]:
+    def filter_by_standard(notes):
+        for i, each in enumerate(notes):
+            if isinstance(each, a.NoteGroup):
+                filter_by_standard(each)
+                if isinstance(each, a.TimingGroup):
+                    opt = each.option
+                    filtered_tg = a.TimingGroup(
+                        filter(lambda x: x is not None, each), opt=opt
+                    )
+                    if len(filtered_tg) > 0:
+                        notes[i] = filtered_tg
+                    else:
+                        notes[i] = None
+            else:
+                if each.time < 0 and not (
+                    each.time == 0 and isinstance(each, a.Timing)
+                ):
+                    notes[i] = None
+        return notes
+    
     chart: a.AffList = a.load(notes)  # type: ignore
     chart.offsetto(params.offset)
+    if not params.allowMinusTimingNote:
+        chart = filter_by_standard(chart)
 
     if notes.startswith("AudioOffset"):
         return make_success_resp(chart.__str__())

@@ -156,6 +156,7 @@ class TimingGlitchParams(StartStopCommonBody, CountCommonBody):
 
 class ChartOffsetParams(BaseModel):
     offset: int
+    allowMinusTimingNote: Optional[bool] = False
 
 
 class ChartAlignParams(BaseModel):

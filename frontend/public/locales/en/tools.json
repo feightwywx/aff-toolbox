@@ -120,5 +120,6 @@
   "input.params.disp.helper": "The total displacement generated at the breakpoint position, which will be divided equally before and after the breakpoint",
   "input.params.scale": "Scale",
   "input.params.standard": "Standard timing",
-  "input.params.standard.helper": "Note will be ignored which is earlier than the standard, defaults to 0"
+  "input.params.standard.helper": "Note will be ignored which is earlier than the standard, defaults to 0",
+  "input.params.allowMinusTimingNote": "Allow Minus Timing Notes"
 }

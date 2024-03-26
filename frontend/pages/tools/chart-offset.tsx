@@ -1,8 +1,8 @@
 import type { GetStaticProps, NextPage } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import ToolFormikForm from "@/components/ToolFormikForm";
-import { AffTextField, NumberField } from "@/components/input";
-import { CardWithGrid } from "@/components/CardWithGrid";
+import { AffTextField, CheckBoxField, NumberField } from "@/components/input";
+import { CardWithGrid, SubtitleTypography } from "@/components/CardWithGrid";
 import { ToolTitle } from "@/components/ToolTitle";
 import * as Yup from "yup";
 import { ToolStack } from "@/components/ToolStack";
@@ -13,11 +13,12 @@ const ToolPage: NextPage = () => {
       <ToolTitle />
 
       <ToolFormikForm
-        initValues={{ notes: "", params: { offset: "" } }}
+        initValues={{ notes: "", params: { offset: "", allowMinusTimingNote: false } }}
         validationSchema={{
           notes: Yup.string().required(),
           params: Yup.object().shape({
             offset: Yup.number().required().integer(),
+            allowMinusTimingNote: Yup.boolean()
           }),
         }}
       >
@@ -27,6 +28,8 @@ const ToolPage: NextPage = () => {
 
         <CardWithGrid title="参数">
           <NumberField name="params.offset" withTimingCalc />
+          <SubtitleTypography>可选参数</SubtitleTypography>
+          <CheckBoxField name="params.allowMinusTimingNote" />
         </CardWithGrid>
       </ToolFormikForm>
     </ToolStack>
