@@ -50,9 +50,9 @@ TRAEFIK_PUBLIC_TAG=traefik-public
 DOCKER_IMAGE_BACKEND=dotdirewolf/aff-toolbox-backend
 DOCKER_IMAGE_FRONTEND=dotdirewolf/aff-toolbox-frontend
 
-# Backend
-BACKEND_CORS_ORIGINS=["http://localhost", "http://localhost:3000", "http://localhost:8080", "https://localhost", "https://localhost:3000", "https://localhost:8080", "https://aff.arcaea.icu"]
-PROJECT_NAME=aff-toolbox
+# aff toolbox info
+ATB_VERSION=2.0.0
+ATB_TARGET=web
 
 ```
 

@@ -175,6 +175,25 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
               </Collapse>
 
               {children}
+
+              <Typography
+                variant="subtitle2"
+                color={() => theme.palette.divider}
+              >
+                {`aff-toolbox ${
+                  process.env.NEXT_PUBLIC_ATB_VERSION
+                    ? process.env.NEXT_PUBLIC_ATB_VERSION
+                    : "development build"
+                }(${
+                  process.env.NEXT_PUBLIC_ATB_VERSION_COMMIT
+                    ? process.env.NEXT_PUBLIC_ATB_VERSION_COMMIT
+                    : "dev"
+                }), target ${
+                  process.env.NEXT_PUBLIC_ATB_TARGET
+                    ? process.env.NEXT_PUBLIC_ATB_TARGET
+                    : "none"
+                }`}
+              </Typography>
             </LayoutContainer>
           </div>
         </Fade>

@@ -71,7 +71,7 @@ services:
       - traefik.http.routers.${STACK_NAME?Variable not set}-proxy-http.middlewares=${STACK_NAME?Variable not set}-www-redirect,${STACK_NAME?Variable not set}-https-redirect
 
   backend:
-    image: '${DOCKER_IMAGE_BACKEND?Variable not set}:${TAG-latest}'
+    image: '${DOCKER_IMAGE_BACKEND?Variable not set}:${ATB_VERSION-latest}'
     env_file:
       - .env
     environment:
@@ -91,7 +91,7 @@ services:
       - traefik.http.routers.${STACK_NAME?Variable not set}-backend-http.middlewares=strip-api-url
 
   frontend:
-    image: '${DOCKER_IMAGE_FRONTEND?Variable not set}:${TAG-latest}'
+    image: '${DOCKER_IMAGE_FRONTEND?Variable not set}:${ATB_VERSION-latest}'
     build:
       context: ./frontend
       args:
