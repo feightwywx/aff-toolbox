@@ -121,5 +121,13 @@
   "input.params.scale": "Scale",
   "input.params.standard": "Standard timing",
   "input.params.standard.helper": "Note will be ignored which is earlier than the standard, defaults to 0",
-  "input.params.allowMinusTimingNote": "Allow Minus Timing Notes"
+  "input.params.allowMinusTimingNote": "Allow Minus Timing Notes",
+  "input.rainLimitMode": "Raindrop Limit Mode",
+  "input.rainLimitMode.standard": "Standard",
+  "input.rainLimitMode.enwiden": "enwiden",
+  "input.rainLimitMode.enwidenbyd": "enwiden(BYD)",
+  "input.params.x_limit_range": "x range",
+  "input.params.x_limit_range.helper": "Format: \"left boundary, right boundary\", would override the limit mode's boundary",
+  "input.params.y_limit_range": "y range",
+  "input.params.y_limit_range.helper": "Format: \"left boundary, right boundary\", would override the limit mode's boundary"
 }
