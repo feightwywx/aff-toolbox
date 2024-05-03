@@ -122,7 +122,13 @@ const ToolFormikForm: React.FC<ToolFormikFormProps> = ({
     // 预处理表单数据
     if (!disablePreprocess && values.params) {
       for (const key in values.params) {
-        if (key.includes("b_point") || key.includes("breakpoint")) {
+        // 参数名包含以下关键字时，表示用逗号分隔的列表
+        // TODO 用一种更优雅的方式实现识别
+        if (
+          key.includes("b_point") ||
+          key.includes("breakpoint") ||
+          key.includes("limit_range")
+        ) {
           values.params[key] = (values.params[key] as string)
             .split(",")
             .map((x: string) => +x);

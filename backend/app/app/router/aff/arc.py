@@ -116,6 +116,9 @@ def arc_rain(
         params.dropLength
         if (params.dropLength is not None)
         else (params.stop - params.start),
+        mode=params.mode,
+        x_limit=params.x_limit_range,
+        y_limit=params.y_limit_range,
     )
 
     if post is not None:

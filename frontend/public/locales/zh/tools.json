@@ -97,5 +97,13 @@
   "input.params.scale": "缩放倍数",
   "input.params.standard": "基准时间点",
   "input.params.standard.helper": "早于基准的note会被忽略，默认为0",
-  "input.params.allowMinusTimingNote": "允许负时间点Note"
+  "input.params.allowMinusTimingNote": "允许负时间点Note",
+  "input.rainLimitMode": "雨点限制模式",
+  "input.rainLimitMode.standard": "标准",
+  "input.rainLimitMode.enwiden": "enwiden",
+  "input.rainLimitMode.enwidenbyd": "enwiden(BYD)",
+  "input.params.x_limit_range": "x方向范围",
+  "input.params.x_limit_range.helper": "格式为“左边界,右边界”，会覆盖限制模式中的边界",
+  "input.params.y_limit_range": "y方向范围",
+  "input.params.y_limit_range.helper": "格式为“左边界,右边界”，会覆盖限制模式中的边界"
 }

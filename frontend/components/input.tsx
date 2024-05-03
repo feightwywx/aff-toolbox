@@ -506,6 +506,48 @@ export const EnvelopeModeSelect: React.FC<SelectWithHelperProps> = ({
   );
 };
 
+export const RainLimitModeSelect: React.FC<SelectWithHelperProps> = ({
+  ...props
+}) => {
+  const [field, meta] = useField(props as { name: any });
+  const { t } = useTranslation("tools");
+
+  let isError = Boolean(meta.touched && meta.error);
+
+  return (
+    <Grid xs={12} sm={6} md={4}>
+      <FormControl fullWidth>
+        <InputLabel>{t("input.rainLimitMode")}</InputLabel>
+        {/* @ts-ignore */}
+        <Select
+          fullWidth
+          label={t("input.rainLimitMode")}
+          error={isError}
+          {...field}
+          {...props}
+        >
+          <MenuItem value="s">
+            <Trans t={t}>input.rainLimitMode.standard</Trans>
+          </MenuItem>
+          <MenuItem value="e">
+            <Trans t={t}>input.rainLimitMode.enwiden</Trans>
+          </MenuItem>
+          <MenuItem value="eb">
+            <Trans t={t}>input.rainLimitMode.enwidenbyd</Trans>
+          </MenuItem>
+        </Select>
+        <FormHelperText>
+          {isError
+            ? t(meta.error!)
+            : props.helperText
+            ? t(`input.rainLimitMode.helper`)
+            : undefined}
+        </FormHelperText>
+      </FormControl>
+    </Grid>
+  );
+};
+
 export const SingleLineField: React.FC<PropsWithChildren> = ({
   children,
   ...props

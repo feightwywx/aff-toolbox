@@ -114,6 +114,9 @@ class ArcAnimateParams(StartStopCommonBody):
 class ArcRainParams(StartStopCommonBody):
     step: float
     dropLength: Optional[int]
+    mode: Literal['s', 'e', 'eb'] = 's'
+    x_limit_range: Optional[list[float]] = None
+    y_limit_range: Optional[list[float]] = None
 
     @root_validator()
     def count_validate(cls, values: dict[str, Any]) -> dict[str, Any]:

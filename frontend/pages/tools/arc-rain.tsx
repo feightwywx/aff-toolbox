@@ -1,7 +1,7 @@
 import type { GetStaticProps, NextPage } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import ToolFormikForm from "@/components/ToolFormikForm";
-import { ArcField, NumberField } from "@/components/input";
+import { ArcField, NumberField, RainLimitModeSelect } from "@/components/input";
 import { CardWithGrid, SubtitleTypography } from "@/components/CardWithGrid";
 import { ToolTitle } from "@/components/ToolTitle";
 import * as Yup from "yup";
@@ -20,7 +20,15 @@ const ToolPage: NextPage = () => {
 
       <ToolFormikForm
         initValues={{
-          params: { start: "", stop: "", step: "", length: "" },
+          params: {
+            start: "",
+            stop: "",
+            step: "",
+            dropLength: "",
+            mode: "s",
+            x_limit_range: "",
+            y_limit_range: "",
+          },
           ...ArcPostProcessInitValues,
         }}
         validationSchema={{
@@ -28,8 +36,15 @@ const ToolPage: NextPage = () => {
             start: Yup.number().integer().required(),
             stop: Yup.number().integer().required(),
             step: Yup.number().required(),
-            length: Yup.number()
+            dropLength: Yup.number()
               .integer()
+              .transform(emptyStringToUndef)
+              .nullable(),
+            mode: Yup.string(),
+            x_limit_range: Yup.string()
+              .transform(emptyStringToUndef)
+              .nullable(),
+            y_limit_range: Yup.string()
               .transform(emptyStringToUndef)
               .nullable(),
           }),
@@ -42,6 +57,9 @@ const ToolPage: NextPage = () => {
           <NumberField name="params.step" withTimingCalc />
           <SubtitleTypography>可选参数</SubtitleTypography>
           <NumberField name="params.dropLength" helperText withTimingCalc />
+          <RainLimitModeSelect name="params.mode" />
+          <NumberField name="params.x_limit_range" helperText />
+          <NumberField name="params.y_limit_range" helperText />
         </CardWithGrid>
         <ArcPostProcessCard />
       </ToolFormikForm>
