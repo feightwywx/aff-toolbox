@@ -14,7 +14,7 @@ docker buildx build \
 --build-arg ATB_VERSION_COMMIT=${git_head} \
 --build-arg ATB_TARGET=${ATB_TARGET} \
 -t ${DOCKER_IMAGE_FRONTEND}:${ATB_VERSION} \
--t ${DOCKER_IMAGE_FRONTEND}:latest
+-t ${DOCKER_IMAGE_FRONTEND}:latest \
 --push ./frontend
 
 docker buildx build \
@@ -23,5 +23,5 @@ docker buildx build \
 --build-arg ATB_VERSION_COMMIT=${git_head} \
 --build-arg ATB_TARGET=${ATB_TARGET} \
 -t ${DOCKER_IMAGE_BACKEND}:${ATB_VERSION} \
--t ${DOCKER_IMAGE_BACKEND}:latest
+-t ${DOCKER_IMAGE_BACKEND}:latest \
 --push ./backend
