@@ -106,6 +106,9 @@ export const NumberField: React.FC<
               </InputAdornment>
             ) : undefined
           }
+          inputProps={{
+            "aria-label": `input.${props.name}`,
+          }}
           {...field}
         />
         <FormHelperText>
