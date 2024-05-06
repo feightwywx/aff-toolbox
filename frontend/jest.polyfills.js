@@ -9,12 +9,15 @@
  * you don't want to deal with this.
  */
 
-const { TextDecoder, TextEncoder, ReadableStream } = require("node:util");
+const { TextDecoder, TextEncoder } = require("node:util");
+const { TransformStream } = require("node:stream/web");
+const { ReadableStream } = require("node:stream/web");
 
 Object.defineProperties(globalThis, {
   TextDecoder: { value: TextDecoder },
   TextEncoder: { value: TextEncoder },
   ReadableStream: { value: ReadableStream },
+  TransformStream: { value: TransformStream },
 });
 
 const { Blob, File } = require("node:buffer");
@@ -29,3 +32,9 @@ Object.defineProperties(globalThis, {
   Request: { value: Request },
   Response: { value: Response },
 });
+
+const {clearImmediate} = require('node:timers')
+
+Object.defineProperties(globalThis, {
+    clearImmediate: {value: clearImmediate}
+})

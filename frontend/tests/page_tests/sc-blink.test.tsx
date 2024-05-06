@@ -1,31 +1,77 @@
-import { render, fireEvent, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { echoServer } from "../mock";
 import ToolPage from "@/pages/tools/sc-blink";
 
 jest.mock("next/router", () => jest.requireActual("next-router-mock"));
 jest.mock("react-redux");
 
-beforeAll(() => echoServer.listen());
-afterEach(() => echoServer.resetHandlers());
-afterAll(() => echoServer.close());
-
-test("echo test", async () => {
+describe("form test", () => {
   const user = userEvent.setup();
-  // @ts-ignore
-  // delete window.location;
-  // @ts-ignore
-  // window.location = new URL("https://www.example.com/tools/sc-blink");
-  render(<ToolPage />);
-  await user.type(
-    screen.getByRole("textbox", { name: "input.params.start" }),
-    "1"
-  );
-  expect(
-    (
-      screen.getByRole("textbox", {
-        name: "input.params.start",
-      }) as HTMLInputElement
-    ).value
-  ).toBe("1");
+  let u: () => void; // local unmount
+  let formControl: { [x: string]: HTMLElement };
+  let formSubmit: HTMLElement;
+  let formResult: HTMLElement;
+
+  beforeEach(() => {
+    const { unmount } = render(<ToolPage />);
+    u = unmount;
+    formControl = {
+      start: screen.getAllByRole("textbox", { name: "input.params.start" })[0],
+      stop: screen.getAllByRole("textbox", { name: "input.params.stop" })[0],
+      count: screen.getAllByRole("textbox", { name: "input.params.count" })[0],
+      sc_x: screen.getAllByRole("textbox", { name: "input.params.sc_x" })[0],
+    } as { [x: string]: HTMLElement };
+    formSubmit = screen.getAllByRole("button", { name: "submit" })[0];
+    formResult = screen.getAllByTestId("result")[0];
+  });
+
+  afterEach(() => {
+    u(); // unmount
+  });
+
+  it("all required", async () => {
+    await user.type(formControl.start, "0");
+    await user.type(formControl.stop, "1000");
+    await user.type(formControl.count, "10");
+    await user.click(formSubmit);
+
+    expect(formResult.innerHTML).toMatchSnapshot();
+  });
+
+  it("all", async () => {
+    await user.type(formControl.start, "0");
+    await user.type(formControl.stop, "1000");
+    await user.type(formControl.count, "10");
+    await user.type(formControl.sc_x, "2");
+    await user.click(formSubmit);
+
+    expect(formResult.innerHTML).toMatchSnapshot();
+  });
+
+  it("required missing", async () => {
+    // await user.type(formControl.start, "0");
+    await user.type(formControl.stop, "1000");
+    await user.type(formControl.count, "10");
+    await user.click(formSubmit);
+
+    expect(formResult.innerHTML).toMatchSnapshot();
+  });
+
+  it("required missing", async () => {
+    await user.type(formControl.start, "0");
+    // await user.type(formControl.stop, "1000");
+    await user.type(formControl.count, "10");
+    await user.click(formSubmit);
+
+    expect(formResult.innerHTML).toMatchSnapshot();
+  });
+
+  it("required missing", async () => {
+    await user.type(formControl.start, "0");
+    await user.type(formControl.stop, "1000");
+    // await user.type(formControl.count, "10");
+    await user.click(formSubmit);
+
+    expect(formResult.innerHTML).toMatchSnapshot();
+  });
 });
