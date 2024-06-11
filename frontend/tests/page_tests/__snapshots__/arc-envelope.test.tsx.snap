@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`form test required 1`] = `"{"post":{"mirror":false,"straighten_x":false,"straighten_y":false,"connector":false,"position_filter":""},"params":{"count":10,"mode":"c"},"arc2":"arc(0,1000,0.00,1.00,s,1.00,0.00,0,none,false);","arc1":"arc(0,1000,0.00,1.00,s,1.00,0.00,0,none,false);"}"`;
+
+exports[`form test required with post 1`] = `"{"post":{"mirror":true,"straighten_x":true,"straighten_y":true,"connector":true,"position_filter":"even"},"params":{"count":10,"mode":"c"},"arc2":"arc(0,1000,0.00,1.00,s,1.00,0.00,0,none,false);","arc1":"arc(0,1000,0.00,1.00,s,1.00,0.00,0,none,false);"}"`;

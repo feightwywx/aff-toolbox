@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`form test all 1`] = `"{"post":{"mirror":false,"straighten_x":false,"straighten_y":false,"connector":false,"position_filter":""},"params":{"y_limit_range":[10],"x_limit_range":[10],"mode":"s","dropLength":10,"step":10,"stop":1000,"start":0}}"`;
+
+exports[`form test all with post 1`] = `"{"post":{"mirror":true,"straighten_x":true,"straighten_y":true,"connector":true,"position_filter":"even"},"params":{"y_limit_range":[10],"x_limit_range":[10],"mode":"s","dropLength":10,"step":10,"stop":1000,"start":0}}"`;
+
+exports[`form test required 1`] = `"{"post":{"mirror":false,"straighten_x":false,"straighten_y":false,"connector":false,"position_filter":""},"params":{"mode":"s","step":10,"stop":1000,"start":0}}"`;
+
+exports[`form test required with post 1`] = `"{"post":{"mirror":true,"straighten_x":true,"straighten_y":true,"connector":true,"position_filter":"even"},"params":{"mode":"s","step":10,"stop":1000,"start":0}}"`;

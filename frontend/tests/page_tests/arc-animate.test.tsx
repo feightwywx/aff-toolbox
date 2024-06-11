@@ -91,8 +91,4 @@ describe("form test", () => {
 
     expect(formResult.innerHTML).toMatchSnapshot();
   }, 30000);
-
-
-
-
 });
