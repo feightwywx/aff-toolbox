@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`form test all 1`] = `"{"params":{"standard":1000,"scale":1.2},"notes":"arc(0,1000,0.00,1.00,s,1.00,0.00,0,none,false);"}"`;
+
+exports[`form test required 1`] = `"{"params":{"scale":1.2},"notes":"arc(0,1000,0.00,1.00,s,1.00,0.00,0,none,false);"}"`;
