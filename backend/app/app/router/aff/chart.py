@@ -46,7 +46,7 @@ async def chart_offset(
                 ):
                     notes[i] = None
         return notes
-    
+
     chart: a.AffList = a.load(notes)  # type: ignore
     chart.offsetto(params.offset)
     if not params.allowMinusTimingNote:
@@ -81,13 +81,25 @@ async def chart_scale(
     notes: a.NoteGroup = Depends(notes_converter), params: ChartScaleParams = Body()
 ) -> CommonResponse[str]:
     params.scale = 1 / params.scale
+
     def scale_group(notes):
+        if isinstance(notes, a.AffList):
+            notes.offset = (
+                notes.offset - params.standard
+            ) * params.scale + params.standard
+            print("scaled offset:", notes.offset)
+
         for each in notes:
+            print(each.__dict__)
             if each is None:
                 continue
+
             if isinstance(each, a.NoteGroup):
                 scale_group(each)
             else:
+                if isinstance(each, a.Timing):
+                    each.bpm = each.bpm * params.scale
+
                 if each.time == 0 and isinstance(each, a.Timing):
                     continue
                 each.time = (
