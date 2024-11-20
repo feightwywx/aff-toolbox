@@ -16,7 +16,7 @@ chart_router = APIRouter(
 )
 
 
-async def notes_converter(notes: str = Body()) -> a.NoteGroup | a.AffList:
+async def notes_converter(notes: str = Body(embed=True)) -> a.NoteGroup | a.AffList:
     chart = a.load(notes)
     if not notes.startswith("AudioOffset"):
         return a.NoteGroup(chart)

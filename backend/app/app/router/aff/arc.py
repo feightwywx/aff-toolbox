@@ -24,7 +24,7 @@ arc_router = APIRouter(
 )
 
 
-async def arc_converter(arc: str = Body()) -> a.Arc:
+async def arc_converter(arc: str = Body(embed=True)) -> a.Arc:
     obj = a.loadline(arc)
     if isinstance(obj, a.Arc):
         return obj
