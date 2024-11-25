@@ -2,5 +2,14 @@
   "extends": ["eslint:recommended", "next/core-web-vitals"],
   "rules": {
     "no-unused-vars": "warn"
-  }
+  },
+  "overrides": [
+    {
+      "files": ["tests/**/*"],
+      "plugins": ["jest"],
+      "env": {
+        "jest/globals": true
+      }
+    }
+  ]
 }

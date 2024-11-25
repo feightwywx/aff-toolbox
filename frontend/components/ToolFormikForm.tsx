@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form, Formik, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import { enqueueSnackbar } from "notistack";
@@ -135,6 +135,7 @@ const ToolFormikForm: React.FC<ToolFormikFormProps> = ({
         }
       }
     }
+    setResultContent(JSON.stringify(values));
 
     const result = await process(values);
 
@@ -172,6 +173,8 @@ const ToolFormikForm: React.FC<ToolFormikFormProps> = ({
     actions.setSubmitting(false);
   };
 
+  const [resultContent, setResultContent] = useState("");
+
   return (
     <Formik
       initialValues={initValues}
@@ -203,17 +206,22 @@ const ToolFormikForm: React.FC<ToolFormikFormProps> = ({
                     variant: "default",
                   });
                 } else if (errKeys.length !== 0) {
-                  enqueueSnackbar(
-                    `${t("请检查以下字段：")}${errKeys.map((e) =>
-                      t(`input.${e}`)
-                    )}`,
-                    {
-                      variant: "error",
-                    }
-                  );
+                  if (enqueueSnackbar) {
+                    enqueueSnackbar(
+                      `${t("请检查以下字段：")}${errKeys.map((e) =>
+                        t(`input.${e}`)
+                      )}`,
+                      {
+                        variant: "error",
+                      }
+                    );
+                  } else {
+                    setResultContent(JSON.stringify(errKeys));
+                  }
                 }
               }}
               disabled={isSubmitting}
+              aria-label="submit"
             >
               {isSubmitting ? (
                 <CircularProgress color="inherit" size={20} sx={{ mr: 1.5 }} />
@@ -223,6 +231,10 @@ const ToolFormikForm: React.FC<ToolFormikFormProps> = ({
               <Trans t={t}>生成并复制</Trans>
             </Fab>
           )}
+          {/* for test propose */}
+          <p style={{ display: "none" }} data-testid="result">
+            {resultContent}
+          </p>
         </Form>
       )}
     </Formik>

@@ -106,6 +106,9 @@ export const NumberField: React.FC<
               </InputAdornment>
             ) : undefined
           }
+          inputProps={{
+            "aria-label": `input.${props.name}`,
+          }}
           {...field}
         />
         <FormHelperText>
@@ -211,6 +214,9 @@ export const BezierField: React.FC<TextFieldProps> = ({ ...props }) => {
             : undefined
         }
         error={isError}
+        inputProps={{
+          "aria-label": `input.${props.name}`,
+        }}
       />
     </Grid>
   );
@@ -260,6 +266,9 @@ export const ArcField: React.FC<TextFieldProps> = ({ ...props }) => {
               <CreateArcButton fieldHelpers={helpers} />
             </InputAdornment>
           }
+          inputProps={{
+            "aria-label": `input.${props.name}`,
+          }}
           {...field}
         />
         <FormHelperText>
@@ -371,6 +380,10 @@ export const EasingModeSelect: React.FC<SelectWithHelperProps> = ({
           fullWidth
           label={t(`input.${props.name}`)}
           error={isError}
+          inputProps={{
+            "role": "listbox",
+            "aria-label": `input.${props.name}`,
+          }}
           {...field}
           {...props}
         >
