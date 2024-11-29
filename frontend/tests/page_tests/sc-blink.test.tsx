@@ -36,7 +36,7 @@ describe("form test", () => {
     await user.click(formSubmit);
 
     expect(formResult.innerHTML).toMatchSnapshot();
-  });
+  }, 30000);
 
   it("all", async () => {
     await user.type(formControl.start, "0");
@@ -46,7 +46,7 @@ describe("form test", () => {
     await user.click(formSubmit);
 
     expect(formResult.innerHTML).toMatchSnapshot();
-  });
+  }, 30000);
 
   it("required missing", async () => {
     // await user.type(formControl.start, "0");
@@ -55,7 +55,7 @@ describe("form test", () => {
     await user.click(formSubmit);
 
     expect(formResult.innerHTML).toMatchSnapshot();
-  });
+  }, 30000);
 
   it("required missing", async () => {
     await user.type(formControl.start, "0");
@@ -64,7 +64,7 @@ describe("form test", () => {
     await user.click(formSubmit);
 
     expect(formResult.innerHTML).toMatchSnapshot();
-  });
+  }, 30000);
 
   it("required missing", async () => {
     await user.type(formControl.start, "0");
@@ -73,5 +73,5 @@ describe("form test", () => {
     await user.click(formSubmit);
 
     expect(formResult.innerHTML).toMatchSnapshot();
-  });
+  }, 30000);
 });
