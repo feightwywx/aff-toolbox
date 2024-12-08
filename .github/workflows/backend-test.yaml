@@ -21,4 +21,4 @@ jobs:
         run: poetry install --with dev
       - name: Run Tests
         working-directory: ./backend/app
-        run: pytest
+        run: poetry run pytest
