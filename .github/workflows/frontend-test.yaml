@@ -14,6 +14,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 20
+      - name: Enable Corepack
+        run: corepack enable
       - name: Install dependencies with Yarn
         working-directory: ./frontend
         run: yarn install --immutable
