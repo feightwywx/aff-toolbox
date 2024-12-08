@@ -68,10 +68,10 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.frontend_meta.outputs.tags }}
           labels: ${{ steps.frontend_meta.outputs.labels }}
-          build-args:
-            - ATB_VERSION=${{ steps.frontend_meta.outputs.version }}
-            - ATB_VERSION_COMMIT=${{ steps.vars.outputs.sha_short }}
-            - ATB_TARGET=web
+          build-args: |
+            "ATB_VERSION=${{ steps.frontend_meta.outputs.version }}"
+            "ATB_VERSION_COMMIT=${{ steps.vars.outputs.sha_short }}"
+            "ATB_TARGET=web"
 
       - name: Backend - Build and push
         uses: docker/build-push-action@v6
@@ -81,8 +81,8 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.frontend_meta.outputs.tags }}
           labels: ${{ steps.frontend_meta.outputs.labels }}
-          build-args:
-            - ATB_VERSION=${{ steps.frontend_meta.outputs.version }}
-            - ATB_VERSION_COMMIT=${{ steps.vars.outputs.sha_short }}
-            - ATB_TARGET=web
+          build-args: |
+            "ATB_VERSION=${{ steps.frontend_meta.outputs.version }}"
+            "ATB_VERSION_COMMIT=${{ steps.vars.outputs.sha_short }}"
+            "ATB_TARGET=web"
 
