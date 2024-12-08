@@ -59,6 +59,7 @@ jobs:
       - name: Frontend - Build and push
         uses: docker/build-push-action@v6
         with:
+          file: ./frontend/Dockerfile
           working-directory: ./frontend
           platforms: linux/amd64,linux/arm64
           push: ${{ github.event_name != 'pull_request' }}
@@ -68,6 +69,7 @@ jobs:
       - name: Backend - Build and push
         uses: docker/build-push-action@v6
         with:
+          file: ./backend/app/Dockerfile
           working-directory: ./backend/app
           platforms: linux/amd64,linux/arm64
           push: ${{ github.event_name != 'pull_request' }}
