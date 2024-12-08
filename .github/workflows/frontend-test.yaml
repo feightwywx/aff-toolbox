@@ -1,0 +1,24 @@
+name: Frontend Test
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+      - name: Enable Corepack
+        run: corepack enable
+      - name: Install dependencies with Yarn
+        working-directory: ./frontend
+        run: yarn install --immutable
+      - name: Run tests
+        working-directory: ./frontend
+        run: yarn run test --silent
