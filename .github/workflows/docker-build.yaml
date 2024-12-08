@@ -59,8 +59,7 @@ jobs:
       - name: Frontend - Build and push
         uses: docker/build-push-action@v6
         with:
-          file: ./frontend/Dockerfile
-          context: ./frontend
+          working-directory: ./frontend
           platforms: linux/amd64,linux/arm64
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.frontend_meta.outputs.tags }}
@@ -69,8 +68,7 @@ jobs:
       - name: Backend - Build and push
         uses: docker/build-push-action@v6
         with:
-          file: ./backend/app/Dockerfile
-          context: ./backend/app
+          working-directory: ./backend/app
           platforms: linux/amd64,linux/arm64
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.frontend_meta.outputs.tags }}
