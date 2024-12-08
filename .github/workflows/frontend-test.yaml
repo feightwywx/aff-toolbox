@@ -14,9 +14,9 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 20
-      - name: Change working directory
-        run: cd frontend
       - name: Install dependencies with Yarn
+        working-directory: ./frontend
         run: yarn install --immutable
       - name: Run tests
+        working-directory: ./frontend
         run: yarn run test
