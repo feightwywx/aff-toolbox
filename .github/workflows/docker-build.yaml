@@ -61,6 +61,7 @@ jobs:
         with:
           file: ./frontend/Dockerfile
           working-directory: ./frontend
+          context: frontend
           platforms: linux/amd64,linux/arm64
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.frontend_meta.outputs.tags }}
@@ -71,6 +72,7 @@ jobs:
         with:
           file: ./backend/app/Dockerfile
           working-directory: ./backend/app
+          context: backend/app
           platforms: linux/amd64,linux/arm64
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.frontend_meta.outputs.tags }}
