@@ -77,10 +77,10 @@ jobs:
           context: ./backend
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ${{ steps.frontend_meta.outputs.tags }}
-          labels: ${{ steps.frontend_meta.outputs.labels }}
+          tags: ${{ steps.backend_meta.outputs.tags }}
+          labels: ${{ steps.backend_meta.outputs.labels }}
           build-args: |
-            "ATB_VERSION=${{ steps.frontend_meta.outputs.version }}"
+            "ATB_VERSION=${{ steps.backend_meta.outputs.version }}"
             "ATB_VERSION_COMMIT=${{ steps.vars.outputs.sha_short }}"
             "ATB_TARGET=web"
 
