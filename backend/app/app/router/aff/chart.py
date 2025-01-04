@@ -80,6 +80,7 @@ async def chart_mirror(
 async def chart_scale(
     notes: a.NoteGroup = Depends(notes_converter), params: ChartScaleParams = Body()
 ) -> CommonResponse[str]:
+    original_scale = params.scale
     params.scale = 1 / params.scale
 
     def scale_group(notes):
@@ -98,7 +99,7 @@ async def chart_scale(
                 scale_group(each)
             else:
                 if isinstance(each, a.Timing):
-                    each.bpm = each.bpm * params.scale
+                    each.bpm = each.bpm * original_scale
 
                 if each.time == 0 and isinstance(each, a.Timing):
                     continue
