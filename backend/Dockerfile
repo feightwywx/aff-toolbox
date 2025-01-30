@@ -5,7 +5,7 @@ WORKDIR /tmp
 RUN apk add build-base libffi-dev
 
 # Install Poetry
-RUN pip install poetry
+RUN pip install 'poetry==1.8.5'
 
 COPY ./app/pyproject.toml ./app/poetry.lock* /tmp/
 
