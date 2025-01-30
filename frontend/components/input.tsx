@@ -39,6 +39,7 @@ interface SelectWithHelperProps extends SelectProps {
 
 interface InputAdornmentButtonProps {
   fieldHelpers: FieldHelperProps<string>;
+  currentValue?: string;
 }
 
 interface CreateArcParams {
@@ -261,9 +262,14 @@ export const ArcField: React.FC<TextFieldProps> = ({ ...props }) => {
         <OutlinedInput
           label={t(`input.${props.name}`)}
           fullWidth
+          multiline
+          minRows={3}
           endAdornment={
             <InputAdornment position="end">
-              <CreateArcButton fieldHelpers={helpers} />
+              <CreateArcButton
+                fieldHelpers={helpers}
+                currentValue={field.value}
+              />
             </InputAdornment>
           }
           inputProps={{
@@ -381,7 +387,7 @@ export const EasingModeSelect: React.FC<SelectWithHelperProps> = ({
           label={t(`input.${props.name}`)}
           error={isError}
           inputProps={{
-            "role": "listbox",
+            role: "listbox",
             "aria-label": `input.${props.name}`,
           }}
           {...field}
@@ -570,6 +576,7 @@ export const SingleLineField: React.FC<PropsWithChildren> = ({
 
 export const CreateArcButton: React.FC<InputAdornmentButtonProps> = ({
   fieldHelpers,
+  currentValue,
 }) => {
   const { t } = useTranslation("tools");
 
@@ -660,7 +667,13 @@ export const CreateArcButton: React.FC<InputAdornmentButtonProps> = ({
             }}
             successCallbackOverride={async (_, result) => {
               if (result.code == StatusCode.SUCCESS) {
-                fieldHelpers.setValue(result.result);
+                fieldHelpers.setValue(
+                  [
+                    currentValue,
+                    currentValue?.length ? "\n" : "",
+                    result.result,
+                  ].join("")
+                );
                 setOpen(false);
               }
             }}
