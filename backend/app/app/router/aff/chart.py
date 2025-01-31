@@ -115,7 +115,11 @@ async def chart_scale(
                     (each.time - params.standard) * params.scale + params.standard
                 )
 
-                if each.time == each.totime and not is_zero_duration:
+                if (
+                    hasattr(each, "totime")
+                    and each.time == each.totime
+                    and not is_zero_duration
+                ):
                     each.totime = each.totime + 1
 
                 if isinstance(each, a.Arc) and each.skynote is not None:
