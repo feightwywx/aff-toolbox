@@ -79,7 +79,7 @@ const ToolPage: NextPage = () => {
         }}
       >
         <CardWithGrid title="Note区域">
-          <ArcField name="arc" />
+          <ArcField name="arc" allowMultiline/>
         </CardWithGrid>
 
         <CardWithGrid title="参数">

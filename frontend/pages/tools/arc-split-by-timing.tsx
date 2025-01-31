@@ -26,7 +26,7 @@ const ToolPage: NextPage = () => {
         }}
       >
         <CardWithGrid title="Note区域">
-          <ArcField name="arc" />
+          <ArcField name="arc" allowMultiline/>
           <AffTextField
             name="timings"
             placeholder={`timing(0,222.22,4.00);\ntiming(100,222.22,4.00);\n...`}

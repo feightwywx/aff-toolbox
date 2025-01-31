@@ -19,7 +19,7 @@ parser_router = APIRouter(
 async def parser_loadline(
     body: Annotated[
         ParserLoadlineBody,
-        Body(example={"note": "(1000,1);"}),
+        Body(examples=[{"note": "(1000,1);"}]),
     ]
 ) -> CommonResponse:
     note = a.loadline(body.note)

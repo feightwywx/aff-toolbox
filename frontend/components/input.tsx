@@ -62,6 +62,10 @@ interface CalcTimingParams {
   offset: number;
 }
 
+interface ArcFieldProps {
+  allowMultiline?: boolean;
+}
+
 export const AffTextField: React.FC<TextFieldProps> = ({ ...props }) => {
   const [field, meta] = useField(props as { name: any });
   const { t } = useTranslation("tools");
@@ -249,7 +253,10 @@ export const BreakpointsField: React.FC<TextFieldProps> = ({ ...props }) => {
   );
 };
 
-export const ArcField: React.FC<TextFieldProps> = ({ ...props }) => {
+export const ArcField: React.FC<TextFieldProps & ArcFieldProps> = ({
+  allowMultiline,
+  ...props
+}) => {
   const [field, meta, helpers] = useField(props as { name: any });
   const { t } = useTranslation("tools");
 
@@ -262,8 +269,6 @@ export const ArcField: React.FC<TextFieldProps> = ({ ...props }) => {
         <OutlinedInput
           label={t(`input.${props.name}`)}
           fullWidth
-          multiline
-          minRows={3}
           endAdornment={
             <InputAdornment position="end">
               <CreateArcButton
@@ -276,6 +281,12 @@ export const ArcField: React.FC<TextFieldProps> = ({ ...props }) => {
             "aria-label": `input.${props.name}`,
           }}
           {...field}
+          {...(allowMultiline
+            ? {
+                multiline: true,
+                minRows: 3,
+              }
+            : {})}
         />
         <FormHelperText>
           {isError
