@@ -40,6 +40,7 @@ interface SelectWithHelperProps extends SelectProps {
 interface InputAdornmentButtonProps {
   fieldHelpers: FieldHelperProps<string>;
   currentValue?: string;
+  appendMode?: boolean;
 }
 
 interface CreateArcParams {
@@ -274,6 +275,7 @@ export const ArcField: React.FC<TextFieldProps & ArcFieldProps> = ({
               <CreateArcButton
                 fieldHelpers={helpers}
                 currentValue={field.value}
+                appendMode={allowMultiline}
               />
             </InputAdornment>
           }
@@ -588,6 +590,7 @@ export const SingleLineField: React.FC<PropsWithChildren> = ({
 export const CreateArcButton: React.FC<InputAdornmentButtonProps> = ({
   fieldHelpers,
   currentValue,
+  appendMode,
 }) => {
   const { t } = useTranslation("tools");
 
@@ -679,11 +682,13 @@ export const CreateArcButton: React.FC<InputAdornmentButtonProps> = ({
             successCallbackOverride={async (_, result) => {
               if (result.code == StatusCode.SUCCESS) {
                 fieldHelpers.setValue(
-                  [
-                    currentValue,
-                    currentValue?.length ? "\n" : "",
-                    result.result,
-                  ].join("")
+                  appendMode
+                    ? [
+                        currentValue,
+                        currentValue?.length ? "\n" : "",
+                        result.result,
+                      ].join("")
+                    : result.result
                 );
                 setOpen(false);
               }
