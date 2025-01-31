@@ -39,6 +39,8 @@ interface SelectWithHelperProps extends SelectProps {
 
 interface InputAdornmentButtonProps {
   fieldHelpers: FieldHelperProps<string>;
+  currentValue?: string;
+  appendMode?: boolean;
 }
 
 interface CreateArcParams {
@@ -59,6 +61,10 @@ interface CalcTimingParams {
   bpm: number;
   division: string;
   offset: number;
+}
+
+interface ArcFieldProps {
+  allowMultiline?: boolean;
 }
 
 export const AffTextField: React.FC<TextFieldProps> = ({ ...props }) => {
@@ -248,7 +254,10 @@ export const BreakpointsField: React.FC<TextFieldProps> = ({ ...props }) => {
   );
 };
 
-export const ArcField: React.FC<TextFieldProps> = ({ ...props }) => {
+export const ArcField: React.FC<TextFieldProps & ArcFieldProps> = ({
+  allowMultiline,
+  ...props
+}) => {
   const [field, meta, helpers] = useField(props as { name: any });
   const { t } = useTranslation("tools");
 
@@ -263,13 +272,23 @@ export const ArcField: React.FC<TextFieldProps> = ({ ...props }) => {
           fullWidth
           endAdornment={
             <InputAdornment position="end">
-              <CreateArcButton fieldHelpers={helpers} />
+              <CreateArcButton
+                fieldHelpers={helpers}
+                currentValue={field.value}
+                appendMode={allowMultiline}
+              />
             </InputAdornment>
           }
           inputProps={{
             "aria-label": `input.${props.name}`,
           }}
           {...field}
+          {...(allowMultiline
+            ? {
+                multiline: true,
+                minRows: 3,
+              }
+            : {})}
         />
         <FormHelperText>
           {isError
@@ -381,7 +400,7 @@ export const EasingModeSelect: React.FC<SelectWithHelperProps> = ({
           label={t(`input.${props.name}`)}
           error={isError}
           inputProps={{
-            "role": "listbox",
+            role: "listbox",
             "aria-label": `input.${props.name}`,
           }}
           {...field}
@@ -570,6 +589,8 @@ export const SingleLineField: React.FC<PropsWithChildren> = ({
 
 export const CreateArcButton: React.FC<InputAdornmentButtonProps> = ({
   fieldHelpers,
+  currentValue,
+  appendMode,
 }) => {
   const { t } = useTranslation("tools");
 
@@ -660,7 +681,15 @@ export const CreateArcButton: React.FC<InputAdornmentButtonProps> = ({
             }}
             successCallbackOverride={async (_, result) => {
               if (result.code == StatusCode.SUCCESS) {
-                fieldHelpers.setValue(result.result);
+                fieldHelpers.setValue(
+                  appendMode
+                    ? [
+                        currentValue,
+                        currentValue?.length ? "\n" : "",
+                        result.result,
+                      ].join("")
+                    : result.result
+                );
                 setOpen(false);
               }
             }}

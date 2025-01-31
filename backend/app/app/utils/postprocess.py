@@ -3,7 +3,10 @@ from arcfutil.aff import NoteGroup
 from arcfutil.aff.generator import arc_straighten
 
 
-def arc_post_process(source: NoteGroup, options: ArcPostProcessParams) -> NoteGroup:
+def arc_post_process(source: NoteGroup, options: ArcPostProcessParams | None) -> NoteGroup:
+    if options is None:
+        return source
+    
     if options.mirror:
         source.mirror()
 

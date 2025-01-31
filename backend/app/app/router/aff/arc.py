@@ -24,20 +24,27 @@ arc_router = APIRouter(
 )
 
 
-async def arc_converter(arc: str = Body(embed=True)) -> a.Arc:
-    obj = a.loadline(arc)
-    if isinstance(obj, a.Arc):
-        return obj
+async def arc_converter(arc: str = Body(embed=True)) -> list[a.Arc]:
+    notes = a.NoteGroup(filter(lambda note: isinstance(note, a.Arc), (a.load(arc))))
+    if len(notes) > 0:
+        return notes
     else:
-        raise appexc.NotAnArcError(obj)
+        raise appexc.NotAnArcError(notes)
 
 
-async def arc_tap_hold_converter(arc: str = Body()) -> a.Arc | a.Tap | a.Hold:
-    obj = a.loadline(arc)
-    if isinstance(obj, a.Arc) or isinstance(obj, a.Tap) or isinstance(obj, a.Hold):
-        return obj
+async def arc_tap_hold_converter(arc: str = Body()) -> list[a.Arc | a.Tap | a.Hold]:
+    notes = a.NoteGroup(
+        filter(
+            lambda note: isinstance(note, a.Arc)
+            or isinstance(note, a.Tap)
+            or isinstance(note, a.Hold),
+            (a.load(arc)),
+        )
+    )
+    if len(notes) > 0:
+        return notes
     else:
-        raise appexc.NotAnArcError(obj)
+        raise appexc.NotAnArcError(notes)
 
 
 async def timings_converter(timings: str = Body()) -> a.NoteGroup:
@@ -49,22 +56,29 @@ async def timings_converter(timings: str = Body()) -> a.NoteGroup:
 async def arc_split(
     arc: a.Arc = Depends(arc_converter),
     params: ArcSplitParams = Body(
-        example={
-            "arc": "arc(0,1000,1.00,0.50,si,0.00,1.00,0,none,false);",
-            "params": {"start": 0, "stop": 500, "count": 12},
-        }
+        examples=[
+            {
+                "arc": "arc(0,1000,1.00,0.50,si,0.00,1.00,0,none,false);",
+                "params": {"start": 0, "stop": 500, "count": 12},
+            }
+        ]
     ),
     post: Optional[ArcPostProcessParams] = Body(),
 ) -> CommonResponse[str]:
-    result = a.generator.arc_slice_by_count(
-        arc=arc,
-        count=params.count,
-        start=params.start if (params.start is not None) else arc.time,
-        stop=params.stop if (params.stop is not None) else arc.totime,
+    result = arc_post_process(
+        a.NoteGroup(
+            *map(
+                lambda arc: a.generator.arc_slice_by_count(
+                    arc=arc,
+                    count=params.count,
+                    start=params.start if (params.start is not None) else arc.time,
+                    stop=params.stop if (params.stop is not None) else arc.totime,
+                ),
+                arc,
+            )
+        ),
+        post,
     )
-
-    if post is not None:
-        result = arc_post_process(result, post)
 
     return make_success_resp(result.__str__())
 
@@ -75,10 +89,18 @@ async def arc_split_by_timing(
     timings: list[a.Timing] = Depends(timings_converter),
     post: Optional[ArcPostProcessParams] = Body(),
 ) -> CommonResponse[str]:
-    result = a.generator.arc_slice_by_timing(arc, timings)
-
-    if post is not None:
-        result = arc_post_process(result, post)
+    result = arc_post_process(
+        a.NoteGroup(
+            *map(
+                lambda arc: a.generator.arc_slice_by_timing(
+                    arc=arc,
+                    timings=timings,
+                ),
+                arc,
+            )
+        ),
+        post,
+    )
 
     return make_success_resp(result.__str__())
 
@@ -89,17 +111,22 @@ def arc_crease_line(
     params: ArcCreaseLineParams = Body(),
     post: Optional[ArcPostProcessParams] = Body(),
 ) -> CommonResponse[str]:
-    result = a.generator.arc_crease_line(
-        arc,
-        params.delta_x,
-        params.delta_y,
-        params.count,
-        mode=params.mode,
-        easing=params.arc_easing,
+    result = arc_post_process(
+        a.NoteGroup(
+            *map(
+                lambda arc: a.generator.arc_crease_line(
+                    base=arc,
+                    x_range=params.delta_x,
+                    y_range=params.delta_y,
+                    count=params.count,
+                    mode=params.mode,
+                    easing=params.arc_easing,
+                ),
+                arc,
+            )
+        ),
+        post,
     )
-
-    if post is not None:
-        result = arc_post_process(result, post)
 
     return make_success_resp(result.__str__())
 
@@ -113,9 +140,11 @@ def arc_rain(
         params.start,
         params.stop,
         params.step,
-        params.dropLength
-        if (params.dropLength is not None)
-        else (params.stop - params.start),
+        (
+            params.dropLength
+            if (params.dropLength is not None)
+            else (params.stop - params.start)
+        ),
         mode=params.mode,
         x_limit=params.x_limit_range,
         y_limit=params.y_limit_range,
@@ -147,24 +176,29 @@ def arc_animate(
         params.easing_b_point_offset_t,
     )
 
-    return make_success_resp(
-        a.generator.arc_animation_assist(
+    result = a.NoteGroup(
+        *map(
+            lambda arc: a.generator.arc_animation_assist(
+                arc,
+                params.start,
+                params.stop,
+                params.delta_x,
+                params.delta_y,
+                params.basebpm,
+                easing_x=easing_x,
+                easing_y=easing_y,
+                infbpm=params.infbpm,
+                framerate=params.framerate,
+                fake_note_t=params.fake_note_t,
+                offset_t=params.offset_t,
+                delta_offset_t=params.delta_offset_t,
+                easing_offset_t=easing_offset_t,
+            ),
             arc,
-            params.start,
-            params.stop,
-            params.delta_x,
-            params.delta_y,
-            params.basebpm,
-            easing_x=easing_x,
-            easing_y=easing_y,
-            infbpm=params.infbpm,
-            framerate=params.framerate,
-            fake_note_t=params.fake_note_t,
-            offset_t=params.offset_t,
-            delta_offset_t=params.delta_offset_t,
-            easing_offset_t=easing_offset_t,
-        ).__str__()
+        )
     )
+
+    return make_success_resp(result.__str__())
 
 
 @arc_router.post("/envelope")
@@ -197,9 +231,18 @@ def arc_break_router(
     params: ArcBreakParams = Body(embed=True),
     post: Optional[ArcPostProcessParams] = Body(),
 ) -> CommonResponse[str]:
-    result = arc_break(arc, params.breakpoints, params.disp)
-
-    if post is not None:
-        result = arc_post_process(result, post)
+    result = arc_post_process(
+        a.NoteGroup(
+            *map(
+                lambda arc: arc_break(
+                    arc,
+                    params.breakpoints,
+                    params.disp,
+                ),
+                arc,
+            )
+        ),
+        post,
+    )
 
     return make_success_resp(result.__str__())
