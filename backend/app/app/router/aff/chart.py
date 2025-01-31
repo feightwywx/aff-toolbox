@@ -103,14 +103,20 @@ async def chart_scale(
 
                 if each.time == 0 and isinstance(each, a.Timing):
                     continue
-                each.time = (
-                    each.time - params.standard
-                ) * params.scale + params.standard
 
+                is_zero_duration = False
                 if hasattr(each, "totime"):
-                    each.totime = (
-                        each.totime - params.standard
-                    ) * params.scale + params.standard
+                    is_zero_duration = each.totime == each.time
+                    each.totime = int(
+                        (each.totime - params.standard) * params.scale + params.standard
+                    )
+
+                each.time = int(
+                    (each.time - params.standard) * params.scale + params.standard
+                )
+
+                if each.time == each.totime and not is_zero_duration:
+                    each.totime = each.totime + 1
 
                 if isinstance(each, a.Arc) and each.skynote is not None:
                     each.skynote = list(
