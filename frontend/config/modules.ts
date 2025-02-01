@@ -91,6 +91,12 @@ export const toolMetas: ArcToolMetadata[] = [
     path: "/chart-scale",
     endpoint: "/chart/scale",
   },
+  {
+    id: "chartShadow",
+    category: "chart",
+    path: "/chart-shadow",
+    endpoint: "/chart/shadow",
+  },
 ];
 
 export default toolMetas;

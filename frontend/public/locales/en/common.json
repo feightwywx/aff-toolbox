@@ -47,5 +47,7 @@
     "tool.arcBreak.name": "Arc Breakpoint Shift Tool",
     "tool.arcBreak.shortDesc": "Cutting off the Arc according to the point in time and generating displacements at the breakpoints",
     "tool.chartScale.name": "Chart Scaling",
-    "tool.chartScale.shortDesc": "Scale whole or segment chart"
+    "tool.chartScale.shortDesc": "Scale whole or segment chart",
+    "tool.chartShadow.name": "Shadow Chart Tool",
+    "tool.chartShadow.shortDesc": "Replace notes with shadow notes made of skylines"
 }
