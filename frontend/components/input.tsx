@@ -25,14 +25,17 @@ import {
   TextField,
   TextFieldProps,
   Unstable_Grid2,
+  Typography,
+  Stack
 } from "@mui/material";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
-import { FieldHelperProps, Form, Formik, useField } from "formik";
+import { FieldHelperProps, Form, Formik, useField, useFormikContext } from "formik";
 import * as Yup from "yup";
 import ToolFormikForm from "./ToolFormikForm";
 import { StatusCode } from "@/utils/interfaces";
 import { SubtitleTypography } from "./CardWithGrid";
+import Image from "next/image";
 
 interface SelectWithHelperProps extends SelectProps {
   helperText?: boolean;
@@ -66,6 +69,12 @@ interface CalcTimingParams {
 
 interface ArcFieldProps {
   allowMultiline?: boolean;
+}
+
+interface ImageFieldProps {
+  name: string;
+  label?: string;
+  helperText?: string;
 }
 
 export const AffTextField: React.FC<TextFieldProps> = ({ ...props }) => {
@@ -843,3 +852,169 @@ export const CalcTimingButton: React.FC<InputAdornmentButtonProps> = ({
     </>
   );
 };
+
+export const SketchToArcMethodSelect: React.FC<SelectWithHelperProps> = ({
+  ...props
+}) => {
+  const [field, meta] = useField(props as { name: any });
+  const { t } = useTranslation("tools");
+
+  let isError = Boolean(meta.touched && meta.error);
+
+  return (
+    <Grid xs={12} sm={6} md={4}>
+      <FormControl fullWidth>
+        <InputLabel>{t("input.method")}</InputLabel>
+        {/* @ts-ignore */}
+        <Select
+          fullWidth
+          label={t("input.method")}
+          error={isError}
+          {...field}
+          {...props}
+        >
+          <MenuItem value="contour">
+            <Trans t={t}>input.method.contour</Trans>
+          </MenuItem>
+          <MenuItem value="thinning">
+            <Trans t={t}>input.method.thinning</Trans>
+          </MenuItem>
+        </Select>
+        <FormHelperText>
+          {isError
+            ? t(meta.error!)
+            : props.helperText
+            ? t(`input.method.helper`)
+            : undefined}
+        </FormHelperText>
+      </FormControl>
+    </Grid>
+  );
+};
+
+export const SketchToArcPlaneSelect: React.FC<SelectWithHelperProps> = ({
+  ...props
+}) => {
+  const [field, meta] = useField(props as { name: any });
+  const { t } = useTranslation("tools");
+
+  let isError = Boolean(meta.touched && meta.error);
+
+  return (
+    <Grid xs={12} sm={6} md={4}>
+      <FormControl fullWidth>
+        <InputLabel>{t("input.plane")}</InputLabel>
+        {/* @ts-ignore */}
+        <Select
+          fullWidth
+          label={t("input.plane")}
+          error={isError}
+          {...field}
+          {...props}
+        >
+          <MenuItem value="vertical">
+            <Trans t={t}>input.plane.vertical</Trans>
+          </MenuItem>
+          <MenuItem value="timeline">
+            <Trans t={t}>input.plane.timeline</Trans>
+          </MenuItem>
+        </Select>
+        <FormHelperText>
+          {isError
+            ? t(meta.error!)
+            : props.helperText
+            ? t(`input.plane.helper`)
+            : undefined}
+        </FormHelperText>
+      </FormControl>
+    </Grid>
+  );
+};
+
+export const ImageField: React.FC<ImageFieldProps> = ({
+  ...props
+}) => {
+  const [field, meta] = useField(props as { name: any });
+  const { setFieldValue } = useFormikContext();
+  const [preview, setPreview] = React.useState<string | null>(null);
+  const { t } = useTranslation("tools");
+  
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    
+    if (!file) {
+      setPreview(null);
+      return;
+    }
+    
+    // Check if the file is an image (PNG or JPEG)
+    if (!file.type.match('image/png|image/jpeg')) {
+      return;
+    }
+    
+    // Create preview
+    const reader = new FileReader();
+    reader.onload = () => {
+      setPreview(reader.result as string);
+    };
+    reader.readAsDataURL(file);
+
+  };
+  
+  const clearImage = () => {
+    setPreview(null);
+  };
+  
+  return (
+    <FormControl fullWidth error={meta.touched && !!meta.error}>
+      <SubtitleTypography>{t("input.img_file")}</SubtitleTypography>
+      
+      <input
+        accept="image/png,image/jpeg"
+        style={{ display: 'none' }}
+        id={`image-upload`}
+        type="file"
+        onChange={handleFileChange}
+      />
+      
+      <Stack direction="column" spacing={2} alignItems="flex-start">
+        <label htmlFor={`image-upload`}>
+          <Button variant="contained" component="span">
+            {t("input.img_file.upload")}
+          </Button>
+        </label>
+        
+        {field.value && (
+          <Button 
+            variant="outlined" 
+            color="secondary" 
+            onClick={clearImage}
+          >
+            {t("input.img_file.clear")}
+          </Button>
+        )}
+        
+        {preview && (
+          <Box sx={{ mt: 2, maxWidth: '100%' }}>
+            <img 
+              src={preview} 
+              alt="preview"
+              style={{ 
+                maxWidth: '100%', 
+                maxHeight: '200px',
+                objectFit: 'contain',
+                border: '1px solid #ddd',
+                borderRadius: '4px'
+              }}
+            />
+          </Box>
+        )}
+        
+        <FormHelperText>
+          {meta.touched && meta.error ? meta.error : t("input.img_file.helper")}
+        </FormHelperText>
+      </Stack>
+    </FormControl>
+  );
+};
+

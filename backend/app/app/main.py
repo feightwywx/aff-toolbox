@@ -70,5 +70,12 @@ async def any_err_hadler(req: Request, e: Exception) -> JSONResponse:
     else:
         return JSONResponse(make_fail_resp("unknown error: " + str(e)).dict())
 
+# Add after app.include_router() calls
+@app.on_event("startup")
+async def startup_event():
+    print("Available routes:")
+    for route in app.routes:
+        if hasattr(route, "methods"):
+            print(f"{route.path} -> {route.methods}")
 
 app.include_router(aff_router)
