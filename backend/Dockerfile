@@ -2,6 +2,7 @@ FROM python:3.11-alpine AS requirements-stage
 
 WORKDIR /tmp
 
+# Install build essentials
 RUN apk add build-base libffi-dev
 
 # Install Poetry
@@ -15,22 +16,34 @@ FROM python:3.11-alpine
 
 WORKDIR /app/
 
-# Install Poetry
-# RUN curl -sSL https://install.python-poetry.org | POETRY_HOME=/opt/poetry python && \
-#     cd /usr/local/bin && \
-#     ln -s /opt/poetry/bin/poetry && \
-#     poetry config virtualenvs.create false
+# Install openCV dependencies
+RUN apk add --no-cache \
+    libstdc++ \
+    libgomp \
+    libjpeg \
+    libpng \
+    tiff \
+    openblas
 
-# # Copy poetry.lock* in case it doesn't exist in the repo
-# COPY ./app/pyproject.toml ./app/poetry.lock* /app/
-
-# # Allow installing dev dependencies to run tests
-# ARG INSTALL_DEV=false
-# RUN bash -c "if [ $INSTALL_DEV == 'true' ] ; then poetry install --no-root ; else poetry install --no-root --without dev ; fi"
+# Install openCV build dependencies
+RUN apk add --no-cache --virtual .build-deps \
+    gcc \
+    g++ \
+    make \
+    musl-dev \
+    linux-headers \
+    jpeg-dev \
+    zlib-dev \
+    libjpeg-turbo-dev \
+    libpng-dev \
+    tiff-dev \
+    libffi-dev \
+    openblas-dev
 
 COPY --from=requirements-stage /tmp/requirements.txt /app/requirements.txt
 
-RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt
+RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt && \
+    apk del .build-deps
 
 COPY ./app /app
 

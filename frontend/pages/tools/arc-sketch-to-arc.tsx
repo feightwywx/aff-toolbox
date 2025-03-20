@@ -27,12 +27,12 @@ const ToolPage: NextPage = () => {
       <ToolFormikForm
         initValues={{
           params: {
-            img_file: null,
+            image:"",
             start: "",
             stop: "",
-            x_limit_range: "",
-            y_limit_range: "",
-            method: 'contour',
+            x_offset: 0,
+            y_offset: 0,
+            method: 'thinning',
             plane: 'vertical',
             sampling_rate: 0.01,
             x_scale: 1,
@@ -42,26 +42,25 @@ const ToolPage: NextPage = () => {
         }}
         validationSchema={{
           params: Yup.object().shape({
-            img_file: Yup.mixed().required(),
+            image: Yup.string().required(),
             start: Yup.number().integer().required(),
             stop: Yup.number().integer().required(),
             method: Yup.string().required(),
             plane: Yup.string().required(),
             sampling_rate: Yup.number().required(),
-            x_limit_range: Yup.string()
-              .transform(emptyStringToUndef)
-              .nullable(),
-            y_limit_range: Yup.string()
-              .transform(emptyStringToUndef)
-              .nullable(),
+            x_offset: Yup.number(),
+            y_offset: Yup.number(),
             x_scale: Yup.number(),
             y_scale: Yup.number(),
           }),
           ...ArcPostProcessValidations,
         }}
       >
+        <CardWithGrid title="图片区域">
+          <ImageField name="params.image"/>
+        </CardWithGrid>
+
         <CardWithGrid title="参数">
-          <ImageField name="params.img_file" />
           <NumberField name="params.start" withTimingCalc />
           <NumberField name="params.stop" withTimingCalc />
           <SketchToArcMethodSelect name="params.method" helperText/>
@@ -69,8 +68,8 @@ const ToolPage: NextPage = () => {
           <NumberField name="params.sampling_rate" helperText />
 
           <SubtitleTypography>可选参数</SubtitleTypography>
-          <NumberField name="params.x_limit_range" helperText />
-          <NumberField name="params.y_limit_range" helperText />
+          <NumberField name="params.x_offset" helperText />
+          <NumberField name="params.y_offset" helperText />
           <NumberField name="params.x_scale" helperText />
           <NumberField name="params.y_scale" helperText />
         </CardWithGrid>

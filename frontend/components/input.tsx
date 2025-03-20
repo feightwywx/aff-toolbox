@@ -934,16 +934,18 @@ export const SketchToArcPlaneSelect: React.FC<SelectWithHelperProps> = ({
 export const ImageField: React.FC<ImageFieldProps> = ({
   ...props
 }) => {
-  const [field, meta] = useField(props as { name: any });
-  const { setFieldValue } = useFormikContext();
+  const [field, meta, helpers] = useField(props as { name: any });
   const [preview, setPreview] = React.useState<string | null>(null);
   const { t } = useTranslation("tools");
+
+  let isError = Boolean(meta.touched && meta.error);
   
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     
     if (!file) {
       setPreview(null);
+      helpers.setValue(null);
       return;
     }
     
@@ -952,45 +954,49 @@ export const ImageField: React.FC<ImageFieldProps> = ({
       return;
     }
     
-    // Create preview
+    // Create preview and set field value
     const reader = new FileReader();
     reader.onload = () => {
-      setPreview(reader.result as string);
+      const base64String = reader.result as string;
+      setPreview(base64String);
+      helpers.setValue(base64String);
+      console.log('Image loaded, length:', base64String.length);
     };
     reader.readAsDataURL(file);
-
   };
   
   const clearImage = () => {
     setPreview(null);
+    helpers.setValue(null);
+    console.log('Image cleared');
   };
   
   return (
-    <FormControl fullWidth error={meta.touched && !!meta.error}>
-      <SubtitleTypography>{t("input.img_file")}</SubtitleTypography>
+    <FormControl fullWidth variant="outlined" error={isError}>
+      <SubtitleTypography>{t(`input.${props.name}`)}</SubtitleTypography>
       
       <input
         accept="image/png,image/jpeg"
         style={{ display: 'none' }}
-        id={`image-upload`}
+        id={`image-upload-${field.name}`}
         type="file"
         onChange={handleFileChange}
       />
       
       <Stack direction="column" spacing={2} alignItems="flex-start">
-        <label htmlFor={`image-upload`}>
+        <label htmlFor={`image-upload-${field.name}`}>
           <Button variant="contained" component="span">
-            {t("input.img_file.upload")}
+            {t("input.image.upload")}
           </Button>
         </label>
         
-        {field.value && (
+        {preview && (
           <Button 
             variant="outlined" 
             color="secondary" 
             onClick={clearImage}
           >
-            {t("input.img_file.clear")}
+            {t("input.image.clear")}
           </Button>
         )}
         
@@ -1011,7 +1017,11 @@ export const ImageField: React.FC<ImageFieldProps> = ({
         )}
         
         <FormHelperText>
-          {meta.touched && meta.error ? meta.error : t("input.img_file.helper")}
+          {isError
+            ? t(meta.error!)
+            : props.helperText
+            ? props.helperText
+            : t(`input.${props.name}.helper`)}
         </FormHelperText>
       </Stack>
     </FormControl>

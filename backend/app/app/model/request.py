@@ -1,5 +1,5 @@
 from typing import Any, Literal, Optional
-from app.exception import CountTooLargeError, StartStopError, TooLessBPointArgsError
+from app.exception import ImageEncodingError, CountTooLargeError, StartStopError, TooLessBPointArgsError, SamplingRateOutOfRangeError
 from pydantic import BaseModel, root_validator, validator
 from app.model.common import ArcString, NoteString
 
@@ -15,6 +15,16 @@ class ParserLoadlineBody(NoteCommonBody):
 class ArcCommonBody(BaseModel):
     arc: ArcString
 
+class ImageCommonBody(BaseModel):
+    image: str # base 64 encoded image
+
+    # 进行base64校验
+    @root_validator()
+    def image_validate(cls, values: dict[str, Any]) -> dict[str, Any]:
+        image = values.get("image")
+        if not image.startswith("data:image/"):
+            raise ImageEncodingError("image should be base64 encoded")
+        return values
 
 class StartStopCommonBody(BaseModel):
     start: int
@@ -135,6 +145,24 @@ class ArcRainParams(StartStopCommonBody):
             raise CountTooLargeError("too much arcs")
 
         return values
+
+class ArcSketchToArcParams(StartStopCommonBody, ImageCommonBody):
+    sampling_rate: float
+    method: Literal['contour', 'thinning'] = 'thinning'
+    plane: Literal['vertical', 'timeline'] = 'vertical'
+    x_offset: Optional[float] = 0.0
+    y_offset: Optional[float] = 0.0
+    x_scale: Optional[float] = 1.0
+    y_scale: Optional[float] = 1.0
+
+    @root_validator()
+    def count_validate(cls, values: dict[str, Any]) -> dict[str, Any]:
+        sampling_rate = values.get("sampling_rate")
+        if sampling_rate < 0.001 or sampling_rate > 1.0:
+            raise SamplingRateOutOfRangeError("sampling_rate should be in range [0.01, 1.0]")
+
+        return values
+
 
 
 class TimingEasingParams(StartStopCommonBody, CountCommonBody):

@@ -1,6 +1,7 @@
 from typing import Optional
 from app.model.common import CommonResponse
 from app.model.request import (
+    ImageCommonBody,
     ArcAnimateParams,
     ArcBreakParams,
     ArcCreaseLineParams,
@@ -8,8 +9,9 @@ from app.model.request import (
     ArcPostProcessParams,
     ArcSplitParams,
     ArcRainParams,
+    ArcSketchToArcParams,
 )
-from app.utils.chart import arc_break
+from app.utils.chart import arc_break, image_to_arc
 from app.utils.postprocess import arc_post_process
 from app.utils.response import make_success_resp
 import app.exception as appexc
@@ -244,5 +246,29 @@ def arc_break_router(
         ),
         post,
     )
+
+    return make_success_resp(result.__str__())
+
+
+@arc_router.post("/sketch-to-arc")
+def sketch_to_arc(
+    params: ArcSketchToArcParams = Body(),
+    post: Optional[ArcPostProcessParams] = Body(),
+) -> CommonResponse[str]:
+    result = image_to_arc(
+        params.image,
+        params.start,
+        params.stop,
+        params.sampling_rate,
+        params.x_offset,
+        params.y_offset,
+        params.x_scale,
+        params.y_scale,
+        method=params.method,
+        plane=params.plane
+    )
+
+    if post is not None:
+        result = arc_post_process(result, post)
 
     return make_success_resp(result.__str__())
