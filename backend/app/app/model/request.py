@@ -18,7 +18,7 @@ class ArcCommonBody(BaseModel):
 class ImageCommonBody(BaseModel):
     image: str # base 64 encoded image
 
-    # 进行base64校验
+    # base64 validation
     @root_validator()
     def image_validate(cls, values: dict[str, Any]) -> dict[str, Any]:
         image = values.get("image")

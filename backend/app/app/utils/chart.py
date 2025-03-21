@@ -63,36 +63,29 @@ def image_to_arc(image: str,
                  method="thinging",
                  plane="vertical"):
 
-    # 检查并删除可能存在的data URI前缀
+    # Extract base64 part. Remove any existing data URI prefix
     if image.startswith('data:'):
-        # 提取base64部分
         image = re.sub(r'^data:image/[a-zA-Z]+;base64,', '', image)
     
-    # 解码base64图像字符串
+    # Decode base64 image string
     image_data = base64.b64decode(image)
-    
-    # 解码图像
     img = cv2.imdecode(np.frombuffer(image_data, np.uint8), cv2.IMREAD_GRAYSCALE)
     
-    # 检查解码是否成功
+    # Check if decoding was successful
     if img is None:
         print("Failed to decode image data")
         return None
-    else:
-        # 输出图像基本属性
-        print("Image shape:", img.shape)
 
-    # 二值化处理(THRESH_BINARY_INV黑白反色处理，OTSU自动阈值处理)
+    # Binary thresholding (THRESH_BINARY_INV for black/white inversion, OTSU for automatic threshold processing)
     ret, binary = cv2.threshold(img, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
     
-    # 修正method名称中的拼写错误
     if method == "contour":
-        # 提取轮廓
+        # Extract contours
         contours, _ = cv2.findContours(binary, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
     elif method == "thinning":
-        # 先进行骨架化：利用 cv2.ximgproc.thinning 方法
+        # First perform skeletonization using cv2.ximgproc.thinning method
         skeleton = cv2.ximgproc.thinning(binary, thinningType=cv2.ximgproc.THINNING_GUOHALL)
-        # 再提取骨架的轮廓
+        # Then extract contours from the skeleton
         contours, _ = cv2.findContours(skeleton, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
     else:
         return None
@@ -101,49 +94,49 @@ def image_to_arc(image: str,
     image_height = img.shape[0]
     image_width = img.shape[1]
     
-    # 计算最大尺寸用于归一化（保持比例）
+    # Calculate maximum dimension for normalization (maintaining aspect ratio)
     max_dimension = max(image_width, image_height)
     
     for contour in contours:
-        # 计算轮廓周长用于采样率
+        # Calculate contour perimeter for sampling rate
         epsilon = sampling_rate * cv2.arcLength(contour, True)
         
-        # 多边形近似
+        # Polygon approximation
         approx = cv2.approxPolyDP(contour, epsilon, True)
         
-        # 生成Traces
+        # Generate Arcs
         for i in range(len(approx)):
             x1, y1 = approx[i][0]
             
-            # 如果是最后一个点则连接回第一个点（闭合轮廓）
+            # If it's the last point, connect back to the first point (close the contour)
             if i == len(approx) - 1:
                 x2, y2 = approx[0][0]
             else:
                 x2, y2 = approx[i+1][0]
 
-            # 坐标变换（归一化 + 翻转Y轴 + 缩放 + 平移）
+            # Coordinate transformation (normalization + Y-axis flip + scaling + translation)
             x1_norm = x1 / max_dimension
             y1_norm = (image_height - y1) / max_dimension
             x2_norm = x2 / max_dimension
             y2_norm = (image_height - y2) / max_dimension
 
             if plane == "vertical":
-                # 在同一时间的垂直平面上生成traces(XY平面)，忽略终止时间 
+                # Generate traces on a vertical plane (XY plane) at the same time, ignoring end time 
                 
-                # 应用缩放和平移
+                # Apply scaling and translation
                 x1_trans = round(x1_norm * scale_x + offset_x, 3)
                 y1_trans = round(y1_norm * scale_y + offset_y, 3)
                 x2_trans = round(x2_norm * scale_x + offset_x, 3)
                 y2_trans = round(y2_norm * scale_y + offset_y, 3)
 
-                # 生成Arc
+                # Generate Arc
                 arcs.append(
                     Arc(time=start, totime=start, fromx=x1_trans, fromy=y1_trans, tox=x2_trans, toy= y2_trans, slideeasing='s', color=0, isskyline=True)
                 )
 
             elif plane == "timeline":
-                # 在X轴与时间轴轨道组成平面上生成traces(XY平面)，起止时间决定垂直方向的拉伸系数
-                # Y值由offset_y决定
+                # Generate traces on a plane formed by X-axis and time axis, start/end time determines vertical stretching factor
+                # Y value is determined by offset_y
 
                 x1_trans = round(x1_norm * scale_x + offset_x, 3)
                 x2_trans = round(x2_norm * scale_x + offset_x, 3)
@@ -153,13 +146,13 @@ def image_to_arc(image: str,
                 t1_trans = int(t1_trans)
                 t2_trans = int(t2_trans)
 
-                # 如果t1_trans大于t2_trans，交换它们的值，保证trace的起始时间小于结束时间
+                # If t1_trans is greater than t2_trans, swap their values to ensure trace start time is less than end time
                 if t1_trans > t2_trans:
                     t1_trans, t2_trans = t2_trans, t1_trans
-                    # 同时，也要交换x1_trans和x2_trans的值
+                    # Also swap x1_trans and x2_trans values
                     x1_trans, x2_trans = x2_trans, x1_trans
 
-                # 生成Arc
+                # Generate Arcs
                 arcs.append(
                     Arc(time=t1_trans, totime=t2_trans, fromx=x1_trans, fromy=offset_y, tox=x2_trans, toy=offset_y, slideeasing='s', color=0, isskyline=True)
                 )
