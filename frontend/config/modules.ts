@@ -91,6 +91,12 @@ export const toolMetas: ArcToolMetadata[] = [
     path: "/chart-scale",
     endpoint: "/chart/scale",
   },
+  {
+    id: "sketchImgToArc",
+    category: "arc",
+    path:"/arc-sketch-to-arc",
+    endpoint: "/arc/sketch-to-arc",
+  }
 ];
 
 export default toolMetas;

@@ -43,5 +43,7 @@
     "tool.arcBreak.name": "Arc断点位移工具",
     "tool.arcBreak.shortDesc": "根据时间点切断Arc并在断点产生位移",
     "tool.chartScale.name": "谱面倍速",
-    "tool.chartScale.shortDesc": "将谱面整体或片段倍速"
+    "tool.chartScale.shortDesc": "将谱面整体或片段倍速",
+    "tool.sketchImgToArc.name": "手绘草图转黑线绘画",
+    "tool.sketchImgToArc.shortDesc": "将手绘黑白图片转换为一组黑线绘画"
 }
