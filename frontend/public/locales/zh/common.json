@@ -45,5 +45,7 @@
     "tool.chartScale.name": "谱面倍速",
     "tool.chartScale.shortDesc": "将谱面整体或片段倍速",
     "tool.sketchImgToArc.name": "手绘草图转黑线绘画",
-    "tool.sketchImgToArc.shortDesc": "将手绘黑白图片转换为一组黑线绘画"
+    "tool.sketchImgToArc.shortDesc": "将手绘黑白图片转换为一组黑线绘画",
+    "tool.arcShift.name": "Arc偏移",
+    "tool.arcShift.shortDesc": "将Arc偏移一定坐标"
 }

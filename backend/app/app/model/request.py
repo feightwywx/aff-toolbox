@@ -226,3 +226,8 @@ class ArcBreakParams(BaseModel):
 class ChartScaleParams(BaseModel):
     scale: float
     standard: Optional[int] = 0
+
+
+class ArcShiftParams(BaseModel):
+    x_offset: Optional[float] = 0
+    y_offset: Optional[float] = 0
