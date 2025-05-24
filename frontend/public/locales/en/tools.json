@@ -130,5 +130,5 @@
   "input.params.x_limit_range.helper": "Format: \"left boundary, right boundary\", would override the limit mode's boundary",
   "input.params.y_limit_range": "y range",
   "input.params.y_limit_range.helper": "Format: \"left boundary, right boundary\", would override the limit mode's boundary",
-  "参考NCat的黑线描物件工具实现": "Reference NCat's shadow maker implementation"
+  "参考NCat的黑线描物件工具实现": "Reference NCat's Note2Trace implementation"
 }

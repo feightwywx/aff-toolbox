@@ -92,10 +92,10 @@ export const toolMetas: ArcToolMetadata[] = [
     endpoint: "/chart/scale",
   },
   {
-    id: "chartShadow",
+    id: "chartToSkyline",
     category: "chart",
-    path: "/chart-shadow",
-    endpoint: "/chart/shadow",
+    path: "/chart-to-skyline",
+    endpoint: "/chart/to-skyline",
   },
 ];
 

@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import ToolPage from "@/pages/tools/chart-shadow";
+import ToolPage from "@/pages/tools/chart-to-skyline";
 
 jest.mock("next/router", () => jest.requireActual("next-router-mock"));
 jest.mock("react-redux");
