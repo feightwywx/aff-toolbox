@@ -1,6 +1,7 @@
 from typing import Optional
 from app.model.common import CommonResponse
 from app.model.request import (
+    ArcShiftParams,
     ImageCommonBody,
     ArcAnimateParams,
     ArcBreakParams,
@@ -270,5 +271,29 @@ def sketch_to_arc(
 
     if post is not None:
         result = arc_post_process(result, post)
+
+    return make_success_resp(result.__str__())
+
+
+@arc_router.post("/shift")
+def arc_shift_router(
+    arc: a.Arc = Depends(arc_converter),
+    params: ArcShiftParams = Body(embed=True),
+    post: Optional[ArcPostProcessParams] = Body(),
+) -> CommonResponse[str]:
+    converted_map = list(
+        filter(
+            lambda y: y is not None,
+            map(
+                lambda x: x.transfer(params.x_offset, params.y_offset) if isinstance(x, a.Arc) else None,
+                arc
+            )
+        )
+    )
+
+    result = arc_post_process(
+        a.NoteGroup(converted_map),
+        post
+    )
 
     return make_success_resp(result.__str__())

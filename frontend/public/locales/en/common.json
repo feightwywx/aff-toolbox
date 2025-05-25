@@ -51,5 +51,7 @@
     "tool.sketchImgToArc.name": "Sketch to Arc Converter",
     "tool.sketchImgToArc.shortDesc": "Convert hand-drawn black and white images to a set of Arc drawings",
     "tool.chartToSkyline.name": "Chart to Skyline Tool",
-    "tool.chartToSkyline.shortDesc": "Replace real notes with notes made of skylines"
+    "tool.chartToSkyline.shortDesc": "Replace real notes with notes made of skylines",
+    "tool.arcShift.name": "Arc Shifting",
+    "tool.arcShift.shortDesc": "Shift Arc with certain offset"
 }

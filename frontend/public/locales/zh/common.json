@@ -47,5 +47,7 @@
     "tool.sketchImgToArc.name": "手绘草图转黑线绘画",
     "tool.sketchImgToArc.shortDesc": "将手绘黑白图片转换为一组黑线绘画",
     "tool.chartToSkyline.name": "谱面黑线化工具",
-    "tool.chartToSkyline.shortDesc": "用黑线描边表现谱面物件"
+    "tool.chartToSkyline.shortDesc": "用黑线描边表现谱面物件",
+    "tool.arcShift.name": "Arc偏移",
+    "tool.arcShift.shortDesc": "将Arc偏移一定坐标"
 }
