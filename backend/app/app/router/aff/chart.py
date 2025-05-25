@@ -6,6 +6,7 @@ from app.model.request import (
     ChartScaleParams,
 )
 from app.utils.response import make_success_resp
+from app.utils.chart import note_to_skyline
 from fastapi import APIRouter, Body, Depends
 from arcfutil import aff as a
 
@@ -159,3 +160,14 @@ async def chart_scale(
         return notes
 
     return make_success_resp(scale_group(filter_by_standard(notes)).__str__())
+
+
+@chart_router.post("/to-skyline")
+async def chart_to_skyline(
+    notes: a.NoteGroup = Depends(notes_converter),
+) -> CommonResponse[str]:
+    converted_list = list(map(lambda x: note_to_skyline(x), notes))
+
+    result = a.NoteGroup(*converted_list)
+
+    return make_success_resp(result.__str__())

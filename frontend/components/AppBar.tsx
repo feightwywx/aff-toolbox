@@ -52,7 +52,16 @@ const AppBar: React.FC<PropsWithChildren> = ({ children }) => {
 
         {/* 标题 */}
         <Box sx={{ flexGrow: 1 }}>
-          <Badge badgeContent={"beta"} color="secondary">
+          <Badge
+            badgeContent={"dev"}
+            color="secondary"
+            invisible={
+              !(
+                process.env.NEXT_PUBLIC_ATB_VERSION?.includes("pr") ||
+                process.env.NEXT_PUBLIC_ATB_VERSION === undefined
+              )
+            }
+          >
             <Typography variant="h6" component="div" sx={{ pr: 2 }}>
               {t("title")}
             </Typography>

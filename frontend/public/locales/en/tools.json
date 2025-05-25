@@ -151,5 +151,6 @@
   "input.params.x_scale": "X-axis Scale",
   "input.params.x_scale.helper": "Stretch the generated pattern along the x-axis of the selected plane, default is 1.0",
   "input.params.y_scale": "Y-axis Scale",
-  "input.params.y_scale.helper": "Stretch the generated pattern along the y-axis of the selected plane, default is 1.0"
+  "input.params.y_scale.helper": "Stretch the generated pattern along the y-axis of the selected plane, default is 1.0",
+  "参考NCat的黑线描物件工具实现": "Reference NCat's Note2Trace implementation"
 }

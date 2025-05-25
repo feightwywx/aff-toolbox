@@ -98,11 +98,16 @@ export const toolMetas: ArcToolMetadata[] = [
     endpoint: "/arc/sketch-to-arc",
   },
   {
+    id: "chartToSkyline",
+    category: "chart",
+    path: "/chart-to-skyline",
+    endpoint: "/chart/to-skyline",
+  },
     id: "arcShift",
     category: "arc",
     path: "/arc-shift",
     endpoint: "/arc/shift",
-  },
+  }
 ];
 
 export default toolMetas;
