@@ -15,4 +15,5 @@ export const newModules: string[] = [
   "timingEasingDisp",
   "timingEasing",
   "chartScale",
+  "sketchImgToArc"
 ];

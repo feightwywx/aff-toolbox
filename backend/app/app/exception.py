@@ -23,3 +23,10 @@ class StartStopError(Exception):
 
 class TooLessBPointArgsError(Exception):
     pass
+
+
+class SamplingRateOutOfRangeError(Exception):
+    pass
+
+class ImageEncodingError(Exception):
+    pass

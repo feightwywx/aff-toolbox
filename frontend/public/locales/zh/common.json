@@ -44,6 +44,8 @@
     "tool.arcBreak.shortDesc": "根据时间点切断Arc并在断点产生位移",
     "tool.chartScale.name": "谱面倍速",
     "tool.chartScale.shortDesc": "将谱面整体或片段倍速",
+    "tool.sketchImgToArc.name": "手绘草图转黑线绘画",
+    "tool.sketchImgToArc.shortDesc": "将手绘黑白图片转换为一组黑线绘画",
     "tool.chartToSkyline.name": "谱面黑线化工具",
     "tool.chartToSkyline.shortDesc": "用黑线描边表现谱面物件"
 }
