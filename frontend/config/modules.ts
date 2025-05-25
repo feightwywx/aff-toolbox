@@ -103,6 +103,7 @@ export const toolMetas: ArcToolMetadata[] = [
     path: "/chart-to-skyline",
     endpoint: "/chart/to-skyline",
   },
+  {
     id: "arcShift",
     category: "arc",
     path: "/arc-shift",
