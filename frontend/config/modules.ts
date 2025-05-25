@@ -96,7 +96,13 @@ export const toolMetas: ArcToolMetadata[] = [
     category: "arc",
     path:"/arc-sketch-to-arc",
     endpoint: "/arc/sketch-to-arc",
-  }
+  },
+  {
+    id: "arcShift",
+    category: "arc",
+    path: "/arc-shift",
+    endpoint: "/arc/shift",
+  },
 ];
 
 export default toolMetas;
