@@ -165,6 +165,8 @@ def image_to_arc(image: str,
 
 def note_to_skyline(note: a.Note) -> a.NoteGroup:
     tap_duration = 25
+    arc_head_duration = 5
+    arctap_duration = 12
 
     def get_x_from_lane(lane: int) -> float:
         return 0.5 * (lane - 1)
@@ -204,19 +206,56 @@ def note_to_skyline(note: a.Note) -> a.NoteGroup:
         dy2 = note.toy
         arc_type = note.slideeasing
         color = note.color
+
+        arc_body_list = [
+            # start
+            Arc(t1, t1, -0.09 + dx1, 0.00 + dx1, 's', -0.07 + dy1, 0.09 + dy1, color, True),
+            Arc(t1, t1, 0.00 + dx1, 0.09 + dx1, 's', 0.09 + dy1, -0.07 + dy1, color, True),
+            # mid
+            Arc(t1, t2, -0.09 + dx1, -0.09 + dx2, arc_type, -0.07 + dy1, -0.07 + dy2, color, True),
+            Arc(t1, t2, 0.00 + dx1, 0.00 + dx2, arc_type, 0.09 + dy1, 0.09 + dy2, color, True),
+            Arc(t1, t2, 0.09 + dx1, 0.09 + dx2, arc_type, -0.07 + dy1, -0.07 + dy2, color, True),
+            # end
+            Arc(t2, t2, -0.09 + dx2, 0.00 + dx2, 's', -0.07 + dy2, 0.09 + dy2, color, True),
+            Arc(t2, t2, 0.00 + dx2, 0.09 + dx2, 's', 0.09 + dy2, -0.07 + dy2, color, True),
+        ]
+
         return NoteGroup(
-            [
-                # start
-                Arc(t1, t1, -0.09 + dx1, 0.00 + dx1, 's', -0.07 + dy1, 0.09 + dy1, color, True),
-                Arc(t1, t1, 0.00 + dx1, 0.09 + dx1, 's', 0.09 + dy1, -0.07 + dy1, color, True),
-                # mid
-                Arc(t1, t2, -0.09 + dx1, -0.09 + dx2, arc_type, -0.07 + dy1, -0.07 + dy2, color, True),
-                Arc(t1, t2, 0.00 + dx1, 0.00 + dx2, arc_type, 0.09 + dy1, 0.09 + dy2, color, True),
-                Arc(t1, t2, 0.09 + dx1, 0.09 + dx2, arc_type, -0.07 + dy1, -0.07 + dy2, color, True),
-                # end
-                Arc(t2, t2, -0.09 + dx2, 0.00 + dx2, 's', -0.07 + dy2, 0.09 + dy2, color, True),
-                Arc(t2, t2, 0.00 + dx2, 0.09 + dx2, 's', 0.09 + dy2, -0.07 + dy2, color, True),
+            arc_body_list
+        )
+    elif type(note) == a.Arc and note.isskyline:
+        def createArctap(t: int, pos: list[float]) -> list[Arc]:
+            t1 = t
+            t2 = t1 + arctap_duration
+            dx = pos[0]
+            dy = pos[1]
+            return [
+                # start TRBL
+                Arc(t1, t1, -0.24 + dx, 0.24 + dx, 's', -0.02 + dy, -0.02 + dy, 0, True),
+                Arc(t1, t1, 0.24 + dx, 0.24 + dx, 's', -0.02 + dy, -0.15 + dy, 0, True),
+                Arc(t1, t1, -0.24 + dx, 0.24 + dx, 's', -0.15 + dy, -0.15 + dy, 0, True),
+                Arc(t1, t1, -0.24 + dx, -0.24 + dx, 's', -0.02 + dy, -0.15 + dy, 0, True),
+                # body TL TR BR BL
+                Arc(t1, t2, -0.24 + dx, -0.24 + dx, 's', -0.02 + dy, -0.02 + dy, 0, True),
+                Arc(t1, t2, 0.24 + dx, 0.24 + dx, 's', -0.02 + dy, -0.02 + dy, 0, True),
+                Arc(t1, t2, 0.24 + dx, 0.24 + dx, 's', -0.15 + dy, -0.15 + dy, 0, True),
+                Arc(t1, t2, -0.24 + dx, -0.24 + dx, 's', -0.15 + dy, -0.15 + dy, 0, True),
+                # end TRBL
+                Arc(t2, t2, -0.24 + dx, 0.24 + dx, 's', -0.02 + dy, -0.02 + dy, 0, True),
+                Arc(t2, t2, 0.24 + dx, 0.24 + dx, 's', -0.02 + dy, -0.15 + dy, 0, True),
+                Arc(t2, t2, -0.24 + dx, 0.24 + dx, 's', -0.15 + dy, -0.15 + dy, 0, True),
+                Arc(t2, t2, -0.24 + dx, -0.24 + dx, 's', -0.02 + dy, -0.15 + dy, 0, True),
             ]
+        arctap_list: list[Arc] = []
+
+        for t in note.skynote:
+            arctap_list.extend(createArctap(t, note[t]))
+
+        note.skynote = []
+
+        return NoteGroup(
+            [note],
+            arctap_list
         )
     else:
         return NoteGroup([note])
