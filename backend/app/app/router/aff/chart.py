@@ -166,7 +166,20 @@ async def chart_scale(
 async def chart_to_skyline(
     notes: a.NoteGroup = Depends(notes_converter),
 ) -> CommonResponse[str]:
-    converted_list = list(map(lambda x: note_to_skyline(x), notes))
+    def note_converter(x: a.Note | a.NoteGroup) -> list:
+        if type(x) == a.TimingGroup:
+            tg_option = x.option
+
+            result_tg = a.TimingGroup(
+                *map(
+                    lambda y: note_to_skyline(y), x
+                ),
+                opt=tg_option
+            )
+            return result_tg
+        else:
+            return note_to_skyline(x)
+    converted_list = list(map(note_converter, notes))
 
     result = a.NoteGroup(*converted_list)
 
