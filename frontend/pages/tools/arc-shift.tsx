@@ -28,11 +28,9 @@ const ToolPage: NextPage = () => {
           arc: Yup.string().required(),
           params: Yup.object().shape({
             x_offset: Yup.number()
-              .integer()
               .transform(emptyStringToUndef)
               .nullable(),
             y_offset: Yup.number()
-              .integer()
               .transform(emptyStringToUndef)
               .nullable(),
           }),
@@ -45,8 +43,8 @@ const ToolPage: NextPage = () => {
 
         <CardWithGrid title="参数">
           <SubtitleTypography>可选参数</SubtitleTypography>
-          <NumberField name="params.x_offset" withTimingCalc />
-          <NumberField name="params.y_offset" withTimingCalc />
+          <NumberField name="params.x_offset" />
+          <NumberField name="params.y_offset" />
         </CardWithGrid>
         <ArcPostProcessCard />
       </ToolFormikForm>
