@@ -170,8 +170,6 @@ def note_to_skyline(note: a.Note) -> a.NoteGroup:
     def get_x_from_lane(lane: int) -> float:
         return 0.5 * (lane - 1)
     
-    print(note)
-    
     if type(note) == a.Tap:
         t1 = note.time
         t2 = t1 + tap_duration
@@ -274,7 +272,7 @@ def arcs_to_appendix(arcs: list[Arc]) -> a.NoteGroup:
         color = arc.color
 
         return [
-            Arc(t1, t2, x, x, 's', y - 0.07, y, color, True),
+            Arc(t1, t2, x, x, 's', y - 0.07, y + 0.09, color, True),
             Arc(t1, t2, x, x - 0.09, 's', y - 0.07, y - 0.07, color, True),
             Arc(t1, t2, x, x + 0.09, 's', y - 0.07, y - 0.07, color, True)
         ]

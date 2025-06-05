@@ -176,26 +176,21 @@ async def chart_to_skyline(
                 ),
                 opt=tg_option
             )
+
+            # create arc appendix in tg
+            tg_arcs = [y for y in x if type(y) == a.Arc]
+            result_tg.extend(arcs_to_appendix(tg_arcs))
+
             return result_tg
         else:
             return note_to_skyline(x)
-        
-    def arc_appendix_converter(x: a.NoteGroup) -> list:
-        if type(x) == a.TimingGroup:
-            tg_option = x.option
-
-            result_tg = a.TimingGroup(
-                *map(
-                    lambda y: arcs_to_appendix(y), x
-                ),
-                opt=tg_option
-            )
-            return result_tg
-        else:
-            return arcs_to_appendix(x)
 
     converted_list = list(map(note_converter, notes))
 
     result = a.NoteGroup(*converted_list)
+
+    # create arc appendix in main aff
+    aff_arcs = [x for x in notes if type(x) == a.Arc]
+    result.extend(arcs_to_appendix(aff_arcs))
 
     return make_success_resp(result.__str__())
