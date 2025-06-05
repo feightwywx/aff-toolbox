@@ -6,7 +6,7 @@ from app.model.request import (
     ChartScaleParams,
 )
 from app.utils.response import make_success_resp
-from app.utils.chart import note_to_skyline
+from app.utils.chart import note_to_skyline, arcs_to_appendix
 from fastapi import APIRouter, Body, Depends
 from arcfutil import aff as a
 
@@ -176,11 +176,21 @@ async def chart_to_skyline(
                 ),
                 opt=tg_option
             )
+
+            # create arc appendix in tg
+            tg_arcs = [y for y in x if type(y) == a.Arc]
+            result_tg.extend(arcs_to_appendix(tg_arcs))
+
             return result_tg
         else:
             return note_to_skyline(x)
+
     converted_list = list(map(note_converter, notes))
 
     result = a.NoteGroup(*converted_list)
+
+    # create arc appendix in main aff
+    aff_arcs = [x for x in notes if type(x) == a.Arc]
+    result.extend(arcs_to_appendix(aff_arcs))
 
     return make_success_resp(result.__str__())

@@ -165,13 +165,10 @@ def image_to_arc(image: str,
 
 def note_to_skyline(note: a.Note) -> a.NoteGroup:
     tap_duration = 25
-    arc_head_duration = 5
     arctap_duration = 12
 
     def get_x_from_lane(lane: int) -> float:
         return 0.5 * (lane - 1)
-    
-    print(note)
     
     if type(note) == a.Tap:
         t1 = note.time
@@ -259,3 +256,53 @@ def note_to_skyline(note: a.Note) -> a.NoteGroup:
         )
     else:
         return NoteGroup([note])
+    
+
+def arcs_to_appendix(arcs: list[Arc]) -> a.NoteGroup:
+    arc_head_duration = 5
+
+    arcs_with_head: list[Arc] = []
+    arcs_with_indicator: list[Arc] = []
+
+    def create_arc_head(arc: Arc) -> list[Arc]:
+        t1 = arc.time - arc_head_duration
+        t2 = arc.time
+        x = arc.fromx
+        y = arc.fromy
+        color = arc.color
+
+        return [
+            Arc(t1, t2, x, x, 's', y - 0.07, y + 0.09, color, True),
+            Arc(t1, t2, x, x - 0.09, 's', y - 0.07, y - 0.07, color, True),
+            Arc(t1, t2, x, x + 0.09, 's', y - 0.07, y - 0.07, color, True)
+        ]
+    
+    def create_arc_indicator(arc: Arc) -> list[Arc]:
+        t = arc.time
+        x = arc.fromx
+        y = arc.fromy
+        color = arc.color
+
+        return [
+            Arc(t, t, x, x, 's', -0.20, y - 0.07, color, True)
+        ]
+
+    for a in arcs:
+        # find arcs with head
+        # arcs with head always have height indicator at start
+        if not any([b.totime == a.time for b in arcs]):
+            arcs_with_head.append(a)
+            arcs_with_indicator.append(a)
+        
+        # find arcs with height indicator at start
+        if any([b.totime == a.time
+                and abs(b.tox - a.fromx) < 1e-4
+                and abs(b.toy - a.fromy) < 1e-4
+                and abs(a.fromy - a.toy) > 1e-4
+                for b in arcs]):
+            arcs_with_indicator.append(a)
+
+    return NoteGroup(
+        *map(create_arc_head, arcs_with_head),
+        *map(create_arc_indicator, arcs_with_indicator)
+    )
