@@ -180,7 +180,7 @@ async def chart_to_skyline(
             )
 
             # create arc appendix in tg
-            tg_arcs = [y for y in x if type(y) == a.Arc]
+            tg_arcs = [y for y in x if type(y) == a.Arc and y.isskyline == False]
             result_tg.extend(arcs_to_appendix(tg_arcs, params.arc_head_scale))
 
             return result_tg
@@ -192,7 +192,7 @@ async def chart_to_skyline(
     result = a.NoteGroup(*converted_list)
 
     # create arc appendix in main aff
-    aff_arcs = [x for x in notes if type(x) == a.Arc]
+    aff_arcs = [x for x in notes if type(x) == a.Arc and x.isskyline == False]
     result.extend(arcs_to_appendix(aff_arcs, params.arc_head_scale))
 
     return make_success_resp(result.__str__())
