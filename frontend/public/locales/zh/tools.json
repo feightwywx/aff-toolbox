@@ -127,5 +127,11 @@
   "input.params.x_scale": "x方向缩放",
   "input.params.x_scale.helper": "向着所选平面的x方向拉伸图案的比例，默认为1.0",
   "input.params.y_scale": "y方向缩放",
-  "input.params.y_scale.helper": "向着所选平面的y方向拉伸图案的比例，默认为1.0"
+  "input.params.y_scale.helper": "向着所选平面的y方向拉伸图案的比例，默认为1.0",
+  "input.params.tap_scale": "Tap时长系数",
+  "input.params.arctap_scale": "ArcTap时长系数",
+  "input.params.arc_head_scale": "Arc头时长系数",
+  "input.params.tap_scale.helper": "调整Tap时长，默认为1",
+  "input.params.arctap_scale.helper": "调整ArcTap时长，默认为1",
+  "input.params.arc_head_scale.helper": "调整Arc头时长，默认为1"
 }

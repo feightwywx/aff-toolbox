@@ -4,6 +4,7 @@ from app.model.request import (
     ChartAlignParams,
     ChartOffsetParams,
     ChartScaleParams,
+    ChartToSkylineParams
 )
 from app.utils.response import make_success_resp
 from app.utils.chart import note_to_skyline, arcs_to_appendix
@@ -164,7 +165,7 @@ async def chart_scale(
 
 @chart_router.post("/to-skyline")
 async def chart_to_skyline(
-    notes: a.NoteGroup = Depends(notes_converter),
+    notes: a.NoteGroup = Depends(notes_converter), params: ChartToSkylineParams = Body()
 ) -> CommonResponse[str]:
     def note_converter(x: a.Note | a.NoteGroup) -> list:
         if type(x) == a.TimingGroup:
@@ -172,25 +173,26 @@ async def chart_to_skyline(
 
             result_tg = a.TimingGroup(
                 *map(
-                    lambda y: note_to_skyline(y), x
+                    lambda y: note_to_skyline(y, params.tap_scale, params.arctap_scale),
+                    x,
                 ),
                 opt=tg_option
             )
 
             # create arc appendix in tg
-            tg_arcs = [y for y in x if type(y) == a.Arc]
-            result_tg.extend(arcs_to_appendix(tg_arcs))
+            tg_arcs = [y for y in x if type(y) == a.Arc and y.isskyline == False]
+            result_tg.extend(arcs_to_appendix(tg_arcs, params.arc_head_scale))
 
             return result_tg
         else:
-            return note_to_skyline(x)
+            return note_to_skyline(x, params.tap_scale, params.arctap_scale)
 
     converted_list = list(map(note_converter, notes))
 
     result = a.NoteGroup(*converted_list)
 
     # create arc appendix in main aff
-    aff_arcs = [x for x in notes if type(x) == a.Arc]
-    result.extend(arcs_to_appendix(aff_arcs))
+    aff_arcs = [x for x in notes if type(x) == a.Arc and x.isskyline == False]
+    result.extend(arcs_to_appendix(aff_arcs, params.arc_head_scale))
 
     return make_success_resp(result.__str__())
