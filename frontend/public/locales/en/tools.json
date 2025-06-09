@@ -152,5 +152,11 @@
   "input.params.x_scale.helper": "Stretch the generated pattern along the x-axis of the selected plane, default is 1.0",
   "input.params.y_scale": "Y-axis Scale",
   "input.params.y_scale.helper": "Stretch the generated pattern along the y-axis of the selected plane, default is 1.0",
-  "参考NCat的黑线描物件工具实现": "Reference NCat's Note2Trace implementation"
+  "参考NCat的黑线描物件工具实现": "Reference NCat's Note2Trace implementation",
+  "input.params.tap_scale": "Tap Duration Scale",
+  "input.params.arctap_scale": "ArcTap Duration Scale",
+  "input.params.arc_head_scale": "Arc head Duration Scale",
+  "input.params.tap_scale.helper": "Adjust Tap duration, defaults to 1",
+  "input.params.arctap_scale.helper": "Adjust ArcTap duration, defaults to 1",
+  "input.params.arc_head_scale.helper": "Adjust Arc head duration, defaults to 1"
 }

@@ -1,4 +1,4 @@
-from typing import Literal
+from typing import Literal, Optional
 from arcfutil import aff as a
 from arcfutil.aff.note import NoteGroup, SceneControl, Arc
 from math import atan2, sin, cos
@@ -163,9 +163,13 @@ def image_to_arc(image: str,
     return arcs
 
 
-def note_to_skyline(note: a.Note) -> a.NoteGroup:
-    tap_duration = 25
-    arctap_duration = 12
+def note_to_skyline(
+        note: a.Note,
+        tap_scale: Optional[float],
+        arctap_scale: Optional[float]
+    ) -> a.NoteGroup:
+    tap_duration = 25 * (tap_scale if tap_scale is not None else 1)
+    arctap_duration = 12 * (arctap_scale if arctap_scale is not None else 1)
 
     def get_x_from_lane(lane: int) -> float:
         return 0.5 * (lane - 1)
@@ -258,8 +262,11 @@ def note_to_skyline(note: a.Note) -> a.NoteGroup:
         return NoteGroup([note])
     
 
-def arcs_to_appendix(arcs: list[Arc]) -> a.NoteGroup:
-    arc_head_duration = 5
+def arcs_to_appendix(
+        arcs: list[Arc],
+        arc_head_scale: Optional[float]
+    ) -> a.NoteGroup:
+    arc_head_duration = 5 * (arc_head_scale if arc_head_scale is not None else 1)
 
     arcs_with_head: list[Arc] = []
     arcs_with_indicator: list[Arc] = []

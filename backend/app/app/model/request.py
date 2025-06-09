@@ -231,3 +231,9 @@ class ChartScaleParams(BaseModel):
 class ArcShiftParams(BaseModel):
     x_offset: Optional[float] = 0
     y_offset: Optional[float] = 0
+
+
+class ChartToSkylineParams(BaseModel):
+    tap_scale: Optional[float] = 1
+    arctap_scale: Optional[float] = 1
+    arc_head_scale: Optional[float] = 1
