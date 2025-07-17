@@ -1,6 +1,6 @@
 import { Trans, useTranslation } from "next-i18next";
 
-import React, { PropsWithChildren, useState } from "react";
+import React, { PropsWithChildren, useRef, useState } from "react";
 import {
   Box,
   Button,
@@ -937,20 +937,16 @@ export const ImageField: React.FC<ImageFieldProps> = ({
   const [field, meta, helpers] = useField(props as { name: any });
   const [preview, setPreview] = React.useState<string | null>(null);
   const { t } = useTranslation("tools");
+  const imgUploadRef = useRef<HTMLInputElement>(null)
 
   let isError = Boolean(meta.touched && meta.error);
   
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     
-    if (!file) {
-      setPreview(null);
-      helpers.setValue(null);
-      return;
-    }
-    
-    // Check if the file is an image (PNG or JPEG)
-    if (!file.type.match('image/png|image/jpeg')) {
+    // when cancel or file type doesn't match
+    if (!file || !file.type.match('image/png|image/jpeg')) {
+      // do nothing
       return;
     }
     
@@ -968,6 +964,9 @@ export const ImageField: React.FC<ImageFieldProps> = ({
   const clearImage = () => {
     setPreview(null);
     helpers.setValue(null);
+    if (imgUploadRef.current) {
+      imgUploadRef.current.value = '';
+    }
     console.log('Image cleared');
   };
   
@@ -981,6 +980,7 @@ export const ImageField: React.FC<ImageFieldProps> = ({
         id={`image-upload-${field.name}`}
         type="file"
         onChange={handleFileChange}
+        ref={imgUploadRef}
       />
       
       <Stack direction="column" spacing={2} alignItems="flex-start">
