@@ -54,6 +54,20 @@ class OptionalStartStopCommonBody(BaseModel):
         return values
 
 
+class EqStartStopCommonBody(BaseModel):
+    start: int
+    stop: int
+
+    @root_validator()
+    def start_stop_validate(cls, values: dict[str, Any]) -> dict[str, Any]:
+        start, stop = values.get("start"), values.get("stop")
+
+        if isinstance(start, int) and isinstance(stop, int) and start > stop:
+            raise StartStopError("start time must before stop time")
+
+        return values
+
+
 class CountCommonBody(BaseModel):
     count: int
 
@@ -146,7 +160,7 @@ class ArcRainParams(StartStopCommonBody):
 
         return values
 
-class ArcSketchToArcParams(StartStopCommonBody, ImageCommonBody):
+class ArcSketchToArcParams(EqStartStopCommonBody, ImageCommonBody):
     sampling_rate: float
     method: Literal['contour', 'thinning'] = 'thinning'
     plane: Literal['vertical', 'timeline'] = 'vertical'
