@@ -33,7 +33,7 @@ import UploadFileIcon from "@mui/icons-material/UploadFile";
 import { FieldHelperProps, Form, Formik, useField, useFormikContext } from "formik";
 import * as Yup from "yup";
 import ToolFormikForm from "./ToolFormikForm";
-import { StatusCode } from "@/utils/interfaces";
+import { ComplexError, StatusCode } from "@/utils/interfaces";
 import { SubtitleTypography } from "./CardWithGrid";
 import Image from "next/image";
 
@@ -169,11 +169,27 @@ export const NumberField: React.FC<
           {...field}
         />
         <FormHelperText>
-          {isError
-            ? t(meta.error!)
-            : props.helperText
-            ? t(`input.${props.name}.helper`)
-            : undefined}
+          {((
+            isError,
+            error: string | ComplexError | undefined,
+            isHelper,
+            fieldName
+          ) => {
+            if (isError && error) {
+              if (typeof error === "string") {
+                return t(error);
+              } else if (
+                error.hasOwnProperty("key") &&
+                error.hasOwnProperty("value")
+              ) {
+                return [t(error.key), error.value].join("");
+              }
+            }
+
+            if (isHelper) {
+              return t(`input.${fieldName}.helper`);
+            }
+          })(isError, meta.error, props.helperText, props.name)}
         </FormHelperText>
       </FormControl>
     </Grid>

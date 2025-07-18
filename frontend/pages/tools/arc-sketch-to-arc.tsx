@@ -47,7 +47,7 @@ const ToolPage: NextPage = () => {
             stop: Yup.number().integer().required(),
             method: Yup.string().required(),
             plane: Yup.string().required(),
-            sampling_rate: Yup.number().required(),
+            sampling_rate: Yup.number().min(0.001).max(1).required(),
             x_offset: Yup.number(),
             y_offset: Yup.number(),
             x_scale: Yup.number(),

@@ -28,8 +28,8 @@ function App({ Component, pageProps }: AppProps) {
     },
     // use functions to generate an error object that includes the value from the schema
     number: {
-      min: ({ min }) => ({ key: "field_too_short", values: { min } }),
-      max: ({ max }) => ({ key: "field_too_big", values: { max } }),
+      min: ({ min }) => ({ key: "error.tooSmall", value: min }),
+      max: ({ max }) => ({ key: "error.tooLarge", value: max }),
       integer: "error.integer",
     },
   });
