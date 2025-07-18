@@ -133,5 +133,7 @@
   "input.params.arc_head_scale": "Arc头时长系数",
   "input.params.tap_scale.helper": "调整Tap时长，默认为1",
   "input.params.arctap_scale.helper": "调整ArcTap时长，默认为1",
-  "input.params.arc_head_scale.helper": "调整Arc头时长，默认为1"
+  "input.params.arc_head_scale.helper": "调整Arc头时长，默认为1",
+  "error.tooSmall": "不能小于",
+  "error.tooLarge": "不能大于"
 }

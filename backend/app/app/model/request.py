@@ -173,7 +173,7 @@ class ArcSketchToArcParams(EqStartStopCommonBody, ImageCommonBody):
     def count_validate(cls, values: dict[str, Any]) -> dict[str, Any]:
         sampling_rate = values.get("sampling_rate")
         if sampling_rate < 0.001 or sampling_rate > 1.0:
-            raise SamplingRateOutOfRangeError("sampling_rate should be in range [0.01, 1.0]")
+            raise SamplingRateOutOfRangeError("sampling_rate should be in range [0.001, 1.0]")
 
         return values
 

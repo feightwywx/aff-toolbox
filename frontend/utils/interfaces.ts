@@ -34,3 +34,8 @@ export enum StatusCode {
   NOTE_PARSE_ERR = 101,
   NETWORK_ERR = 200,
 }
+
+export interface ComplexError {
+  key: string
+  value: any
+}

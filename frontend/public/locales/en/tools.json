@@ -158,5 +158,7 @@
   "input.params.arc_head_scale": "Arc head Duration Scale",
   "input.params.tap_scale.helper": "Adjust Tap duration, defaults to 1",
   "input.params.arctap_scale.helper": "Adjust ArcTap duration, defaults to 1",
-  "input.params.arc_head_scale.helper": "Adjust Arc head duration, defaults to 1"
+  "input.params.arc_head_scale.helper": "Adjust Arc head duration, defaults to 1",
+  "error.tooSmall": "Can't be smaller than ",
+  "error.tooLarge": "Can't be larger than "
 }
