@@ -1,5 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`form test all 1`] = `"{"params":{"allowMinusTimingNote":true,"offset":200},"notes":"arc(0,1000,0.00,1.00,s,1.00,0.00,0,none,false);"}"`;
+exports[`form test all 1`] = `"{"params":{"process_audiooffset":false,"allowMinusTimingNote":true,"offset":200},"notes":"arc(0,1000,0.00,1.00,s,1.00,0.00,0,none,false);"}"`;
 
-exports[`form test required 1`] = `"{"params":{"allowMinusTimingNote":false,"offset":200},"notes":"arc(0,1000,0.00,1.00,s,1.00,0.00,0,none,false);"}"`;
+exports[`form test required 1`] = `"{"params":{"process_audiooffset":false,"allowMinusTimingNote":false,"offset":200},"notes":"arc(0,1000,0.00,1.00,s,1.00,0.00,0,none,false);"}"`;
