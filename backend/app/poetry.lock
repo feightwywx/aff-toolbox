@@ -24,14 +24,14 @@ trio = ["trio (>=0.26.1)"]
 
 [[package]]
 name = "arcfutil"
-version = "0.12.2"
+version = "0.12.3"
 description = "A Python module designed for processing Arcaea related files(.aff chart, songlist, etc.)"
 optional = false
 python-versions = ">=3.4"
 groups = ["main"]
 files = [
-    {file = "arcfutil-0.12.2-py3-none-any.whl", hash = "sha256:34d7fffc5c6f13ad4795ce77e54b48eea8b9a4cd2269d720c83ddab577f15a4d"},
-    {file = "arcfutil-0.12.2.tar.gz", hash = "sha256:2fa175f4ec73dce1e38a043dd0b4bdd6bf71fb528fdc989dac05a3f0fb130e3c"},
+    {file = "arcfutil-0.12.3-py3-none-any.whl", hash = "sha256:43e4ddc2783b3902f7b86b6e7738eefeb12f5f659d33fb32b5414afe77f01513"},
+    {file = "arcfutil-0.12.3.tar.gz", hash = "sha256:1fc4e41726192c3af38608e22efd28f874ca7b5ac08d6a664229929548c0b69b"},
 ]
 
 [[package]]
@@ -927,4 +927,4 @@ files = [
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.11"
-content-hash = "220b1d29ba43f6602eca6a73fecfd5629bcd78cc222b57d05ef4a492a88f3ef8"
+content-hash = "0f2ab5cc5ba9129431748608b2047fc47300371d0c1fbfb8b64e9acc5dadd94e"
