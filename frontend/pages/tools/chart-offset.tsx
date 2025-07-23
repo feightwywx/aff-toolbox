@@ -13,12 +13,20 @@ const ToolPage: NextPage = () => {
       <ToolTitle />
 
       <ToolFormikForm
-        initValues={{ notes: "", params: { offset: "", allowMinusTimingNote: false } }}
+        initValues={{
+          notes: "",
+          params: {
+            offset: "",
+            allowMinusTimingNote: false,
+            process_audiooffset: false,
+          },
+        }}
         validationSchema={{
           notes: Yup.string().required(),
           params: Yup.object().shape({
             offset: Yup.number().required().integer(),
-            allowMinusTimingNote: Yup.boolean()
+            allowMinusTimingNote: Yup.boolean(),
+            process_audiooffset: Yup.boolean()
           }),
         }}
       >
@@ -30,6 +38,7 @@ const ToolPage: NextPage = () => {
           <NumberField name="params.offset" withTimingCalc />
           <SubtitleTypography>可选参数</SubtitleTypography>
           <CheckBoxField name="params.allowMinusTimingNote" />
+          <CheckBoxField name="params.process_audiooffset" />
         </CardWithGrid>
       </ToolFormikForm>
     </ToolStack>

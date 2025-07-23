@@ -160,5 +160,6 @@
   "input.params.arctap_scale.helper": "Adjust ArcTap duration, defaults to 1",
   "input.params.arc_head_scale.helper": "Adjust Arc head duration, defaults to 1",
   "error.tooSmall": "Can't be smaller than ",
-  "error.tooLarge": "Can't be larger than "
+  "error.tooLarge": "Can't be larger than ",
+  "input.params.process_audiooffset": "Offset AudioOffset"
 }
