@@ -58,7 +58,7 @@ const AppBar: React.FC<PropsWithChildren> = ({ children }) => {
             invisible={
               !(
                 process.env.NEXT_PUBLIC_ATB_VERSION?.includes("pr") ||
-                process.env.NEXT_PUBLIC_ATB_VERSION === undefined
+                process.env.NEXT_PUBLIC_ATB_VERSION?.includes("beta")
               )
             }
           >
