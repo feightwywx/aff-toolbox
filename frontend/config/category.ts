@@ -9,11 +9,7 @@ export const category: CategoryWithNew[] = [
 ];
 
 export const newModules: string[] = [
-  "arcBreak",
-  "arcEnvelope",
-  "arcSplit",
-  "timingEasingDisp",
-  "timingEasing",
-  "chartScale",
-  "sketchImgToArc"
+  "sketchImgToArc",
+  "chartToSkyline",
+  "arcShift"
 ];
