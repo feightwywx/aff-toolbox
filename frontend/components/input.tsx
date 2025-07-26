@@ -386,6 +386,11 @@ export const CreaseModeSelect: React.FC<SelectWithHelperProps> = ({
           fullWidth
           label={t("input.creaseMode")}
           error={isError}
+          inputProps={{
+            role: "listbox",
+            "aria-label": `input.${props.name}`,
+            "data-testid": `input.${props.name}`,
+          }}
           {...field}
           {...props}
         >
@@ -425,6 +430,11 @@ export const ArcEasingModeSelect: React.FC<SelectWithHelperProps> = ({
           fullWidth
           label={t(`input.${props.name}`)}
           error={isError}
+          inputProps={{
+            role: "listbox",
+            "aria-label": `input.${props.name}`,
+            "data-testid": `input.${props.name}`,
+          }}
           {...field}
           {...props}
         >
@@ -469,6 +479,7 @@ export const EasingModeSelect: React.FC<SelectWithHelperProps> = ({
           inputProps={{
             role: "listbox",
             "aria-label": `input.${props.name}`,
+            "data-testid": `input.${props.name}`,
           }}
           {...field}
           {...props}
