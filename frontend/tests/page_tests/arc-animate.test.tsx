@@ -2,44 +2,111 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import ToolPage from "@/pages/tools/arc-animate";
 
+const formFields = [
+  {
+    id: "arc",
+    type: "textbox",
+    name: "input.arc"
+  },
+  {
+    id: "start",
+    type: "textbox",
+    name: "input.params.start"
+  },
+  {
+    id: "stop",
+    type: "textbox",
+    name: "input.params.stop"
+  },
+  {
+    id: "delta_x",
+    type: "textbox",
+    name: "input.params.delta_x"
+  },
+  {
+    id: "delta_y",
+    type: "textbox",
+    name: "input.params.delta_y"
+  },
+  {
+    id: "basebpm",
+    type: "textbox",
+    name: "input.params.basebpm"
+  },
+  {
+    id: "easing_x",
+    type: "button",
+    name: "input.params.easing_x"
+  },
+  {
+    id: "easing_y",
+    type: "button",
+    name: "input.params.easing_y"
+  },
+  {
+    id: "easing_b_point_x",
+    type: "textbox",
+    name: "input.params.easing_b_point_x"
+  },
+  {
+    id: "easing_b_point_y",
+    type: "textbox",
+    name: "input.params.easing_b_point_y"
+  },
+  {
+    id: "offset_t",
+    type: "textbox",
+    name: "input.params.offset_t"
+  },
+  {
+    id: "delta_offset_t",
+    type: "textbox",
+    name: "input.params.delta_offset_t"
+  },
+  {
+    id: "easing_offset_t",
+    type: "button",
+    name: "input.params.easing_offset_t"
+  },
+  {
+    id: "easing_b_point_offset_t",
+    type: "textbox",
+    name: "input.params.easing_b_point_offset_t"
+  },
+  {
+    id: "infbpm",
+    type: "textbox",
+    name: "input.params.infbpm"
+  },
+  {
+    id: "framerate",
+    type: "textbox",
+    name: "input.params.framerate"
+  },
+  {
+    id: "fake_note_t",
+    type: "textbox",
+    name: "input.params.fake_note_t"
+  }
+];
+
 jest.mock("next/router", () => jest.requireActual("next-router-mock"));
 jest.mock("react-redux");
 
 describe("form test", () => {
   const user = userEvent.setup();
   let u: () => void; // local unmount
-  let formControl: { [x: string]: HTMLElement };
+  let formControl: { [x: string]: HTMLElement } = {};
   let formSubmit: HTMLElement;
   let formResult: HTMLElement;
 
   beforeEach(() => {
     const { unmount } = render(<ToolPage />);
     u = unmount;
-    formControl = {
-      arc: screen.getAllByRole("textbox", { name: "input.arc" })[0],
-      start: screen.getAllByRole("textbox", { name: "input.params.start" })[0],
-      stop: screen.getAllByRole("textbox", { name: "input.params.stop" })[0],
-      delta_x: screen.getAllByRole("textbox", { name: "input.params.delta_x" })[0],
-      delta_y: screen.getAllByRole("textbox", { name: "input.params.delta_y" })[0],
-      basebpm: screen.getAllByRole("textbox", { name: "input.params.basebpm" })[0],
 
-      // optional
-      easing_x: screen.getAllByRole("button", { name: "input.params.easing_x" })[0],
-      easing_y: screen.getAllByRole("button", { name: "input.params.easing_y" })[0],
-      easing_b_point_x: screen.getAllByRole("textbox", { name: "input.params.easing_b_point_x" })[0],
-      easing_b_point_y: screen.getAllByRole("textbox", { name: "input.params.easing_b_point_y" })[0],
-
-      // optional t offset
-      offset_t: screen.getAllByRole("textbox", { name: "input.params.offset_t" })[0],
-      delta_offset_t: screen.getAllByRole("textbox", { name: "input.params.delta_offset_t" })[0],
-      easing_offset_t: screen.getAllByRole("button", { name: "input.params.easing_offset_t" })[0],
-      easing_b_point_offset_t: screen.getAllByRole("textbox", { name: "input.params.easing_b_point_offset_t" })[0],
-
-      // optional customize
-      infbpm: screen.getAllByRole("textbox", { name: "input.params.infbpm" })[0],
-      framerate: screen.getAllByRole("textbox", { name: "input.params.framerate" })[0],
-      fake_note_t: screen.getAllByRole("textbox", { name: "input.params.fake_note_t" })[0],
-    } as { [x: string]: HTMLElement };
+    for (const meta of formFields) {
+      formControl[meta.id] = screen.getByRole(meta.type, { name: meta.name });
+    }
 
     formSubmit = screen.getAllByRole("button", { name: "submit" })[0];
     formResult = screen.getAllByTestId("result")[0];
@@ -71,8 +138,10 @@ describe("form test", () => {
     await user.type(formControl.basebpm, "100");
 
     // optional
-    // await user.type(formControl.easing_x, "s");
-    // await user.type(formControl.easing_y, "s");
+    await user.click(formControl.easing_x);
+    await user.click(screen.getAllByRole("option", { name: "b" })[0]);
+    await user.click(formControl.easing_y);
+    await user.click(screen.getAllByRole("option", { name: "b" })[0]);
     await user.type(formControl.easing_b_point_x, "0,1,0,1");
     await user.type(formControl.easing_b_point_y, "0,1,0,1");
 
@@ -80,6 +149,8 @@ describe("form test", () => {
     await user.type(formControl.offset_t, "1000");
     await user.type(formControl.delta_offset_t, "-100");
     // await user.type(formControl.easing_offset_t, "s");
+    await user.click(formControl.easing_offset_t);
+    await user.click(screen.getAllByRole("option", { name: "b" })[0]);
     await user.type(formControl.easing_b_point_offset_t, "0,1,0,1");
 
     // optional customize
