@@ -907,6 +907,11 @@ export const SketchToArcMethodSelect: React.FC<SelectWithHelperProps> = ({
           fullWidth
           label={t("input.method")}
           error={isError}
+          inputProps={{
+            role: "listbox",
+            "aria-label": `input.${props.name}`,
+            "data-testid": `input.${props.name}`,
+          }}
           {...field}
           {...props}
         >
@@ -946,6 +951,11 @@ export const SketchToArcPlaneSelect: React.FC<SelectWithHelperProps> = ({
           fullWidth
           label={t("input.plane")}
           error={isError}
+          inputProps={{
+            role: "listbox",
+            "aria-label": `input.${props.name}`,
+            "data-testid": `input.${props.name}`,
+          }}
           {...field}
           {...props}
         >
@@ -1018,6 +1028,12 @@ export const ImageField: React.FC<ImageFieldProps> = ({
         type="file"
         onChange={handleFileChange}
         ref={imgUploadRef}
+        {...
+          {
+            "aria-label": `input.${props.name}`,
+            "data-testid": `input.${props.name}`,
+          }
+        }
       />
       
       <Stack direction="column" spacing={2} alignItems="flex-start">
