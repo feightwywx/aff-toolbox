@@ -2,37 +2,66 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import ToolPage from "@/pages/tools/timing-easing";
 
+const formFields = [
+  {
+    id: "start",
+    type: "textbox",
+    name: "input.params.start"
+  },
+  {
+    id: "stop",
+    type: "textbox",
+    name: "input.params.stop"
+  },
+  {
+    id: "start_bpm",
+    type: "textbox",
+    name: "input.params.start_bpm"
+  },
+  {
+    id: "stop_bpm",
+    type: "textbox",
+    name: "input.params.stop_bpm"
+  },
+  {
+    id: "count",
+    type: "textbox",
+    name: "input.params.count"
+  },
+  {
+    id: "bar",
+    type: "textbox",
+    name: "input.params.bar"
+  },
+  {
+    id: "easing",
+    type: "button",
+    name: "input.params.easing"
+  },
+  {
+    id: "easing_b_point",
+    type: "textbox",
+    name: "input.params.easing_b_point"
+  }
+];
+
 jest.mock("next/router", () => jest.requireActual("next-router-mock"));
 jest.mock("react-redux");
 
 describe("form test", () => {
   const user = userEvent.setup();
   let u: () => void; // local unmount
-  let formControl: { [x: string]: HTMLElement };
+  let formControl: { [x: string]: HTMLElement } = {};
   let formSubmit: HTMLElement;
   let formResult: HTMLElement;
 
   beforeEach(() => {
     const { unmount } = render(<ToolPage />);
     u = unmount;
-    formControl = {
-      start: screen.getAllByRole("textbox", { name: "input.params.start" })[0],
-      stop: screen.getAllByRole("textbox", { name: "input.params.stop" })[0],
-      start_bpm: screen.getAllByRole("textbox", {
-        name: "input.params.start_bpm",
-      })[0],
-      stop_bpm: screen.getAllByRole("textbox", {
-        name: "input.params.stop_bpm",
-      })[0],
-      count: screen.getAllByRole("textbox", { name: "input.params.count" })[0],
 
-      // optional
-      bar: screen.getAllByRole("textbox", { name: "input.params.bar" })[0],
-      // easing: screen.getAllByRole("button", { name: "input.params.easing" })[0],
-      easing_b_point: screen.getAllByRole("textbox", {
-        name: "input.params.easing_b_point",
-      })[0],
-    } as { [x: string]: HTMLElement };
+    for (const meta of formFields) {
+      formControl[meta.id] = screen.getByRole(meta.type, { name: meta.name });
+    }
 
     formSubmit = screen.getAllByRole("button", { name: "submit" })[0];
     formResult = screen.getAllByTestId("result")[0];
@@ -64,6 +93,8 @@ describe("form test", () => {
     // optional
     await user.type(formControl.bar, "4.00");
     await user.type(formControl.easing_b_point, "0,1,0,1");
+    await user.click(formControl.easing);
+    await user.click(screen.getAllByRole("option", { name: "b" })[0]);
 
     await user.click(formSubmit);
 

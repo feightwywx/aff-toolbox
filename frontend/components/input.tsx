@@ -594,6 +594,11 @@ export const EnvelopeModeSelect: React.FC<SelectWithHelperProps> = ({
           fullWidth
           label={t("input.envelopeMode")}
           error={isError}
+          inputProps={{
+            role: "listbox",
+            "aria-label": "input.envelopeMode",
+            "data-testid": "input.envelopeMode",
+          }}
           {...field}
           {...props}
         >
@@ -633,6 +638,11 @@ export const RainLimitModeSelect: React.FC<SelectWithHelperProps> = ({
           fullWidth
           label={t("input.rainLimitMode")}
           error={isError}
+          inputProps={{
+            role: "listbox",
+            "aria-label": "input.rainLimitMode",
+            "data-testid": "input.rainLimitMode",
+          }}
           {...field}
           {...props}
         >

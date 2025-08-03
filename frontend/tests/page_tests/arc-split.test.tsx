@@ -1,6 +1,31 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import ToolPage from "@/pages/tools/arc-split";
+import { arcPostProcessFields } from "../utils/commonFields";
+
+const formFields = [
+  {
+    id: "arc",
+    type: "textbox",
+    name: "input.arc"
+  },
+  {
+    id: "count",
+    type: "textbox",
+    name: "input.params.count"
+  },
+  {
+    id: "start",
+    type: "textbox",
+    name: "input.params.start"
+  },
+  {
+    id: "stop",
+    type: "textbox",
+    name: "input.params.stop"
+  },
+  ...arcPostProcessFields,
+];
 
 jest.mock("next/router", () => jest.requireActual("next-router-mock"));
 jest.mock("react-redux");
@@ -8,29 +33,17 @@ jest.mock("react-redux");
 describe("form test", () => {
   const user = userEvent.setup();
   let u: () => void; // local unmount
-  let formControl: { [x: string]: HTMLElement };
+  let formControl: { [x: string]: HTMLElement } = {};
   let formSubmit: HTMLElement;
   let formResult: HTMLElement;
 
   beforeEach(() => {
     const { unmount } = render(<ToolPage />);
     u = unmount;
-    formControl = {
-      arc: screen.getAllByRole("textbox", { name: "input.arc" })[0],
-      count: screen.getAllByRole("textbox", { name: "input.params.count" })[0],
-      start: screen.getAllByRole("textbox", { name: "input.params.start" })[0],
-      stop: screen.getAllByRole("textbox", { name: "input.params.stop" })[0],
 
-      // arc post process
-      mirror: screen.getAllByRole("checkbox", { name: "input.post.mirror" })[0],
-      straighten_x: screen.getAllByRole("checkbox", { name: "input.post.straighten_x" })[0],
-      straighten_y: screen.getAllByRole("checkbox", { name: "input.post.straighten_y" })[0],
-      connector: screen.getAllByRole("checkbox", { name: "input.post.connector" })[0],
-      position_filter_none: screen.getAllByRole("radio", { name: "input.post.position_filter.none" })[0],
-      position_filter_even: screen.getAllByRole("radio", { name: "input.post.position_filter.even" })[0],
-      position_filter_odd: screen.getAllByRole("radio", { name: "input.post.position_filter.odd" })[0],
-
-    } as { [x: string]: HTMLElement };
+    for (const meta of formFields) {
+      formControl[meta.id] = screen.getByRole(meta.type, { name: meta.name });
+    }
 
     formSubmit = screen.getAllByRole("button", { name: "submit" })[0];
     formResult = screen.getAllByTestId("result")[0];

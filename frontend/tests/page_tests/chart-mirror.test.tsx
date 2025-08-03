@@ -2,22 +2,31 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import ToolPage from "@/pages/tools/chart-mirror";
 
+const formFields = [
+  {
+    id: "notes",
+    type: "textbox", 
+    name: "input.notes"
+  }
+];
+
 jest.mock("next/router", () => jest.requireActual("next-router-mock"));
 jest.mock("react-redux");
 
 describe("form test", () => {
   const user = userEvent.setup();
   let u: () => void; // local unmount
-  let formControl: { [x: string]: HTMLElement };
+  let formControl: { [x: string]: HTMLElement } = {};
   let formSubmit: HTMLElement;
   let formResult: HTMLElement;
 
   beforeEach(() => {
     const { unmount } = render(<ToolPage />);
     u = unmount;
-    formControl = {
-      notes: screen.getAllByRole("textbox", { name: "input.notes" })[0],
-    } as { [x: string]: HTMLElement };
+
+    for (const meta of formFields) {
+      formControl[meta.id] = screen.getByRole(meta.type, { name: meta.name });
+    }
 
     formSubmit = screen.getAllByRole("button", { name: "submit" })[0];
     formResult = screen.getAllByTestId("result")[0];

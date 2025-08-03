@@ -1,6 +1,46 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import ToolPage from "@/pages/tools/arc-rain";
+import { arcPostProcessFields } from "../utils/commonFields";
+
+const formFields = [
+  {
+    id: "start",
+    type: "textbox",
+    name: "input.params.start"
+  },
+  {
+    id: "stop",
+    type: "textbox",
+    name: "input.params.stop"
+  },
+  {
+    id: "step",
+    type: "textbox",
+    name: "input.params.step"
+  },
+  {
+    id: "dropLength",
+    type: "textbox",
+    name: "input.params.dropLength"
+  },
+  {
+    id: "mode",
+    type: "button",
+    name: "input.rainLimitMode"
+  },
+  {
+    id: "x_limit_range",
+    type: "textbox",
+    name: "input.params.x_limit_range"
+  },
+  {
+    id: "y_limit_range",
+    type: "textbox",
+    name: "input.params.y_limit_range"
+  },
+  ...arcPostProcessFields
+];
 
 jest.mock("next/router", () => jest.requireActual("next-router-mock"));
 jest.mock("react-redux");
@@ -8,34 +48,17 @@ jest.mock("react-redux");
 describe("form test", () => {
   const user = userEvent.setup();
   let u: () => void; // local unmount
-  let formControl: { [x: string]: HTMLElement };
+  let formControl: { [x: string]: HTMLElement } = {};
   let formSubmit: HTMLElement;
   let formResult: HTMLElement;
 
   beforeEach(() => {
     const { unmount } = render(<ToolPage />);
     u = unmount;
-    formControl = {
-      start: screen.getAllByRole("textbox", { name: "input.params.start" })[0],
-      stop: screen.getAllByRole("textbox", { name: "input.params.stop" })[0],
-      step: screen.getAllByRole("textbox", { name: "input.params.step" })[0],
 
-      // optional
-      dropLength: screen.getAllByRole("textbox", { name: "input.params.dropLength" })[0],
-      // mode: screen.getAllByRole("button", { name: "input.params.mode" })[0],
-      x_limit_range: screen.getAllByRole("textbox", { name: "input.params.x_limit_range" })[0],
-      y_limit_range: screen.getAllByRole("textbox", { name: "input.params.y_limit_range" })[0],
-
-      // arc post process
-      mirror: screen.getAllByRole("checkbox", { name: "input.post.mirror" })[0],
-      straighten_x: screen.getAllByRole("checkbox", { name: "input.post.straighten_x" })[0],
-      straighten_y: screen.getAllByRole("checkbox", { name: "input.post.straighten_y" })[0],
-      connector: screen.getAllByRole("checkbox", { name: "input.post.connector" })[0],
-      position_filter_none: screen.getAllByRole("radio", { name: "input.post.position_filter.none" })[0],
-      position_filter_even: screen.getAllByRole("radio", { name: "input.post.position_filter.even" })[0],
-      position_filter_odd: screen.getAllByRole("radio", { name: "input.post.position_filter.odd" })[0],
-
-    } as { [x: string]: HTMLElement };
+    for (const meta of formFields) {
+      formControl[meta.id] = screen.getByRole(meta.type, { name: meta.name });
+    }
 
     formSubmit = screen.getAllByRole("button", { name: "submit" })[0];
     formResult = screen.getAllByTestId("result")[0];
@@ -64,6 +87,8 @@ describe("form test", () => {
     await user.type(formControl.dropLength, "10");
     await user.type(formControl.x_limit_range, "10");
     await user.type(formControl.y_limit_range, "10");
+    await user.click(formControl.mode);
+    await user.click(screen.getAllByRole("option", { name: "input.rainLimitMode.enwidenbyd" })[0]);
 
     await user.click(formSubmit);
 
@@ -96,6 +121,8 @@ describe("form test", () => {
     await user.type(formControl.dropLength, "10");
     await user.type(formControl.x_limit_range, "10");
     await user.type(formControl.y_limit_range, "10");
+    await user.click(formControl.mode);
+    await user.click(screen.getAllByRole("option", { name: "input.rainLimitMode.enwidenbyd" })[0]);
 
     // post
     await user.click(formControl.mirror);
