@@ -1,28 +1,25 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import ToolPage from "@/pages/tools/sc-blink";
+import ToolPage from "@/pages/tools/arc-shift";
+import { arcPostProcessFields } from "../utils/commonFields";
 
 const formFields = [
   {
-    id: "start",
+    id: "arc",
     type: "textbox",
-    name: "input.params.start"
+    name: "input.arc"
   },
   {
-    id: "stop",
+    id: "x_offset",
     type: "textbox",
-    name: "input.params.stop"
+    name: "input.params.x_offset"
   },
   {
-    id: "count",
+    id: "y_offset",
     type: "textbox",
-    name: "input.params.count"
+    name: "input.params.y_offset"
   },
-  {
-    id: "sc_x",
-    type: "textbox",
-    name: "input.params.sc_x"
-  }
+  ...arcPostProcessFields,
 ];
 
 jest.mock("next/router", () => jest.requireActual("next-router-mock"));
@@ -51,47 +48,46 @@ describe("form test", () => {
     u(); // unmount
   });
 
-  it("all required", async () => {
-    await user.type(formControl.start, "0");
-    await user.type(formControl.stop, "1000");
-    await user.type(formControl.count, "10");
+  it("x only", async () => {
+    await user.type(formControl.arc, "arc(0,1000,0.00,1.00,s,1.00,0.00,0,none,false);");
+    await user.type(formControl.x_offset, "0.5");
+
+    await user.click(formSubmit);
+
+    expect(formResult.innerHTML).toMatchSnapshot();
+  }, 30000);
+
+  it("y only", async () => {
+    await user.type(formControl.arc, "arc(0,1000,0.00,1.00,s,1.00,0.00,0,none,false);");
+    await user.type(formControl.y_offset, "-0.5");
+
     await user.click(formSubmit);
 
     expect(formResult.innerHTML).toMatchSnapshot();
   }, 30000);
 
   it("all", async () => {
-    await user.type(formControl.start, "0");
-    await user.type(formControl.stop, "1000");
-    await user.type(formControl.count, "10");
-    await user.type(formControl.sc_x, "2");
+    await user.type(formControl.arc, "arc(0,1000,0.00,1.00,s,1.00,0.00,0,none,false);");
+    await user.type(formControl.x_offset, "0.5");
+    await user.type(formControl.y_offset, "-0.5");
+
     await user.click(formSubmit);
 
     expect(formResult.innerHTML).toMatchSnapshot();
   }, 30000);
 
-  it("required missing", async () => {
-    // await user.type(formControl.start, "0");
-    await user.type(formControl.stop, "1000");
-    await user.type(formControl.count, "10");
-    await user.click(formSubmit);
+  it("all with post", async () => {
+    await user.type(formControl.arc, "arc(0,1000,0.00,1.00,s,1.00,0.00,0,none,false);");
+    await user.type(formControl.x_offset, "0.5");
+    await user.type(formControl.y_offset, "-0.5");
 
-    expect(formResult.innerHTML).toMatchSnapshot();
-  }, 30000);
+    // post
+    await user.click(formControl.mirror);
+    await user.click(formControl.straighten_x);
+    await user.click(formControl.straighten_y);
+    await user.click(formControl.connector);
+    await user.click(formControl.position_filter_even);
 
-  it("required missing", async () => {
-    await user.type(formControl.start, "0");
-    // await user.type(formControl.stop, "1000");
-    await user.type(formControl.count, "10");
-    await user.click(formSubmit);
-
-    expect(formResult.innerHTML).toMatchSnapshot();
-  }, 30000);
-
-  it("required missing", async () => {
-    await user.type(formControl.start, "0");
-    await user.type(formControl.stop, "1000");
-    // await user.type(formControl.count, "10");
     await user.click(formSubmit);
 
     expect(formResult.innerHTML).toMatchSnapshot();

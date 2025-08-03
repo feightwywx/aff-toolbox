@@ -200,7 +200,6 @@ const config: Config = {
 
   // Whether to use watchman for file crawling
   // watchman: true,
-  resolver: `${__dirname}/config/jest_resolver.js`,
 };
 
 export default createJestConfig(config);

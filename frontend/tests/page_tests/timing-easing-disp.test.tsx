@@ -2,6 +2,44 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import ToolPage from "@/pages/tools/timing-easing-disp";
 
+const formFields = [
+  {
+    id: "start",
+    type: "textbox",
+    name: "input.params.start"
+  },
+  {
+    id: "stop",
+    type: "textbox",
+    name: "input.params.stop"
+  },
+  {
+    id: "basebpm",
+    type: "textbox",
+    name: "input.params.basebpm"
+  },
+  {
+    id: "count",
+    type: "textbox",
+    name: "input.params.count"
+  },
+  {
+    id: "bar",
+    type: "textbox",
+    name: "input.params.bar"
+  },
+  {
+    id: "easing",
+    type: "button",
+    name: "input.params.easing"
+  },
+  {
+    id: "easing_b_point",
+    type: "textbox",
+    name: "input.params.easing_b_point"
+  }
+];
+
 jest.mock("next/router", () => jest.requireActual("next-router-mock"));
 jest.mock("react-redux");
 
@@ -25,7 +63,7 @@ describe("form test", () => {
 
       // optional
       bar: screen.getAllByRole("textbox", { name: "input.params.bar" })[0],
-      // easing: screen.getAllByRole("button", { name: "input.params.easing" })[0],
+      easing: screen.getAllByRole("button", { name: "input.params.easing" })[0],
       easing_b_point: screen.getAllByRole("textbox", {
         name: "input.params.easing_b_point",
       })[0],
@@ -59,6 +97,8 @@ describe("form test", () => {
     // optional
     await user.type(formControl.bar, "4.00");
     await user.type(formControl.easing_b_point, "0,1,0,1");
+    await user.click(formControl.easing);
+    await user.click(screen.getAllByRole("option", { name: "b" })[0]);
 
     await user.click(formSubmit);
 

@@ -2,28 +2,41 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import ToolPage from "@/pages/tools/chart-scale";
 
+const formFields = [
+  {
+    id: "notes",
+    type: "textbox",
+    name: "input.notes"
+  },
+  {
+    id: "scale",
+    type: "textbox",
+    name: "input.params.scale"
+  },
+  {
+    id: "standard",
+    type: "textbox",
+    name: "input.params.standard"
+  }
+];
+
 jest.mock("next/router", () => jest.requireActual("next-router-mock"));
 jest.mock("react-redux");
 
 describe("form test", () => {
   const user = userEvent.setup();
   let u: () => void; // local unmount
-  let formControl: { [x: string]: HTMLElement };
+  let formControl: { [x: string]: HTMLElement } = {};
   let formSubmit: HTMLElement;
   let formResult: HTMLElement;
 
   beforeEach(() => {
     const { unmount } = render(<ToolPage />);
     u = unmount;
-    formControl = {
-      notes: screen.getAllByRole("textbox", { name: "input.notes" })[0],
-      scale: screen.getAllByRole("textbox", { name: "input.params.scale" })[0],
 
-      // optional
-      standard: screen.getAllByRole("textbox", {
-        name: "input.params.standard",
-      })[0],
-    } as { [x: string]: HTMLElement };
+    for (const meta of formFields) {
+      formControl[meta.id] = screen.getByRole(meta.type, { name: meta.name });
+    }
 
     formSubmit = screen.getAllByRole("button", { name: "submit" })[0];
     formResult = screen.getAllByTestId("result")[0];

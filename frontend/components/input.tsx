@@ -388,6 +388,11 @@ export const CreaseModeSelect: React.FC<SelectWithHelperProps> = ({
           fullWidth
           label={t("input.creaseMode")}
           error={isError}
+          inputProps={{
+            role: "listbox",
+            "aria-label": `input.${props.name}`,
+            "data-testid": `input.${props.name}`,
+          }}
           {...field}
           {...props}
         >
@@ -427,6 +432,11 @@ export const ArcEasingModeSelect: React.FC<SelectWithHelperProps> = ({
           fullWidth
           label={t(`input.${props.name}`)}
           error={isError}
+          inputProps={{
+            role: "listbox",
+            "aria-label": `input.${props.name}`,
+            "data-testid": `input.${props.name}`,
+          }}
           {...field}
           {...props}
         >
@@ -471,6 +481,7 @@ export const EasingModeSelect: React.FC<SelectWithHelperProps> = ({
           inputProps={{
             role: "listbox",
             "aria-label": `input.${props.name}`,
+            "data-testid": `input.${props.name}`,
           }}
           {...field}
           {...props}
@@ -585,6 +596,11 @@ export const EnvelopeModeSelect: React.FC<SelectWithHelperProps> = ({
           fullWidth
           label={t("input.envelopeMode")}
           error={isError}
+          inputProps={{
+            role: "listbox",
+            "aria-label": "input.envelopeMode",
+            "data-testid": "input.envelopeMode",
+          }}
           {...field}
           {...props}
         >
@@ -624,6 +640,11 @@ export const RainLimitModeSelect: React.FC<SelectWithHelperProps> = ({
           fullWidth
           label={t("input.rainLimitMode")}
           error={isError}
+          inputProps={{
+            role: "listbox",
+            "aria-label": "input.rainLimitMode",
+            "data-testid": "input.rainLimitMode",
+          }}
           {...field}
           {...props}
         >
@@ -888,6 +909,11 @@ export const SketchToArcMethodSelect: React.FC<SelectWithHelperProps> = ({
           fullWidth
           label={t("input.method")}
           error={isError}
+          inputProps={{
+            role: "listbox",
+            "aria-label": `input.${props.name}`,
+            "data-testid": `input.${props.name}`,
+          }}
           {...field}
           {...props}
         >
@@ -927,6 +953,11 @@ export const SketchToArcPlaneSelect: React.FC<SelectWithHelperProps> = ({
           fullWidth
           label={t("input.plane")}
           error={isError}
+          inputProps={{
+            role: "listbox",
+            "aria-label": `input.${props.name}`,
+            "data-testid": `input.${props.name}`,
+          }}
           {...field}
           {...props}
         >
@@ -999,6 +1030,12 @@ export const ImageField: React.FC<ImageFieldProps> = ({
         type="file"
         onChange={handleFileChange}
         ref={imgUploadRef}
+        {...
+          {
+            "aria-label": `input.${props.name}`,
+            "data-testid": `input.${props.name}`,
+          }
+        }
       />
       
       <Stack direction="column" spacing={2} alignItems="flex-start">

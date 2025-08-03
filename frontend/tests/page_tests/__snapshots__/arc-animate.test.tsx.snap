@@ -1,5 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`form test all 1`] = `"{"params":{"fake_note_t":1000000,"framerate":120,"infbpm":100000,"easing_b_point_offset_t":[0,1,0,1],"easing_offset_t":"s","delta_offset_t":-100,"offset_t":1000,"easing_b_point_y":[0,1,0,1],"easing_y":"s","easing_b_point_x":[0,1,0,1],"easing_x":"s","basebpm":100,"delta_y":1,"delta_x":1,"stop":1000,"start":0},"arc":"arc(0,1000,0.00,1.00,s,1.00,0.00,0,none,false);"}"`;
+exports[`form test all 1`] = `"{"params":{"fake_note_t":1000000,"framerate":120,"infbpm":100000,"easing_b_point_offset_t":[0,1,0,1],"easing_offset_t":"b","delta_offset_t":-100,"offset_t":1000,"easing_b_point_y":[0,1,0,1],"easing_y":"b","easing_b_point_x":[0,1,0,1],"easing_x":"b","basebpm":100,"delta_y":1,"delta_x":1,"stop":1000,"start":0},"arc":"arc(0,1000,0.00,1.00,s,1.00,0.00,0,none,false);"}"`;
 
 exports[`form test required 1`] = `"{"params":{"easing_offset_t":"s","easing_y":"s","easing_x":"s","basebpm":100,"delta_y":1,"delta_x":1,"stop":1000,"start":0},"arc":"arc(0,1000,0.00,1.00,s,1.00,0.00,0,none,false);"}"`;
