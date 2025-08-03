@@ -80,6 +80,7 @@ interface ImageFieldProps {
 export const AffTextField: React.FC<TextFieldProps> = ({ ...props }) => {
   const [field, meta, helpers] = useField(props as { name: any });
   const { t } = useTranslation("tools");
+  const inputRef = useRef<HTMLInputElement>(null);
 
   let isError = Boolean(meta.touched && meta.error);
 
@@ -92,7 +93,7 @@ export const AffTextField: React.FC<TextFieldProps> = ({ ...props }) => {
       reader.onload = (e: ProgressEvent<FileReader>) => {
         if (e.target?.result) {
           helpers.setValue(e.target.result as string);
-          helpers.setTouched(true);
+          inputRef.current!.value = '';
         }
       };
       reader.readAsText(file);
@@ -116,6 +117,7 @@ export const AffTextField: React.FC<TextFieldProps> = ({ ...props }) => {
                 onChange={handleFileChange}
                 style={{ display: "none" }}
                 id="file-input"
+                ref={inputRef}
               />
               <label htmlFor="file-input">
                 <IconButton onClick={async () => {}}  component="span">

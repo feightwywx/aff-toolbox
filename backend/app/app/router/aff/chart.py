@@ -52,7 +52,7 @@ async def chart_offset(
     chart: a.AffList = a.load(notes)  # type: ignore
     chart.offsetto(params.offset)
     if hasattr(chart, 'offset') and params.process_audiooffset:
-        chart.offset = chart.offset + params.offset
+        chart.offset = chart.offset - params.offset
     if not params.allowMinusTimingNote:
         chart = filter_by_standard(chart)
 
