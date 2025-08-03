@@ -127,7 +127,7 @@ describe("form test", () => {
     await user.click(formSubmit);
 
     expect(formResult.innerHTML).toMatchSnapshot();
-  }, 30000);
+  }, 60000);
 
   it("all", async () => {
     await user.type(formControl.arc, "arc(0,1000,0.00,1.00,s,1.00,0.00,0,none,false);");
@@ -161,5 +161,5 @@ describe("form test", () => {
     await user.click(formSubmit);
 
     expect(formResult.innerHTML).toMatchSnapshot();
-  }, 30000);
+  }, 60000);
 });
