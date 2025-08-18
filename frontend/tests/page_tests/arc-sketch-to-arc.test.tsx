@@ -31,12 +31,12 @@ const formFields = [
   {
     id: "method",
     type: "button",
-    name: "input.params.method"
+    name: "input.method"
   },
   {
     id: "plane",
     type: "button",
-    name: "input.params.plane"
+    name: "input.plane"
   },
   {
     id: "sampling_rate",

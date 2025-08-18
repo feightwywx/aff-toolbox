@@ -1,17 +1,19 @@
-import type { GetStaticProps, NextPage } from "next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import ToolFormikForm from "@/components/ToolFormikForm";
-import { ArcField, NumberField } from "@/components/input";
-import { CardWithGrid, SubtitleTypography } from "@/components/CardWithGrid";
-import { ToolTitle } from "@/components/ToolTitle";
 import * as Yup from "yup";
-import { ToolStack } from "@/components/ToolStack";
-import { emptyStringToUndef } from "@/utils/helpers";
+
+import { ArcField, NumberField } from "@/components/input";
 import {
   ArcPostProcessCard,
   ArcPostProcessInitValues,
   ArcPostProcessValidations,
 } from "@/components/ArcPostProcessCard";
+import { CardWithGrid, SubtitleTypography } from "@/components/CardWithGrid";
+import type { GetStaticProps, NextPage } from "next";
+
+import { ToolFormikForm } from "@/components/ToolFormikForm";
+import { ToolStack } from "@/components/ToolStack";
+import { ToolTitle } from "@/components/ToolTitle";
+import { emptyStringToUndef } from "@/utils/helpers";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const ToolPage: NextPage = () => {
   return (
@@ -27,18 +29,14 @@ const ToolPage: NextPage = () => {
         validationSchema={{
           arc: Yup.string().required(),
           params: Yup.object().shape({
-            x_offset: Yup.number()
-              .transform(emptyStringToUndef)
-              .nullable(),
-            y_offset: Yup.number()
-              .transform(emptyStringToUndef)
-              .nullable(),
+            x_offset: Yup.number().transform(emptyStringToUndef).nullable(),
+            y_offset: Yup.number().transform(emptyStringToUndef).nullable(),
           }),
-          ...ArcPostProcessValidations
+          ...ArcPostProcessValidations,
         }}
       >
         <CardWithGrid title="Note区域">
-          <ArcField name="arc" allowMultiline/>
+          <ArcField name="arc" allowMultiline />
         </CardWithGrid>
 
         <CardWithGrid title="参数">

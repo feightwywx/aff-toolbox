@@ -1,9 +1,22 @@
-import { SelectProps } from "@mui/material";
-import { FieldHelperProps } from "formik";
+import type { SelectProps as MuiSelectProps } from "@mui/material";
+import type { FieldHelperProps } from "formik";
 
-export interface SelectWithHelperProps extends SelectProps {
+export interface SelectProps extends MuiSelectProps {
   helperText?: boolean;
 }
+
+export interface BaseSelectProps extends SelectProps {
+  item: SelectItem[];
+  helperText?: boolean;
+  overrideSelectLabel?: string;
+}
+
+export type SelectItem = {
+  value: string;
+  label: string;
+  isSubHeader?: boolean;
+};
+
 export interface InputAdornmentButtonProps {
   fieldHelpers: FieldHelperProps<string>;
   currentValue?: string;

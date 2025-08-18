@@ -1,6 +1,6 @@
 import { Trans, useTranslation } from "next-i18next";
 
-import { PropsWithChildren, useState } from "react";
+import { useState } from "react";
 import type React from "react";
 import {
   Box,
@@ -22,8 +22,13 @@ import * as Yup from "yup";
 import ToolFormikForm from "@/components/ToolFormikForm";
 import { StatusCode } from "@/utils/interfaces";
 import { SubtitleTypography } from "@/components/CardWithGrid";
-import { ArcFieldProps, SelectWithHelperProps, InputAdornmentButtonProps, CreateArcParams } from "./interfaces";
+import {
+  ArcFieldProps,
+  InputAdornmentButtonProps,
+  CreateArcParams,
+} from "./interfaces";
 import { AnyTextField, CheckBoxField, NumberField } from ".";
+import { ArcEasingModeSelect, ArcColorSelect } from "./select/selects";
 
 export const ArcField: React.FC<TextFieldProps & ArcFieldProps> = ({
   allowMultiline,
@@ -206,3 +211,4 @@ export const CreateArcButton: React.FC<InputAdornmentButtonProps> = ({
   );
 };
 
+export default ArcField;

@@ -22,7 +22,7 @@ interface ToolFormikFormProps extends React.PropsWithChildren {
   disableSubmitFab?: boolean;
 }
 
-const ToolFormikForm: React.FC<ToolFormikFormProps> = ({
+export const ToolFormikForm: React.FC<ToolFormikFormProps> = ({
   children,
   initValues,
   validationSchema,

@@ -1,11 +1,13 @@
-import type { GetStaticProps, NextPage } from "next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import ToolFormikForm from "@/components/ToolFormikForm";
+import * as Yup from "yup";
+
 import { AffTextField, CheckBoxField, NumberField } from "@/components/input";
 import { CardWithGrid, SubtitleTypography } from "@/components/CardWithGrid";
-import { ToolTitle } from "@/components/ToolTitle";
-import * as Yup from "yup";
+import type { GetStaticProps, NextPage } from "next";
+
+import { ToolFormikForm } from "@/components/ToolFormikForm";
 import { ToolStack } from "@/components/ToolStack";
+import { ToolTitle } from "@/components/ToolTitle";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const ToolPage: NextPage = () => {
   return (
@@ -26,7 +28,7 @@ const ToolPage: NextPage = () => {
           params: Yup.object().shape({
             offset: Yup.number().required().integer(),
             allowMinusTimingNote: Yup.boolean(),
-            process_audiooffset: Yup.boolean()
+            process_audiooffset: Yup.boolean(),
           }),
         }}
       >

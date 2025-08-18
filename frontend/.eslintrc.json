@@ -5,7 +5,14 @@
   ],
   "rules": {
     "no-unused-vars": "warn",
-    "no-prototype-builtins": "warn"
+    "no-prototype-builtins": "warn",
+    "sort-imports": ["warn", {
+        "ignoreCase": false,
+        "ignoreDeclarationSort": false,
+        "ignoreMemberSort": false,
+        "memberSyntaxSortOrder": ["none", "all", "multiple", "single"],
+        "allowSeparatedGroups": false
+    }]
   },
   "overrides": [
     {

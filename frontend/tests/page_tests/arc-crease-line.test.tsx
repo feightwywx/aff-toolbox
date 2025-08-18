@@ -32,7 +32,7 @@ const formFields = [
   {
     id: "mode",
     type: "button",
-    name: "input.params.mode",
+    name: "input.creaseMode",
   },
   ...arcPostProcessFields,
 ];

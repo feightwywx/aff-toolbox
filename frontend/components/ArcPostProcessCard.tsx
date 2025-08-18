@@ -1,7 +1,8 @@
 import React from "react";
 import * as Yup from "yup";
 import { CardWithGrid, SubtitleTypography } from "./CardWithGrid";
-import { CheckBoxField, Radio, SingleLineField } from "./input";
+import { CheckBoxField, Radio } from "./input";
+import SingleLineGrid from './SingleLineGrid';
 import { RadioGroup } from "@mui/material";
 
 export const ArcPostProcessCard: React.FC = () => {
@@ -14,13 +15,13 @@ export const ArcPostProcessCard: React.FC = () => {
       <CheckBoxField name="post.straighten_y"></CheckBoxField>
       <CheckBoxField name="post.connector"></CheckBoxField>
       <SubtitleTypography>title.post.filter</SubtitleTypography>
-      <SingleLineField>
+      <SingleLineGrid>
         <RadioGroup row>
           <Radio name="post.position_filter" id="post.position_filter.none" value=""></Radio>
           <Radio name="post.position_filter" id="post.position_filter.even" value="even"></Radio>
           <Radio name="post.position_filter" id="post.position_filter.odd" value="odd"></Radio>
         </RadioGroup>
-      </SingleLineField>
+      </SingleLineGrid>
     </CardWithGrid>
   );
 };

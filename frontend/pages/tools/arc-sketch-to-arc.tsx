@@ -1,23 +1,23 @@
-import type { GetStaticProps, NextPage } from "next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import ToolFormikForm from "@/components/ToolFormikForm";
-import { 
-    ArcField,
-    NumberField,
-    ImageField,
-    SketchToArcMethodSelect,
-    SketchToArcPlaneSelect
-} from "@/components/input";
-import { CardWithGrid, SubtitleTypography } from "@/components/CardWithGrid";
-import { ToolTitle } from "@/components/ToolTitle";
 import * as Yup from "yup";
-import { ToolStack } from "@/components/ToolStack";
-import { emptyStringToUndef } from "@/utils/helpers";
+
 import {
   ArcPostProcessCard,
   ArcPostProcessInitValues,
   ArcPostProcessValidations,
 } from "@/components/ArcPostProcessCard";
+import { CardWithGrid, SubtitleTypography } from "@/components/CardWithGrid";
+import type { GetStaticProps, NextPage } from "next";
+import { ImageField, NumberField } from "@/components/input";
+import {
+  SketchToArcMethodSelect,
+  SketchToArcPlaneSelect,
+} from "@/components/input/select/selects";
+
+import { ToolFormikForm } from "@/components/ToolFormikForm";
+import { ToolStack } from "@/components/ToolStack";
+import { ToolTitle } from "@/components/ToolTitle";
+import { emptyStringToUndef } from "@/utils/helpers";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const ToolPage: NextPage = () => {
   return (
@@ -27,16 +27,16 @@ const ToolPage: NextPage = () => {
       <ToolFormikForm
         initValues={{
           params: {
-            image:"",
+            image: "",
             start: "",
             stop: "",
             x_offset: 0,
             y_offset: 0,
-            method: 'thinning',
-            plane: 'vertical',
+            method: "thinning",
+            plane: "vertical",
             sampling_rate: 0.01,
             x_scale: 1,
-            y_scale: 1
+            y_scale: 1,
           },
           ...ArcPostProcessInitValues,
         }}
@@ -51,20 +51,20 @@ const ToolPage: NextPage = () => {
             x_offset: Yup.number().transform(emptyStringToUndef).nullable(),
             y_offset: Yup.number().transform(emptyStringToUndef).nullable(),
             x_scale: Yup.number().transform(emptyStringToUndef).nullable(),
-            y_scale: Yup.number().transform(emptyStringToUndef) .nullable(),
+            y_scale: Yup.number().transform(emptyStringToUndef).nullable(),
           }),
           ...ArcPostProcessValidations,
         }}
       >
         <CardWithGrid title="图片区域">
-          <ImageField name="params.image"/>
+          <ImageField name="params.image" />
         </CardWithGrid>
 
         <CardWithGrid title="参数">
           <NumberField name="params.start" withTimingCalc />
           <NumberField name="params.stop" withTimingCalc />
-          <SketchToArcMethodSelect name="params.method" helperText/>
-          <SketchToArcPlaneSelect name="params.plane" helperText/>
+          <SketchToArcMethodSelect name="params.method" helperText />
+          <SketchToArcPlaneSelect name="params.plane" helperText />
           <NumberField name="params.sampling_rate" helperText />
 
           <SubtitleTypography>可选参数</SubtitleTypography>

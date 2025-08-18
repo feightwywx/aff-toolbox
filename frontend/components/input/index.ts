@@ -1,5 +1,6 @@
 import _AffTextField from "./AffTextField";
 import _AnyTextField from "./AnyTextField";
+import _ArcField from './ArcField';
 import _BezierField from './BezierField';
 import _BreakpointsField from './BreakpointsField';
 import _CheckBoxField from "./CheckBoxField";
@@ -9,6 +10,7 @@ import _Radio from './Radio';
 
 export const AffTextField = _AffTextField;
 export const AnyTextField = _AnyTextField;
+export const ArcField = _ArcField;
 export const BezierField = _BezierField;
 export const BreakpointsField = _BreakpointsField;
 export const CheckBoxField = _CheckBoxField;

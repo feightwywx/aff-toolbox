@@ -1,21 +1,19 @@
-import type { GetStaticProps, NextPage } from "next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import ToolFormikForm from "@/components/ToolFormikForm";
-import {
-  ArcField,
-  BezierField,
-  EasingModeSelect,
-  NumberField,
-  SingleLineField,
-} from "@/components/input";
-import { CardWithGrid, SubtitleTypography } from "@/components/CardWithGrid";
-import { ToolTitle } from "@/components/ToolTitle";
 import * as Yup from "yup";
-import { ToolStack } from "@/components/ToolStack";
-import { emptyStringToUndef } from "@/utils/helpers";
-import { Link, Typography } from "@mui/material";
-import { BezierHint } from "@/components/hints";
+
+import { BezierField, NumberField } from "@/components/input";
+import { CardWithGrid, SubtitleTypography } from "@/components/CardWithGrid";
+import type { GetStaticProps, NextPage } from "next";
 import { Trans, useTranslation } from "next-i18next";
+
+import { BezierHint } from "@/components/hints";
+import { EasingModeSelect } from "@/components/input/select/selects";
+import { SingleLineGrid } from "@/components/SingleLineGrid";
+import { ToolFormikForm } from "@/components/ToolFormikForm";
+import { ToolStack } from "@/components/ToolStack";
+import { ToolTitle } from "@/components/ToolTitle";
+import { Typography } from "@mui/material";
+import { emptyStringToUndef } from "@/utils/helpers";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const ToolPage: NextPage = () => {
   const { t } = useTranslation("tools");
@@ -55,11 +53,11 @@ const ToolPage: NextPage = () => {
           <SubtitleTypography>可选参数</SubtitleTypography>
           <NumberField name="params.bar" />
           <BezierHint />
-          <SingleLineField>
+          <SingleLineGrid>
             <Typography>
               <Trans t={t}>hint.timingEasingDisp.easing</Trans>
             </Typography>
-          </SingleLineField>
+          </SingleLineGrid>
           <EasingModeSelect name="params.easing" />
           <BezierField name="params.easing_b_point" />
         </CardWithGrid>
