@@ -1,14 +1,15 @@
-import React from "react";
 import { Box, Card, CardActions, CardContent, Typography } from "@mui/material";
-import { useTranslation, Trans } from "next-i18next";
+import { Trans, useTranslation } from "next-i18next";
+
 import { Button } from "./common";
+import React from "react";
 
 export const IndexRecommendCard: React.FC<{
   title: string;
   desc: string;
   href: string;
 }> = ({ title, desc, href }) => {
-  const { t } = useTranslation('index');
+  const { t } = useTranslation("index");
   return (
     <Card variant="outlined" sx={{ height: "100%", width: "100%" }}>
       <CardContent>

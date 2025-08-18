@@ -1,9 +1,9 @@
 import * as Yup from "yup";
 
-import { NumberField } from "@/components/input";
 import { CardWithGrid, SubtitleTypography } from "@/components/CardWithGrid";
 import type { GetStaticProps, NextPage } from "next";
 
+import { NumberField } from "@/components/input";
 import { ToolFormikForm } from "@/components/ToolFormikForm";
 import { ToolStack } from "@/components/ToolStack";
 import { ToolTitle } from "@/components/ToolTitle";

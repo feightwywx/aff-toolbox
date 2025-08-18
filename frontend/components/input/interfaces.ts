@@ -1,5 +1,5 @@
-import type { SelectProps as MuiSelectProps } from "@mui/material";
 import type { FieldHelperProps } from "formik";
+import type { SelectProps as MuiSelectProps } from "@mui/material";
 
 export interface SelectProps extends MuiSelectProps {
   helperText?: boolean;

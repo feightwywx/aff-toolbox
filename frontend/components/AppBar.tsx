@@ -1,31 +1,25 @@
-import { PropsWithChildren, useState } from "react";
-import { useTranslation } from "next-i18next";
 import {
-  AppBar as MuiAppBar,
   Badge,
   Box,
-  IconButton,
+  AppBar as MuiAppBar,
   Toolbar,
   Typography,
-  Theme,
 } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
-import React from "react";
-import { useRouter } from "next/router";
-import useMediaQuery from "@mui/material/useMediaQuery";
 import {
   ChangeLangButton,
   DrawerButton,
   HistoryButton,
-  MoreActionsButton,
   ToggleThemeButton,
 } from "./AppBarActions";
-import { useAppSelector } from "@/utils/hooks";
-import { computeDarkMode } from "@/utils/helpers";
 
-const AppBar: React.FC<PropsWithChildren> = ({ children }) => {
-  const router = useRouter();
-  const { t, i18n } = useTranslation();
+import type React from "react";
+import { computeDarkMode } from "@/utils/helpers";
+import { useAppSelector } from "@/utils/hooks";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTranslation } from "next-i18next";
+
+const AppBar: React.FC<React.PropsWithChildren> = () => {
+  const { t } = useTranslation();
 
   const configuredDarkMode = useAppSelector((state) => state.layout.darkMode);
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");

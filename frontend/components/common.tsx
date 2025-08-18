@@ -1,7 +1,8 @@
-import { LinkProps, Link as MuiLink, Button as MuiButton, ButtonProps } from "@mui/material";
+import { ButtonProps, LinkProps, Button as MuiButton, Link as MuiLink } from "@mui/material";
+
 import NextLink from "next/link";
+import type React from "react";
 import { useRouter } from "next/router";
-import React from "react";
 
 export const Link: React.FC<LinkProps & { withLocale?: boolean }> = ({
   withLocale,

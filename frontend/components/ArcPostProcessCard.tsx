@@ -1,14 +1,16 @@
-import React from "react";
 import * as Yup from "yup";
+
 import { CardWithGrid, SubtitleTypography } from "./CardWithGrid";
 import { CheckBoxField, Radio } from "./input";
-import SingleLineGrid from './SingleLineGrid';
+
 import { RadioGroup } from "@mui/material";
+import type React from "react";
+import SingleLineGrid from "./SingleLineGrid";
 import { useField } from "formik";
 
 export const ArcPostProcessCard: React.FC = () => {
   const [field] = useField("post.position_filter");
-  
+
   return (
     <CardWithGrid title="title.post">
       <SubtitleTypography>title.post.mirror</SubtitleTypography>
@@ -20,9 +22,21 @@ export const ArcPostProcessCard: React.FC = () => {
       <SubtitleTypography>title.post.filter</SubtitleTypography>
       <SingleLineGrid>
         <RadioGroup row {...field}>
-          <Radio name="post.position_filter" id="post.position_filter.none" value=""></Radio>
-          <Radio name="post.position_filter" id="post.position_filter.even" value="even"></Radio>
-          <Radio name="post.position_filter" id="post.position_filter.odd" value="odd"></Radio>
+          <Radio
+            name="post.position_filter"
+            id="post.position_filter.none"
+            value=""
+          ></Radio>
+          <Radio
+            name="post.position_filter"
+            id="post.position_filter.even"
+            value="even"
+          ></Radio>
+          <Radio
+            name="post.position_filter"
+            id="post.position_filter.odd"
+            value="odd"
+          ></Radio>
         </RadioGroup>
       </SingleLineGrid>
     </CardWithGrid>

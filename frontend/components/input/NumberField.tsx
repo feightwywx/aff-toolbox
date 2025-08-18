@@ -1,7 +1,5 @@
-import { Trans, useTranslation } from "next-i18next";
+import * as Yup from "yup";
 
-import { useState } from "react";
-import type React from "react";
 import {
   Box,
   Button,
@@ -15,13 +13,16 @@ import {
   OutlinedInput,
   TextFieldProps,
 } from "@mui/material";
-import AddBoxIcon from "@mui/icons-material/AddBox";
-import { useField } from "formik";
-import * as Yup from "yup";
-import ToolFormikForm from "@/components/ToolFormikForm";
+import { CalcTimingParams, InputAdornmentButtonProps } from "./interfaces";
 import { ComplexError, StatusCode } from "@/utils/interfaces";
+import { Trans, useTranslation } from "next-i18next";
+
+import AddBoxIcon from "@mui/icons-material/AddBox";
+import type React from "react";
 import { SubtitleTypography } from "@/components/CardWithGrid";
-import { InputAdornmentButtonProps, CalcTimingParams } from "./interfaces";
+import ToolFormikForm from "@/components/ToolFormikForm";
+import { useField } from "formik";
+import { useState } from "react";
 
 export const NumberField: React.FC<
   TextFieldProps & { withTimingCalc?: boolean }

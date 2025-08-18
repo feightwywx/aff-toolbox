@@ -1,7 +1,8 @@
-import React from "react";
-import SingleLineGrid from './SingleLineGrid';
 import { Link, Typography } from "@mui/material";
-import { useTranslation, Trans } from "next-i18next";
+import { Trans, useTranslation } from "next-i18next";
+
+import type React from "react";
+import SingleLineGrid from "./SingleLineGrid";
 
 export const BezierHint: React.FC = () => {
   const { t } = useTranslation("tools");

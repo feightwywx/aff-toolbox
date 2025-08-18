@@ -1,7 +1,3 @@
-import { useTranslation } from "next-i18next";
-
-import { useRef } from "react";
-import type React from "react";
 import {
   FormControl,
   FormHelperText,
@@ -12,8 +8,12 @@ import {
   OutlinedInput,
   TextFieldProps,
 } from "@mui/material";
+
+import type React from "react";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import { useField } from "formik";
+import { useRef } from "react";
+import { useTranslation } from "next-i18next";
 
 const AffTextField: React.FC<TextFieldProps> = ({ ...props }) => {
   const [field, meta, helpers] = useField(props as { name: any });

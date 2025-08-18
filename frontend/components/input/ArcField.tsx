@@ -1,7 +1,12 @@
-import { Trans, useTranslation } from "next-i18next";
+import * as Yup from "yup";
 
-import { useState } from "react";
-import type React from "react";
+import { AnyTextField, CheckBoxField, NumberField } from ".";
+import { ArcColorSelect, ArcEasingModeSelect } from "./select/selects";
+import {
+  ArcFieldProps,
+  CreateArcParams,
+  InputAdornmentButtonProps,
+} from "./interfaces";
 import {
   Box,
   Button,
@@ -16,19 +21,15 @@ import {
   TextFieldProps,
   Unstable_Grid2,
 } from "@mui/material";
+import { Trans, useTranslation } from "next-i18next";
+
 import AddBoxIcon from "@mui/icons-material/AddBox";
-import { useField } from "formik";
-import * as Yup from "yup";
-import ToolFormikForm from "@/components/ToolFormikForm";
+import type React from "react";
 import { StatusCode } from "@/utils/interfaces";
 import { SubtitleTypography } from "@/components/CardWithGrid";
-import {
-  ArcFieldProps,
-  InputAdornmentButtonProps,
-  CreateArcParams,
-} from "./interfaces";
-import { AnyTextField, CheckBoxField, NumberField } from ".";
-import { ArcEasingModeSelect, ArcColorSelect } from "./select/selects";
+import ToolFormikForm from "@/components/ToolFormikForm";
+import { useField } from "formik";
+import { useState } from "react";
 
 export const ArcField: React.FC<TextFieldProps & ArcFieldProps> = ({
   allowMultiline,

@@ -1,6 +1,3 @@
-import { useTranslation } from "next-i18next";
-
-import type React from "react";
 import {
   Checkbox,
   CheckboxProps,
@@ -8,7 +5,10 @@ import {
   FormGroup,
   Unstable_Grid2 as Grid,
 } from "@mui/material";
+
+import type React from "react";
 import { useField } from "formik";
+import { useTranslation } from "next-i18next";
 
 const CheckBoxField: React.FC<CheckboxProps & { singleLine?: boolean }> = ({
   singleLine,

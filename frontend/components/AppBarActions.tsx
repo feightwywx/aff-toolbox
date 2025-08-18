@@ -1,5 +1,4 @@
 import {
-  Box,
   ButtonProps,
   Dialog,
   DialogContent,
@@ -10,24 +9,24 @@ import {
   Stack,
   Toolbar,
   Tooltip,
-  Typography,
   useMediaQuery,
 } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
-import HistoryIcon from "@mui/icons-material/History";
-import TranslateIcon from "@mui/icons-material/Translate";
-import MoreIcon from "@mui/icons-material/MoreVert";
-import CloseIcon from "@mui/icons-material/Close";
-import LightModeIcon from "@mui/icons-material/LightMode";
-import DarkModeIcon from "@mui/icons-material/DarkMode";
-import BrightnessMediumIcon from "@mui/icons-material/BrightnessMedium";
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import { Trans, useTranslation } from "next-i18next";
-import { MenuItemSx } from "@/styles/sx";
-import { useAppDispatch, useAppSelector } from "@/utils/hooks";
-import { setDarkMode, toggleDrawer } from "@/utils/slices/layout";
 import { EmptyHistory, HistoryCard } from "./history";
+import React, { useEffect, useState } from "react";
+import { Trans, useTranslation } from "next-i18next";
+import { setDarkMode, toggleDrawer } from "@/utils/slices/layout";
+import { useAppDispatch, useAppSelector } from "@/utils/hooks";
+
+import BrightnessMediumIcon from "@mui/icons-material/BrightnessMedium";
+import CloseIcon from "@mui/icons-material/Close";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
+import HistoryIcon from "@mui/icons-material/History";
+import LightModeIcon from "@mui/icons-material/LightMode";
+import MenuIcon from "@mui/icons-material/Menu";
+import { MenuItemSx } from "@/styles/sx";
+import MoreIcon from "@mui/icons-material/MoreVert";
+import TranslateIcon from "@mui/icons-material/Translate";
+import { useRouter } from "next/router";
 
 export const DrawerButton: React.FC<ButtonProps> = ({ ...props }) => {
   const dispatch = useAppDispatch();
@@ -49,7 +48,6 @@ export const DrawerButton: React.FC<ButtonProps> = ({ ...props }) => {
 
 export const ChangeLangButton: React.FC<ButtonProps> = ({ ...props }) => {
   const router = useRouter();
-  const { t, i18n } = useTranslation();
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -68,7 +66,7 @@ export const ChangeLangButton: React.FC<ButtonProps> = ({ ...props }) => {
 
   return (
     <>
-      <Tooltip title='语言/Language'>
+      <Tooltip title="语言/Language">
         <IconButton
           size="large"
           aria-label="language"
@@ -108,7 +106,7 @@ export const ChangeLangButton: React.FC<ButtonProps> = ({ ...props }) => {
 };
 
 export const ToggleThemeButton: React.FC<ButtonProps> = ({ ...props }) => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const darkMode = useAppSelector((state) => state.layout.darkMode);
   const dispatch = useAppDispatch();
 
@@ -224,7 +222,6 @@ export const HistoryButton: React.FC<ButtonProps> = ({ ...props }) => {
 
 export const MoreActionsButton: React.FC<ButtonProps> = ({ ...props }) => {
   const router = useRouter();
-  const { t, i18n } = useTranslation();
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {

@@ -1,12 +1,12 @@
-import { useTranslation } from "next-i18next";
-
-import type React from "react";
 import {
   Unstable_Grid2 as Grid,
   TextField,
   TextFieldProps,
 } from "@mui/material";
+
+import type React from "react";
 import { useField } from "formik";
+import { useTranslation } from "next-i18next";
 
 const BezierField: React.FC<TextFieldProps> = ({ ...props }) => {
   const [field, meta] = useField(props as { name: any });

@@ -1,15 +1,18 @@
-import React, { useState } from "react";
-import { Form, Formik, FormikHelpers } from "formik";
 import * as Yup from "yup";
-import { enqueueSnackbar } from "notistack";
-import { CircularProgress, Fab, Stack } from "@mui/material";
-import PlayArrow from "@mui/icons-material/PlayArrow";
-import { useTranslation, Trans } from "next-i18next";
-import { useRouter } from "next/router";
-import toolMetas from "@/config/modules";
+
 import { ArcToolResult, ResponseJson, StatusCode } from "@/utils/interfaces";
+import { CircularProgress, Fab, Stack } from "@mui/material";
+import { Form, Formik, FormikHelpers } from "formik";
 import { ResultHistory, appendHistory } from "@/utils/slices/layout";
+import { Trans, useTranslation } from "next-i18next";
+
+import PlayArrow from "@mui/icons-material/PlayArrow";
+import type React from "react";
+import { enqueueSnackbar } from "notistack";
+import toolMetas from "@/config/modules";
 import { useAppDispatch } from "@/utils/hooks";
+import { useRouter } from "next/router";
+import { useState } from "react";
 
 type DataProcessor = (values: unknown) => Promise<ArcToolResult>;
 type FormCallback = (input: Object, result: ArcToolResult) => void;
