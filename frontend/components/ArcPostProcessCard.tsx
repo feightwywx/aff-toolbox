@@ -4,8 +4,11 @@ import { CardWithGrid, SubtitleTypography } from "./CardWithGrid";
 import { CheckBoxField, Radio } from "./input";
 import SingleLineGrid from './SingleLineGrid';
 import { RadioGroup } from "@mui/material";
+import { useField } from "formik";
 
 export const ArcPostProcessCard: React.FC = () => {
+  const [field] = useField("post.position_filter");
+  
   return (
     <CardWithGrid title="title.post">
       <SubtitleTypography>title.post.mirror</SubtitleTypography>
@@ -16,7 +19,7 @@ export const ArcPostProcessCard: React.FC = () => {
       <CheckBoxField name="post.connector"></CheckBoxField>
       <SubtitleTypography>title.post.filter</SubtitleTypography>
       <SingleLineGrid>
-        <RadioGroup row>
+        <RadioGroup row {...field}>
           <Radio name="post.position_filter" id="post.position_filter.none" value=""></Radio>
           <Radio name="post.position_filter" id="post.position_filter.even" value="even"></Radio>
           <Radio name="post.position_filter" id="post.position_filter.odd" value="odd"></Radio>
