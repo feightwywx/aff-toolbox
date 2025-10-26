@@ -1,9 +1,10 @@
 import { Stack, StackProps } from "@mui/material";
+
 import Head from "next/head";
-import React from "react";
-import { useTranslation, Trans } from "next-i18next";
-import { useRouter } from "next/router";
+import type React from "react";
 import { toolMetas } from "@/config/modules";
+import { useRouter } from "next/router";
+import { useTranslation } from "next-i18next";
 
 export const ToolStack: React.FC<StackProps> = ({ children, ...props }) => {
   const { t } = useTranslation();

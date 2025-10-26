@@ -1,22 +1,19 @@
-import type { GetStaticProps, NextPage } from "next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import ToolFormikForm from "@/components/ToolFormikForm";
-import {
-  ArcEasingModeSelect,
-  ArcField,
-  BezierField,
-  EasingModeSelect,
-  NumberField,
-  SingleLineField,
-} from "@/components/input";
-import { CardWithGrid, SubtitleTypography } from "@/components/CardWithGrid";
-import { ToolTitle } from "@/components/ToolTitle";
 import * as Yup from "yup";
-import { ToolStack } from "@/components/ToolStack";
-import { emptyStringToUndef } from "@/utils/helpers";
-import { Divider, Link, Typography } from "@mui/material";
-import { useTranslation, Trans } from "next-i18next";
+
+import { ArcField, BezierField, NumberField } from "@/components/input";
+import { CardWithGrid, SubtitleTypography } from "@/components/CardWithGrid";
+import type { GetStaticProps, NextPage } from "next";
+import { Trans, useTranslation } from "next-i18next";
+
 import { BezierHint } from "@/components/hints";
+import { EasingModeSelect } from "@/components/input/select/selects";
+import { SingleLineGrid } from "@/components/SingleLineGrid";
+import { ToolFormikForm } from "@/components/ToolFormikForm";
+import { ToolStack } from "@/components/ToolStack";
+import { ToolTitle } from "@/components/ToolTitle";
+import { Typography } from "@mui/material";
+import { emptyStringToUndef } from "@/utils/helpers";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const ToolPage: NextPage = () => {
   const { t } = useTranslation("tools");
@@ -79,7 +76,7 @@ const ToolPage: NextPage = () => {
         }}
       >
         <CardWithGrid title="Note区域">
-          <ArcField name="arc" allowMultiline/>
+          <ArcField name="arc" allowMultiline />
         </CardWithGrid>
 
         <CardWithGrid title="参数">
@@ -94,29 +91,29 @@ const ToolPage: NextPage = () => {
           <EasingModeSelect name="params.easing_y" />
           <BezierField name="params.easing_b_point_x" />
           <BezierField name="params.easing_b_point_y" />
-          <SingleLineField>
+          <SingleLineGrid>
             <Typography>
               <Trans t={t}>
                 下面的参数用于控制物件与z轴的距离（离玩家方向更远+/更近-）。
               </Trans>
             </Typography>
-          </SingleLineField>
+          </SingleLineGrid>
           <NumberField name="params.offset_t" withTimingCalc />
-          <SingleLineField>
+          <SingleLineGrid>
             <Typography>
               <Trans t={t}>
                 同时，也可以借此处的设置实现物件在z轴上的平移，填写方式与在x、y轴上的控制参数相仿。
               </Trans>
             </Typography>
-          </SingleLineField>
+          </SingleLineGrid>
           <NumberField name="params.delta_offset_t" withTimingCalc />
           <EasingModeSelect name="params.easing_offset_t" />
           <BezierField name="params.easing_b_point_offset_t" />
-          <SingleLineField>
+          <SingleLineGrid>
             <Typography>
               <Trans t={t}>下面是一些个性化的设置。</Trans>
             </Typography>
-          </SingleLineField>
+          </SingleLineGrid>
           <NumberField name="params.infbpm" helperText />
           <NumberField name="params.framerate" helperText />
           <NumberField name="params.fake_note_t" helperText />

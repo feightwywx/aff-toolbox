@@ -1,5 +1,3 @@
-import { PropsWithChildren, useEffect, useState } from "react";
-import { Trans, useTranslation } from "next-i18next";
 import {
   Collapse,
   CssBaseline,
@@ -13,19 +11,21 @@ import {
   createTheme,
   useMediaQuery,
 } from "@mui/material";
-import Head from "next/head";
-import React from "react";
-import { useRouter } from "next/router";
+import { PropsWithChildren, useEffect, useState } from "react";
+import { Trans, useTranslation } from "next-i18next";
+
 import AppBar from "./AppBar";
 import Drawer from "./Drawer";
 import LayoutContainer from "./LayoutContainer";
-import { useAppSelector } from "@/utils/hooks";
-import { getDesignTokens } from "@/utils/theme";
+import React from "react";
 import { computeDarkMode } from "@/utils/helpers";
+import { getDesignTokens } from "@/utils/theme";
+import { useAppSelector } from "@/utils/hooks";
+import { useRouter } from "next/router";
 
 const Layout: React.FC<PropsWithChildren> = ({ children }) => {
   const router = useRouter();
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
 
   const drawerOpen = useAppSelector((state) => state.layout.drawerOpen);
 
@@ -44,7 +44,7 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
     if (!(localStorage.getItem("infoChecked.community") === "true")) {
       setShowCommunity(true);
     }
-  });
+  }, []);
 
   const configuredDarkMode = useAppSelector((state) => state.layout.darkMode);
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");

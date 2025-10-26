@@ -1,20 +1,15 @@
-import React from "react";
+import "@fortawesome/fontawesome-svg-core/styles.css";
+
 import type { AppProps } from "next/app";
 import Head from "next/head";
-import { appWithTranslation } from "next-i18next";
-import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
 import Layout from "../components/Layout";
-import { Provider as ReduxProvider } from "react-redux";
-import store from "@/utils/store";
-import { SnackbarProvider } from "notistack";
-import { setLocale } from "yup";
-import { config } from "@fortawesome/fontawesome-svg-core";
 import ReactGA from "react-ga4";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import "@fortawesome/fontawesome-svg-core/styles.css";
-import { getDesignTokens } from "@/utils/theme";
-import { useAppSelector } from "@/utils/hooks";
-import { computeDarkMode } from "@/utils/helpers";
+import { Provider as ReduxProvider } from "react-redux";
+import { SnackbarProvider } from "notistack";
+import { appWithTranslation } from "next-i18next";
+import { config } from "@fortawesome/fontawesome-svg-core";
+import { setLocale } from "yup";
+import store from "@/utils/store";
 
 config.autoAddCss = false;
 

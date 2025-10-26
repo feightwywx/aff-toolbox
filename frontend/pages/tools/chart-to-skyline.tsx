@@ -1,14 +1,16 @@
-import type { GetStaticProps, NextPage } from "next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import ToolFormikForm from "@/components/ToolFormikForm";
-import { AffTextField, NumberField } from "@/components/input";
-import { CardWithGrid, SubtitleTypography } from "@/components/CardWithGrid";
-import { ToolTitle } from "@/components/ToolTitle";
 import * as Yup from "yup";
-import { ToolStack } from "@/components/ToolStack";
-import { Typography } from "@mui/material";
+
+import { AffTextField, NumberField } from "@/components/input";
+import type { GetStaticProps, NextPage } from "next";
 import { Trans, useTranslation } from "react-i18next";
+
+import { CardWithGrid } from "@/components/CardWithGrid";
+import { ToolFormikForm } from "@/components/ToolFormikForm";
+import { ToolStack } from "@/components/ToolStack";
+import { ToolTitle } from "@/components/ToolTitle";
+import { Typography } from "@mui/material";
 import { emptyStringToUndef } from "@/utils/helpers";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const ToolPage: NextPage = () => {
   const { t } = useTranslation("tools");

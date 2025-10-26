@@ -1,8 +1,9 @@
-import { toolMetas } from "@/config/modules";
+import React, { PropsWithChildren } from "react";
+
 import { Typography } from "@mui/material";
+import { toolMetas } from "@/config/modules";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
-import React, { PropsWithChildren } from "react";
 
 export const ToolTitle: React.FC<PropsWithChildren> = ({ children }) => {
   const router = useRouter();

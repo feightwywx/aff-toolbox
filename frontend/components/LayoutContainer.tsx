@@ -1,5 +1,5 @@
-import { styled } from "@mui/material";
 import { drawerWidth } from "./Drawer";
+import { styled } from "@mui/material";
 
 const LayoutContainer = styled("main", {
   shouldForwardProp: (prop) => prop !== "open",

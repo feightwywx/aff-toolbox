@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Box,
   Collapse,
@@ -9,18 +8,20 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
+import { category, newModules } from "@/config/category";
+import { useAppDispatch, useAppSelector } from "@/utils/hooks";
+
 import type { DrawerProps } from "@mui/material";
-import { Drawer as MuiDrawer } from "@mui/material";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
-import { useAppDispatch, useAppSelector } from "@/utils/hooks";
-import { toggleDrawer } from "@/utils/slices/layout";
-import { ListItemSx } from "@/styles/sx";
-import { useTranslation } from "next-i18next";
-import { useRouter } from "next/router";
-import toolMetas from "@/config/modules";
-import { category, newModules } from "@/config/category";
 import Link from "next/link";
+import { ListItemSx } from "@/styles/sx";
+import { Drawer as MuiDrawer } from "@mui/material";
+import React from "react";
+import { toggleDrawer } from "@/utils/slices/layout";
+import toolMetas from "@/config/modules";
+import { useRouter } from "next/router";
+import { useTranslation } from "next-i18next";
 
 export const drawerWidth = 240;
 
@@ -32,7 +33,7 @@ const Drawer: React.FC<
   const open = useAppSelector((state) => state.layout.drawerOpen);
   const dispatch = useAppDispatch();
 
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const router = useRouter();
   const pathname = `/${router.asPath.split("/").slice(-1)}`;
 

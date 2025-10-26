@@ -1,6 +1,6 @@
-import toolMetas from "@/config/modules";
 import { ArcToolMetadata } from "@/utils/interfaces";
 import { GetServerSideProps } from "next";
+import toolMetas from "@/config/modules";
 
 function generateSiteMap(tools: ArcToolMetadata[]) {
   return `<?xml version="1.0" encoding="UTF-8"?>

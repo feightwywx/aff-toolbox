@@ -1,16 +1,18 @@
-import type { GetStaticProps, NextPage } from "next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import ToolFormikForm from "@/components/ToolFormikForm";
-import { AffTextField, ArcField } from "@/components/input";
-import { CardWithGrid } from "@/components/CardWithGrid";
-import { ToolTitle } from "@/components/ToolTitle";
 import * as Yup from "yup";
-import { ToolStack } from "@/components/ToolStack";
+
+import { AffTextField, ArcField } from "@/components/input";
 import {
   ArcPostProcessCard,
   ArcPostProcessInitValues,
   ArcPostProcessValidations,
 } from "@/components/ArcPostProcessCard";
+import type { GetStaticProps, NextPage } from "next";
+
+import { CardWithGrid } from "@/components/CardWithGrid";
+import { ToolFormikForm } from "@/components/ToolFormikForm";
+import { ToolStack } from "@/components/ToolStack";
+import { ToolTitle } from "@/components/ToolTitle";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const ToolPage: NextPage = () => {
   return (
@@ -26,7 +28,7 @@ const ToolPage: NextPage = () => {
         }}
       >
         <CardWithGrid title="Note区域">
-          <ArcField name="arc" allowMultiline/>
+          <ArcField name="arc" allowMultiline />
           <AffTextField
             name="timings"
             placeholder={`timing(0,222.22,4.00);\ntiming(100,222.22,4.00);\n...`}

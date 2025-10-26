@@ -8,11 +8,12 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import React from "react";
-import HistoryIcon from "@mui/icons-material/History";
-import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import { ResultHistory } from "@/utils/slices/layout";
 import { Trans, useTranslation } from "next-i18next";
+
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import HistoryIcon from "@mui/icons-material/History";
+import type React from "react";
+import { ResultHistory } from "@/utils/slices/layout";
 import { enqueueSnackbar } from "notistack";
 
 export interface HistoryCardProps {
