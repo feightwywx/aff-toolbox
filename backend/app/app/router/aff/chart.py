@@ -4,7 +4,7 @@ from app.model.request import (
     ChartAlignParams,
     ChartOffsetParams,
     ChartScaleParams,
-    ChartToSkylineParams
+    ChartToSkylineParams,
 )
 from app.utils.response import make_success_resp
 from app.utils.chart import note_to_skyline, arcs_to_appendix
@@ -51,7 +51,7 @@ async def chart_offset(
 
     chart: a.AffList = a.load(notes)  # type: ignore
     chart.offsetto(params.offset)
-    if hasattr(chart, 'offset') and params.process_audiooffset:
+    if hasattr(chart, "offset") and params.process_audiooffset:
         chart.offset = chart.offset - params.offset
     if not params.allowMinusTimingNote:
         chart = filter_by_standard(chart)
@@ -87,15 +87,15 @@ async def chart_scale(
     original_scale = params.scale
     params.scale = 1 / params.scale
 
+    initial_event_ids = set()
+
     def scale_group(notes):
         if isinstance(notes, a.AffList):
             notes.offset = (
                 notes.offset - params.standard
             ) * params.scale + params.standard
-            print("scaled offset:", notes.offset)
 
         for each in notes:
-            print(each.__dict__)
             if each is None:
                 continue
 
@@ -105,7 +105,7 @@ async def chart_scale(
                 if isinstance(each, a.Timing):
                     each.bpm = each.bpm * original_scale
 
-                if each.time == 0 and isinstance(each, a.Timing):
+                if id(each) in initial_event_ids:
                     continue
 
                 is_zero_duration = False
@@ -143,23 +143,41 @@ async def chart_scale(
         return notes
 
     def filter_by_standard(notes):
-        for i, each in enumerate(notes):
+        # 每个时间组独立取样：优先参考点之前最近的，否则取之后最近的。
+        candidates = {}
+        for each in notes:
+            if isinstance(each, a.Timing):
+                key = (a.Timing,)
+            elif isinstance(each, a.SceneControl):
+                key = (a.SceneControl, each.scenetype)
+            else:
+                continue
+            candidates.setdefault(key, []).append(each)
+
+        initial_events = []
+        for events in candidates.values():
+            before = [event for event in events if event.time <= params.standard]
+            selected = (
+                max(before, key=lambda event: event.time)
+                if before
+                else min(events, key=lambda event: event.time)
+            )
+            initial = selected if selected.time == 0 else selected.copyto(0)
+            initial_events.append(initial)
+            initial_event_ids.add(id(initial))
+
+        retained = []
+        for each in notes:
             if isinstance(each, a.NoteGroup):
                 filter_by_standard(each)
-                if isinstance(each, a.TimingGroup):
-                    opt = each.option
-                    filtered_tg = a.TimingGroup(
-                        filter(lambda x: x is not None, each), opt=opt
-                    )
-                    if len(filtered_tg) > 0:
-                        notes[i] = filtered_tg
-                    else:
-                        notes[i] = None
-            else:
-                if each.time < params.standard and not (
-                    each.time == 0 and isinstance(each, a.Timing)
-                ):
-                    notes[i] = None
+                if each:
+                    retained.append(each)
+            elif each is not None and id(each) not in initial_event_ids:
+                if each.time >= params.standard:
+                    retained.append(each)
+
+        # 原地更新，保留 AffList 头部和 TimingGroup option，并移除过滤占位。
+        notes[:] = initial_events + retained
         return notes
 
     return make_success_resp(scale_group(filter_by_standard(notes)).__str__())
