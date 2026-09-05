@@ -180,7 +180,21 @@ async def chart_scale(
         notes[:] = initial_events + retained
         return notes
 
-    return make_success_resp(scale_group(filter_by_standard(notes)).__str__())
+    def fix_same_time_timing(group):
+        bpm_by_time = {}
+        for each in group:
+            if isinstance(each, a.Timing):
+                while any(bpm != each.bpm for bpm in bpm_by_time.get(each.time, set())):
+                    each.time += 1
+                bpm_by_time.setdefault(each.time, set()).add(each.bpm)
+            elif isinstance(each, a.TimingGroup):
+                fix_same_time_timing(each)
+        return group
+
+    processed = scale_group(filter_by_standard(notes))
+    if params.fix_same_time_timing:
+        fix_same_time_timing(processed)
+    return make_success_resp(processed.__str__())
 
 
 @chart_router.post("/to-skyline")

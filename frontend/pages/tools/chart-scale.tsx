@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 
-import { AffTextField, NumberField } from "@/components/input";
+import { AffTextField, CheckBoxField, NumberField } from "@/components/input";
 import { CardWithGrid, SubtitleTypography } from "@/components/CardWithGrid";
 import type { GetStaticProps, NextPage } from "next";
 
@@ -15,7 +15,10 @@ const ToolPage: NextPage = () => {
     <ToolStack>
       <ToolTitle />
       <ToolFormikForm
-        initValues={{ notes: "", params: { scale: "" } }}
+        initValues={{
+          notes: "",
+          params: { scale: "", fix_same_time_timing: false },
+        }}
         validationSchema={{
           notes: Yup.string().required(),
           params: Yup.object().shape({
@@ -24,6 +27,7 @@ const ToolPage: NextPage = () => {
               .integer()
               .transform(emptyStringToUndef)
               .nullable(),
+            fix_same_time_timing: Yup.boolean(),
           }),
         }}
       >
@@ -35,6 +39,7 @@ const ToolPage: NextPage = () => {
           <NumberField name="params.scale" />
           <SubtitleTypography>可选参数</SubtitleTypography>
           <NumberField name="params.standard" helperText />
+          <CheckBoxField name="params.fix_same_time_timing" helperText />
         </CardWithGrid>
       </ToolFormikForm>
     </ToolStack>
