@@ -121,6 +121,8 @@
   "input.params.scale": "Scale",
   "input.params.standard": "Standard timing",
   "input.params.standard.helper": "Note will be ignored which is earlier than the standard, defaults to 0",
+  "input.params.fix_same_time_timing": "Fix Timings at the same time",
+  "input.params.fix_same_time_timing.helper": "Try enabling this if effects become disordered after speeding up",
   "input.params.allowMinusTimingNote": "Allow Minus Timing Notes",
   "input.rainLimitMode": "Raindrop Limit Mode",
   "input.rainLimitMode.standard": "Standard",

@@ -161,3 +161,99 @@ def test_scale_group_keeps_initial_timing_when_other_events_filtered():
         "code": 0,
         "result": "timinggroup(noinput){\n  timing(0,240.00,4.00);\n};\n",
     }
+
+
+def test_scale_same_time_timing_fix_is_disabled_by_default():
+    response = client.post(
+        "/aff/chart/scale",
+        json={
+            "params": {"scale": 2},
+            "notes": "timing(100,120,4);\ntiming(101,180,4);",
+        },
+    )
+    assert response.status_code == 200
+    assert response.json() == {
+        "code": 0,
+        "result": "timing(0,240.00,4.00);\ntiming(50,240.00,4.00);\ntiming(50,360.00,4.00);\n",
+    }
+
+
+def test_scale_fixes_same_time_timings_with_different_bpm():
+    response = client.post(
+        "/aff/chart/scale",
+        json={
+            "params": {"scale": 2, "fix_same_time_timing": True},
+            "notes": "timing(0,100,4);\ntiming(100,120,4);\ntiming(101,180,4);",
+        },
+    )
+    assert response.status_code == 200
+    assert response.json() == {
+        "code": 0,
+        "result": "timing(0,200.00,4.00);\ntiming(50,240.00,4.00);\ntiming(51,360.00,4.00);\n",
+    }
+
+
+def test_scale_keeps_same_time_timings_with_same_bpm():
+    response = client.post(
+        "/aff/chart/scale",
+        json={
+            "params": {"scale": 2, "fix_same_time_timing": True},
+            "notes": "timing(0,100,4);\ntiming(100,120,4);\ntiming(101,120,3);",
+        },
+    )
+    assert response.status_code == 200
+    assert response.json() == {
+        "code": 0,
+        "result": "timing(0,200.00,4.00);\ntiming(50,240.00,4.00);\ntiming(50,240.00,3.00);\n",
+    }
+
+
+def test_scale_moves_timing_until_all_conflicts_are_resolved():
+    response = client.post(
+        "/aff/chart/scale",
+        json={
+            "params": {"scale": 2, "fix_same_time_timing": True},
+            "notes": "timing(0,100,4);\ntiming(100,120,4);\ntiming(101,180,4);\ntiming(102,240,4);",
+        },
+    )
+    assert response.status_code == 200
+    assert response.json() == {
+        "code": 0,
+        "result": "timing(0,200.00,4.00);\ntiming(50,240.00,4.00);\ntiming(51,360.00,4.00);\ntiming(52,480.00,4.00);\n",
+    }
+
+
+def test_scale_fixes_same_time_timings_in_each_group_independently():
+    response = client.post(
+        "/aff/chart/scale",
+        json={
+            "params": {"scale": 2, "fix_same_time_timing": True},
+            "notes": (
+                "AudioOffset:0\n-\ntiming(0,100,4);\ntiming(100,120,4);\ntiming(101,180,4);\n"
+                "timinggroup(noinput){\ntiming(0,80,4);\ntiming(200,90,4);\ntiming(201,150,4);\n};"
+            ),
+        },
+    )
+    assert response.status_code == 200
+    assert response.json() == {
+        "code": 0,
+        "result": (
+            "AudioOffset:0\n-\ntiming(0,200.00,4.00);\ntiming(50,240.00,4.00);\ntiming(51,360.00,4.00);\n"
+            "timinggroup(noinput){\n  timing(0,160.00,4.00);\n  timing(100,180.00,4.00);\n  timing(101,300.00,4.00);\n};\n"
+        ),
+    }
+
+
+def test_scale_fixes_different_bpm_timings_at_zero():
+    response = client.post(
+        "/aff/chart/scale",
+        json={
+            "params": {"scale": 2, "fix_same_time_timing": True},
+            "notes": "timing(0,100,4);\ntiming(0,120,3);",
+        },
+    )
+    assert response.status_code == 200
+    assert response.json() == {
+        "code": 0,
+        "result": "timing(0,200.00,4.00);\ntiming(1,240.00,3.00);\n",
+    }

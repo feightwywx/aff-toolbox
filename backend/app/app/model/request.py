@@ -241,6 +241,7 @@ class ArcBreakParams(BaseModel):
 class ChartScaleParams(BaseModel):
     scale: float
     standard: Optional[int] = 0
+    fix_same_time_timing: bool = False
 
 
 class ArcShiftParams(BaseModel):

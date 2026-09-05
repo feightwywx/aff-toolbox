@@ -17,6 +17,11 @@ const formFields = [
     id: "standard",
     type: "textbox",
     name: "input.params.standard"
+  },
+  {
+    id: "fix_same_time_timing",
+    type: "checkbox",
+    name: "input.params.fix_same_time_timing"
   }
 ];
 
@@ -67,6 +72,7 @@ describe("form test", () => {
 
     // optional
     await user.type(formControl.standard, "1000");
+    await user.click(formControl.fix_same_time_timing);
 
     await user.click(formSubmit);
 

@@ -97,6 +97,8 @@
   "input.params.scale": "缩放倍数",
   "input.params.standard": "基准时间点",
   "input.params.standard.helper": "早于基准的note会被忽略，默认为0",
+  "input.params.fix_same_time_timing": "修复同时间 Timing",
+  "input.params.fix_same_time_timing.helper": "加速后特效错乱可尝试勾选",
   "input.params.allowMinusTimingNote": "允许负时间点Note",
   "input.rainLimitMode": "雨点限制模式",
   "input.rainLimitMode.standard": "标准",
