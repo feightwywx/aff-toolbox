@@ -17,6 +17,113 @@ def test_offset():
     assert response.json() == {"code": 0, "result": "(1000,1);\n"}
 
 
+def test_offset_preserves_latest_timing_and_scenecontrol_at_zero():
+    response = client.post(
+        "/aff/chart/offset",
+        json={
+            "params": {"offset": -1000},
+            "notes": (
+                "AudioOffset:100\n-\ntiming(0,100,4);\ntiming(600,120,3);\n"
+                "timing(1200,180,4);\nscenecontrol(200,hidegroup,0,0);\n"
+                "scenecontrol(800,hidegroup,2,1);\nscenecontrol(1100,trackhide);\n"
+                "scenecontrol(700,trackshow);\n(900,1);\n(1400,2);"
+            ),
+        },
+    )
+    assert response.status_code == 200
+    assert response.json() == {
+        "code": 0,
+        "result": (
+            "AudioOffset:100\n-\ntiming(0,120.00,3.00);\n"
+            "scenecontrol(0,hidegroup,2.00,1);\nscenecontrol(0,trackhide);\n"
+            "scenecontrol(0,trackshow);\ntiming(200,180.00,4.00);\n"
+            "scenecontrol(100,trackhide);\n(400,2);\n"
+        ),
+    }
+
+
+def test_offset_does_not_duplicate_events_shifted_to_zero():
+    response = client.post(
+        "/aff/chart/offset",
+        json={
+            "params": {"offset": -500},
+            "notes": (
+                "timing(0,100,4);\ntiming(500,120,3);\n"
+                "scenecontrol(500,hidegroup,2,1);\n(500,2);"
+            ),
+        },
+    )
+    assert response.status_code == 200
+    assert response.json() == {
+        "code": 0,
+        "result": (
+            "timing(0,120.00,3.00);\n"
+            "scenecontrol(0,hidegroup,2.00,1);\n(0,2);\n"
+        ),
+    }
+
+
+def test_offset_groups_sample_initial_events_independently():
+    response = client.post(
+        "/aff/chart/offset",
+        json={
+            "params": {"offset": -1000},
+            "notes": (
+                "AudioOffset:0\n-\ntiming(0,100,4);\ntiming(600,120,3);\n"
+                "timinggroup(noinput){\ntiming(0,60,4);\ntiming(800,90,3);\n"
+                "scenecontrol(900,hidegroup,1,0);\n(1200,1);\n};\n"
+                "timinggroup(anglex200){\ntiming(1200,150,3);\n"
+                "scenecontrol(1400,hidegroup,3,1);\n};"
+            ),
+        },
+    )
+    assert response.status_code == 200
+    assert response.json() == {
+        "code": 0,
+        "result": (
+            "AudioOffset:0\n-\ntiming(0,120.00,3.00);\n"
+            "timinggroup(noinput){\n  timing(0,90.00,3.00);\n"
+            "  scenecontrol(0,hidegroup,1.00,0);\n  (200,1);\n};\n"
+            "timinggroup(anglex200){\n  timing(0,150.00,3.00);\n"
+            "  scenecontrol(0,hidegroup,3.00,1);\n  timing(200,150.00,3.00);\n"
+            "  scenecontrol(400,hidegroup,3.00,1);\n};\n"
+        ),
+    }
+
+
+def test_offset_keeps_minus_events_when_enabled():
+    response = client.post(
+        "/aff/chart/offset",
+        json={
+            "params": {"allowMinusTimingNote": True, "offset": -100},
+            "notes": "timing(0,120,3);\nscenecontrol(0,trackhide);\n(0,1);",
+        },
+    )
+    assert response.status_code == 200
+    assert response.json() == {
+        "code": 0,
+        "result": (
+            "timing(-100,120.00,3.00);\n"
+            "scenecontrol(-100,trackhide);\n(-100,1);\n"
+        ),
+    }
+
+
+def test_offset_processes_audiooffset_after_sampling_initial_events():
+    response = client.post(
+        "/aff/chart/offset",
+        json={
+            "params": {"offset": -500, "process_audiooffset": True},
+            "notes": "AudioOffset:100\n-\ntiming(0,100,4);\ntiming(500,120,3);",
+        },
+    )
+    assert response.status_code == 200
+    assert response.json() == {
+        "code": 0,
+        "result": "AudioOffset:600\n-\ntiming(0,120.00,3.00);\n",
+    }
+
+
 def test_align():
     response = client.post(
         "/aff/chart/align",
