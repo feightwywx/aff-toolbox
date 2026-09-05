@@ -1,4 +1,3 @@
-from typing import Iterable
 from app.model.common import CommonResponse
 from app.model.request import (
     ChartAlignParams,
@@ -18,6 +17,51 @@ chart_router = APIRouter(
 )
 
 
+def filter_by_standard(notes: a.NoteGroup, standard: int):
+    """保留参考点处生效的 Timing/SceneControl，并移除更早的物件。"""
+    initial_event_ids = set()
+
+    def filter_group(group: a.NoteGroup):
+        # 每个时间组独立取样：优先参考点之前最近的，否则取之后最近的。
+        candidates = {}
+        for each in group:
+            if isinstance(each, a.Timing):
+                key = (a.Timing,)
+            elif isinstance(each, a.SceneControl):
+                key = (a.SceneControl, each.scenetype)
+            else:
+                continue
+            candidates.setdefault(key, []).append(each)
+
+        initial_events = []
+        for events in candidates.values():
+            before = [event for event in events if event.time <= standard]
+            selected = (
+                max(before, key=lambda event: event.time)
+                if before
+                else min(events, key=lambda event: event.time)
+            )
+            initial = selected if selected.time == 0 else selected.copyto(0)
+            initial_events.append(initial)
+            initial_event_ids.add(id(initial))
+
+        retained = []
+        for each in group:
+            if isinstance(each, a.NoteGroup):
+                filter_group(each)
+                if each:
+                    retained.append(each)
+            elif each is not None and id(each) not in initial_event_ids:
+                if each.time >= standard:
+                    retained.append(each)
+
+        # 原地更新，保留 AffList 头部和 TimingGroup option，并移除过滤占位。
+        group[:] = initial_events + retained
+        return group
+
+    return filter_group(notes), initial_event_ids
+
+
 async def notes_converter(notes: str = Body(embed=True)) -> a.NoteGroup | a.AffList:
     chart = a.load(notes)
     if not notes.startswith("AudioOffset"):
@@ -29,38 +73,31 @@ async def notes_converter(notes: str = Body(embed=True)) -> a.NoteGroup | a.AffL
 async def chart_offset(
     notes: str = Body(), params: ChartOffsetParams = Body()
 ) -> CommonResponse[str]:
-    def filter_by_standard(notes):
-        for i, each in enumerate(notes):
+    def offset_group(group: a.NoteGroup):
+        for each in group:
             if isinstance(each, a.NoteGroup):
-                filter_by_standard(each)
-                if isinstance(each, a.TimingGroup):
-                    opt = each.option
-                    filtered_tg = a.TimingGroup(
-                        filter(lambda x: x is not None, each), opt=opt
-                    )
-                    if len(filtered_tg) > 0:
-                        notes[i] = filtered_tg
-                    else:
-                        notes[i] = None
+                offset_group(each)
             else:
-                if each.time < 0 and not (
-                    each.time == 0 and isinstance(each, a.Timing)
-                ):
-                    notes[i] = None
-        return notes
+                each.offsetto(params.offset)
+        return group
 
     chart: a.AffList = a.load(notes)  # type: ignore
-    chart.offsetto(params.offset)
+    if params.allowMinusTimingNote:
+        # 保留原有兼容行为，包括 arcfutil 自动补入的零时刻 Timing。
+        chart.offsetto(params.offset)
+    else:
+        offset_group(chart)
+        chart, _ = filter_by_standard(chart, 0)
+
     if hasattr(chart, "offset") and params.process_audiooffset:
         chart.offset = chart.offset - params.offset
-    if not params.allowMinusTimingNote:
-        chart = filter_by_standard(chart)
 
     if notes.startswith("AudioOffset"):
         return make_success_resp(chart.__str__())
     else:
         processed = a.NoteGroup(chart)
-        processed.pop(0)
+        if params.allowMinusTimingNote:
+            processed.pop(0)
         return make_success_resp(processed.__str__())
 
 
@@ -86,8 +123,6 @@ async def chart_scale(
 ) -> CommonResponse[str]:
     original_scale = params.scale
     params.scale = 1 / params.scale
-
-    initial_event_ids = set()
 
     def scale_group(notes):
         if isinstance(notes, a.AffList):
@@ -142,44 +177,6 @@ async def chart_scale(
                     each.x = (each.x - params.standard) * params.scale + params.standard
         return notes
 
-    def filter_by_standard(notes):
-        # 每个时间组独立取样：优先参考点之前最近的，否则取之后最近的。
-        candidates = {}
-        for each in notes:
-            if isinstance(each, a.Timing):
-                key = (a.Timing,)
-            elif isinstance(each, a.SceneControl):
-                key = (a.SceneControl, each.scenetype)
-            else:
-                continue
-            candidates.setdefault(key, []).append(each)
-
-        initial_events = []
-        for events in candidates.values():
-            before = [event for event in events if event.time <= params.standard]
-            selected = (
-                max(before, key=lambda event: event.time)
-                if before
-                else min(events, key=lambda event: event.time)
-            )
-            initial = selected if selected.time == 0 else selected.copyto(0)
-            initial_events.append(initial)
-            initial_event_ids.add(id(initial))
-
-        retained = []
-        for each in notes:
-            if isinstance(each, a.NoteGroup):
-                filter_by_standard(each)
-                if each:
-                    retained.append(each)
-            elif each is not None and id(each) not in initial_event_ids:
-                if each.time >= params.standard:
-                    retained.append(each)
-
-        # 原地更新，保留 AffList 头部和 TimingGroup option，并移除过滤占位。
-        notes[:] = initial_events + retained
-        return notes
-
     def fix_same_time_timing(group):
         bpm_by_time = {}
         for each in group:
@@ -191,7 +188,8 @@ async def chart_scale(
                 fix_same_time_timing(each)
         return group
 
-    processed = scale_group(filter_by_standard(notes))
+    filtered, initial_event_ids = filter_by_standard(notes, params.standard)
+    processed = scale_group(filtered)
     if params.fix_same_time_timing:
         fix_same_time_timing(processed)
     return make_success_resp(processed.__str__())
