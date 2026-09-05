@@ -6,6 +6,21 @@ from ..main import app
 client = TestClient(app)
 
 
+def test_scale_uses_zero_when_standard_is_omitted():
+    response = client.post(
+        "/aff/chart/scale",
+        json={
+            "params": {"scale": 2},
+            "notes": "timing(0,120,3);\nscenecontrol(100,trackhide);\n(200,2);",
+        },
+    )
+    assert response.status_code == 200
+    assert response.json() == {
+        "code": 0,
+        "result": "timing(0,240.00,3.00);\nscenecontrol(0,trackhide);\nscenecontrol(50,trackhide);\n(100,2);\n",
+    }
+
+
 def test_scale_prefers_latest_before_standard():
     response = client.post(
         "/aff/chart/scale",
